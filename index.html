@@ -7,115 +7,116 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+  <!-- Blobs d'arrière-plan -->
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+
+  <!-- Navigation -->
   <nav class="nav" id="nav">
-  <a class="nav-logo" href="#">&gt; MHT_</a>
-  <ul class="nav-links">
-    <li><a href="#projets">projets</a></li>
-    <li><a href="#stack">stack</a></li>
-    <li><a href="#contact">contact</a></li>
-  </ul>
-</nav>
+    <a class="nav-logo" href="#">M<span>.</span>HT</a>
+    <ul class="nav-links">
+      <li><a href="#projets">projets</a></li>
+      <li><a href="#stack">stack</a></li>
+      <li><a href="#contact">contact</a></li>
+    </ul>
+  </nav>
 
-<main>
-  <section class="hero fade-in">
-    <p class="section-label">// PORTFOLIO</p>
-    <h1 class="hero-name">Meven<br>Hoarau Techer</h1>
-    <p class="hero-title">
-      Étudiant <span>BTS SIO</span> · option <span>SLAM</span>
-    </p>
-    <p class="hero-desc">
-      Lycée Pierre Poivre — Nantes · 2024–2026<br>
-      Passionné par le développement d'applications et les solutions open source.
-    </p>
-    <a class="hero-cta" href="#projets">voir mes projets →</a>
-  </section>
+  <main>
 
-  <section class="section projects-section fade-in" id="projets">
-    <p class="section-label">// RÉALISATIONS</p>
-    <h2 class="section-title">Projets</h2>
-    <div class="projects-grid">
+    <!-- Hero -->
+    <section class="hero fade-in">
+      <div class="hero-badge">BTS SIO · OPTION SLAM</div>
+      <h1 class="hero-name">Meven<br><span>Hoarau Techer</span></h1>
+      <p class="hero-sub">Lycée Pierre Poivre — La Réunion · 2024–2026</p>
+      <p class="hero-desc">
+        Passionné par le développement d'applications et les solutions open source.
+      </p>
+      <a class="hero-cta" href="#projets">voir mes projets →</a>
+    </section>
 
-      <article class="project-card">
-        <div class="project-header">
+    <!-- Projets -->
+    <section class="section fade-in" id="projets">
+      <div class="section-badge">RÉALISATIONS</div>
+      <h2 class="section-title">Projets</h2>
+      <div class="projects-grid">
+
+        <article class="project-card">
           <h3 class="project-name">PharmaPays++</h3>
-          <span class="project-icon" aria-hidden="true">⬡</span>
-        </div>
-        <p class="project-desc">
-          Application desktop de gestion et consultation de médicaments.
-          Interface graphique JavaFX, persistance SQLite, architecture MVC.
-        </p>
-        <ul class="project-tags">
-          <li>Java</li>
-          <li>JavaFX</li>
-          <li>SQLite</li>
-          <li>Maven</li>
-        </ul>
-        <div class="project-links">
-          <a class="project-link" href="https://github.com/AoiShidaStr/pharmapays2" target="_blank" rel="noopener">[ GitHub ]</a>
-        </div>
-      </article>
+          <p class="project-desc">
+            Application desktop de gestion et consultation de médicaments.
+            Interface graphique JavaFX, persistance SQLite, architecture MVC.
+          </p>
+          <ul class="project-tags">
+            <li>Java</li>
+            <li>JavaFX</li>
+            <li>SQLite</li>
+            <li>Maven</li>
+          </ul>
+          <a class="project-link" href="https://github.com/AoiShidaStr/pharmapays2" target="_blank" rel="noopener">[ GitHub ] →</a>
+        </article>
 
-      <article class="project-card">
-        <div class="project-header">
+        <article class="project-card">
           <h3 class="project-name">Lespass / TiBillet</h3>
-          <span class="project-icon" aria-hidden="true">⬡</span>
-        </div>
-        <p class="project-desc">
-          Étude et déploiement d'une solution de billetterie open source coopérative.
-          Configuration Docker, exploration Django et architecture microservices.
-        </p>
-        <ul class="project-tags">
-          <li>Python</li>
-          <li>Django</li>
-          <li>Docker</li>
-          <li>GitHub</li>
-        </ul>
-        <div class="project-links">
-          <a class="project-link" href="https://github.com/AoiShidaStr/Lespass" target="_blank" rel="noopener">[ GitHub ]</a>
-        </div>
-      </article>
+          <p class="project-desc">
+            Étude et déploiement d'une solution de billetterie open source coopérative.
+            Configuration Docker, exploration Django et architecture microservices.
+          </p>
+          <ul class="project-tags">
+            <li>Python</li>
+            <li>Django</li>
+            <li>Docker</li>
+            <li>GitHub</li>
+          </ul>
+          <a class="project-link" href="https://github.com/AoiShidaStr/Lespass" target="_blank" rel="noopener">[ GitHub ] →</a>
+        </article>
 
-    </div>
-  </section>
+      </div>
+    </section>
 
-  <section class="section fade-in" id="stack">
-    <p class="section-label">// OUTILS</p>
-    <h2 class="section-title">Stack technique</h2>
-    <ul class="stack-grid">
-      <li class="skill-item"><span class="skill-dot"></span>Java</li>
-      <li class="skill-item"><span class="skill-dot"></span>Python</li>
-      <li class="skill-item"><span class="skill-dot"></span>Django</li>
-      <li class="skill-item"><span class="skill-dot"></span>HTML / CSS</li>
-      <li class="skill-item"><span class="skill-dot"></span>JavaScript</li>
-      <li class="skill-item"><span class="skill-dot"></span>SQL</li>
-      <li class="skill-item"><span class="skill-dot"></span>Docker</li>
-      <li class="skill-item"><span class="skill-dot"></span>Git / GitHub</li>
-    </ul>
-  </section>
+    <!-- Stack -->
+    <section class="section fade-in" id="stack">
+      <div class="section-badge">OUTILS</div>
+      <h2 class="section-title">Stack technique</h2>
+      <ul class="stack-grid">
+        <li class="skill-item"><span class="skill-dot"></span>Java</li>
+        <li class="skill-item"><span class="skill-dot"></span>Python</li>
+        <li class="skill-item"><span class="skill-dot"></span>Django</li>
+        <li class="skill-item"><span class="skill-dot"></span>HTML / CSS</li>
+        <li class="skill-item"><span class="skill-dot"></span>JavaScript</li>
+        <li class="skill-item"><span class="skill-dot"></span>SQL</li>
+        <li class="skill-item"><span class="skill-dot"></span>Docker</li>
+        <li class="skill-item"><span class="skill-dot"></span>Git / GitHub</li>
+      </ul>
+    </section>
 
-  <section class="section fade-in" id="contact">
-    <p class="section-label">// ME CONTACTER</p>
-    <h2 class="section-title">Contact</h2>
-    <ul class="contact-grid">
-      <li class="contact-item">
-        <span class="contact-prefix">@</span>
-        <a href="mailto:meventecher@gmail.com">meventecher@gmail.com</a>
-      </li>
-      <li class="contact-item">
-        <span class="contact-prefix">gh</span>
-        <a href="https://github.com/AoiShidaStr" target="_blank" rel="noopener">AoiShidaStr</a>
-      </li>
-      <li class="contact-item">
-        <span class="contact-prefix">☎</span>
-        <span>+262 693 827 100</span>
-      </li>
-    </ul>
-  </section>
-</main>
+    <!-- Contact -->
+    <section class="section fade-in" id="contact">
+      <div class="section-badge">CONTACT</div>
+      <h2 class="section-title">Me contacter</h2>
+      <ul class="contact-grid">
+        <li class="contact-item">
+          <span class="contact-prefix">@</span>
+          <a href="mailto:meventecher@gmail.com">meventecher@gmail.com</a>
+        </li>
+        <li class="contact-item">
+          <span class="contact-prefix">gh</span>
+          <a href="https://github.com/AoiShidaStr" target="_blank" rel="noopener">AoiShidaStr</a>
+        </li>
+        <li class="contact-item">
+          <span class="contact-prefix">☎</span>
+          <span>+262 693 827 100</span>
+        </li>
+      </ul>
+    </section>
 
-<footer class="footer">
-  MEVEN HOARAU TECHER &nbsp;·&nbsp; BTS SIO SLAM &nbsp;·&nbsp; 2026
-</footer>
+  </main>
+
+  <footer class="footer">
+    MEVEN HOARAU TECHER &nbsp;·&nbsp; BTS SIO SLAM &nbsp;·&nbsp; 2026
+  </footer>
+
   <script src="script.js"></script>
 </body>
 </html>
