@@ -1,350 +1,684 @@
-/* ===== VARIABLES ===== */
+/* ================================================================
+   PORTFOLIO — MEVEN HOARAU TECHER
+   Thème : Isométrique / Low-poly — v2
+   ================================================================ */
+
+/* ================================================================
+   1. DESIGN TOKENS
+   ================================================================ */
 :root {
-  --bg-start:   #0a0a1a;
-  --bg-mid:     #1a0a2e;
-  --bg-end:     #0a1a2e;
-  --accent:     #a78bfa;
-  --accent-dim: rgba(167, 139, 250, 0.12);
-  --accent-border: rgba(167, 139, 250, 0.3);
-  --glass:      rgba(255, 255, 255, 0.05);
-  --glass-border: rgba(255, 255, 255, 0.09);
-  --text:       #ffffff;
-  --text-muted: rgba(255, 255, 255, 0.45);
-  --text-dim:   rgba(255, 255, 255, 0.25);
-  --font-sans:  system-ui, -apple-system, sans-serif;
-  --font-mono:  'Courier New', Courier, monospace;
+  --bg:        #0a0a0f;
+  --surface:   #1e1b4b;
+  --indigo:    #4f46e5;
+  --indigo-lt: #a5b4fc;
+  --text:      #e0e7ff;
+  --text-muted:#a5b4fc;
+  --border:    rgba(99, 102, 241, 0.25);
+
+  --font-sans: 'Segoe UI', system-ui, sans-serif;
+  --font-mono: 'Cascadia Code', 'Fira Code', 'Courier New', monospace;
+
+  --ease-out:  cubic-bezier(.22, 1, .36, 1);
 }
 
-/* ===== RESET ===== */
+/* ================================================================
+   2. RESET & BASE
+   ================================================================ */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 html { scroll-behavior: smooth; }
 
 body {
-  background: linear-gradient(135deg, var(--bg-start) 0%, var(--bg-mid) 45%, var(--bg-end) 100%);
-  min-height: 100vh;
-  color: var(--text-muted);
+  background: var(--bg);
+  color: var(--text);
   font-family: var(--font-sans);
-  line-height: 1.6;
-  position: relative;
+  font-size: 15px;
+  line-height: 1.65;
   overflow-x: hidden;
+  cursor: none; /* curseur custom actif */
 }
 
-a { color: inherit; text-decoration: none; }
+a { color: var(--indigo-lt); text-decoration: none; }
+a:hover { color: #fff; }
 
-/* ===== BLOBS ===== */
-.blob {
+ul { list-style: none; }
+
+/* ================================================================
+   3. CURSEUR PERSONNALISÉ — losange indigo
+   ================================================================ */
+.cursor {
   position: fixed;
-  border-radius: 50%;
-  filter: blur(70px);
+  top: 0; left: 0;
+  width: 14px; height: 14px;
+  background: var(--indigo);
+  clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 9999;
+  transition: transform 80ms linear, opacity 200ms;
+  mix-blend-mode: screen;
+}
+
+/* Agrandir le curseur au hover sur liens/boutons */
+body:has(a:hover) .cursor,
+body:has(button:hover) .cursor {
+  transform: translate(-50%, -50%) scale(2.2);
+  opacity: .7;
+}
+
+/* ================================================================
+   4. PARTICULES D'ARRIÈRE-PLAN — losanges SVG
+   ================================================================ */
+.particles {
+  position: fixed;
+  inset: 0;
   pointer-events: none;
   z-index: 0;
-  animation: drift 18s ease-in-out infinite alternate;
-}
-.blob-1 { width: 380px; height: 380px; background: rgba(120, 60, 255, 0.16); top: -100px; right: -80px; animation-delay: 0s; }
-.blob-2 { width: 260px; height: 260px; background: rgba(0, 180, 255, 0.11); bottom: 20%; left: -60px; animation-delay: -6s; }
-.blob-3 { width: 220px; height: 220px; background: rgba(255, 60, 120, 0.09); top: 50%; right: 15%; animation-delay: -12s; }
-
-@keyframes drift {
-  from { transform: translate(0, 0) scale(1); }
-  to   { transform: translate(20px, -30px) scale(1.05); }
+  overflow: hidden;
 }
 
-/* ===== UTILITAIRES ===== */
-.section-badge {
-  display: inline-block;
-  background: rgba(255, 255, 255, 0.06);
-  color: rgba(255, 255, 255, 0.35);
-  font-size: 9px;
-  letter-spacing: 3px;
-  padding: 4px 12px;
-  border-radius: 4px;
-  margin-bottom: 12px;
+/* Chaque particule est injectée via JS — voir script.js */
+.particle {
+  position: absolute;
+  width: 8px; height: 8px;
+  background: var(--indigo);
+  clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+  opacity: 0;
+  animation: particle-drift var(--dur, 18s) var(--delay, 0s) infinite linear;
+}
+
+@keyframes particle-drift {
+  0%   { transform: translateY(110vh) rotate(0deg);   opacity: 0; }
+  10%  { opacity: var(--op, 0.15); }
+  90%  { opacity: var(--op, 0.15); }
+  100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+}
+
+/* ================================================================
+   5. NAVIGATION
+   ================================================================ */
+.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 48px;
+  background: rgba(10, 10, 15, 0.7);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-logo {
   font-family: var(--font-mono);
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--text);
+  letter-spacing: 1px;
+}
+.nav-logo span { color: var(--indigo); }
+
+.nav-links {
+  display: flex;
+  gap: 36px;
+  align-items: center;
+}
+.nav-links a {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 2px;
+  color: var(--text-muted);
+  text-transform: lowercase;
+  transition: color 200ms;
+}
+.nav-links a:hover { color: var(--text); }
+
+.nav-link-tableau {
+  border: 1px solid var(--border);
+  padding: 6px 14px;
+  border-radius: 6px;
+  color: var(--indigo-lt) !important;
+  transition: background 200ms, color 200ms !important;
+}
+.nav-link-tableau:hover {
+  background: rgba(79, 70, 229, 0.15);
+  color: #fff !important;
+}
+
+/* ================================================================
+   6. LAYOUT UTILITAIRES
+   ================================================================ */
+main {
+  position: relative;
+  z-index: 1;
+}
+
+.section {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 120px 32px 80px;
+}
+
+.section-badge {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 4px;
+  color: var(--indigo);
+  margin-bottom: 12px;
 }
 
 .section-title {
+  font-size: clamp(28px, 4vw, 42px);
+  font-weight: 800;
   color: var(--text);
-  font-size: 22px;
-  font-weight: 700;
-  margin-bottom: 28px;
+  margin-bottom: 56px;
+  position: relative;
+}
+.section-title::after {
+  content: '';
+  display: block;
+  width: 40px; height: 3px;
+  background: var(--indigo);
+  margin-top: 12px;
+  border-radius: 2px;
 }
 
-/* ===== FADE-IN ===== */
+/* ================================================================
+   7. SCROLL REVEAL — fade-in
+   ================================================================ */
 .fade-in {
   opacity: 0;
-  transform: translateY(20px);
-  transition: opacity .6s ease, transform .6s ease;
+  transform: translateY(32px);
+  transition: opacity 700ms var(--ease-out), transform 700ms var(--ease-out);
 }
+
 .fade-in.visible {
   opacity: 1;
   transform: translateY(0);
 }
 
-/* ===== NAVIGATION ===== */
-.nav {
-  position: sticky;
-  top: 0;
-  z-index: 100;
+/* Délais pour les cubes stack */
+.stack-cube[data-delay="0"] { transition-delay: 0ms; }
+.stack-cube[data-delay="1"] { transition-delay: 80ms; }
+.stack-cube[data-delay="2"] { transition-delay: 160ms; }
+.stack-cube[data-delay="3"] { transition-delay: 240ms; }
+.stack-cube[data-delay="4"] { transition-delay: 320ms; }
+.stack-cube[data-delay="5"] { transition-delay: 400ms; }
+.stack-cube[data-delay="6"] { transition-delay: 480ms; }
+.stack-cube[data-delay="7"] { transition-delay: 560ms; }
+
+/* ================================================================
+   8. HERO SECTION
+   ================================================================ */
+.hero {
+  min-height: 100vh;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 0 40px;
-  height: 56px;
-  background: rgba(10, 10, 26, 0.7);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  justify-content: center;
+  gap: 64px;
+  padding: 120px 48px 80px;
+  max-width: 1100px;
+  margin: 0 auto;
 }
 
-.nav-logo {
-  color: var(--text);
-  font-weight: 800;
-  font-size: 15px;
-  letter-spacing: .5px;
-}
-.nav-logo span { color: var(--accent); }
-
-.nav-links {
-  display: flex;
-  gap: 28px;
-  list-style: none;
+/* --- SVG isométrique --- */
+.hero-iso {
+  flex: 0 0 auto;
+  width: min(500px, 45vw);
 }
 
-.nav-links a {
-  font-size: 12px;
-  color: var(--text-muted);
-  transition: color .2s;
+.iso-svg {
+  width: 100%;
+  height: auto;
+  overflow: visible;
 }
-.nav-links a:hover { color: var(--text); }
 
-/* ===== HERO ===== */
-.hero {
-  position: relative;
-  z-index: 1;
-  padding: 80px 40px 64px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-  max-width: 800px;
+/* Animation flottante des cubes satellites */
+.iso-cube {
+  animation: iso-float 4s ease-in-out infinite;
+}
+
+.sat-java   { animation-delay: 0s; }
+.sat-python { animation-delay: .6s; }
+.sat-docker { animation-delay: 1.2s; }
+.sat-sql    { animation-delay: 1.8s; }
+.sat-git    { animation-delay: 2.4s; }
+.sat-js     { animation-delay: 3s; }
+.sat-html   { animation-delay: 3.6s; }
+
+@keyframes iso-float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-8px); }
+}
+
+/* Animation du cube central — pulse glow */
+.iso-center-cube {
+  animation: center-pulse 3s ease-in-out infinite;
+}
+
+@keyframes center-pulse {
+  0%, 100% { filter: drop-shadow(0 0 8px rgba(79,70,229,.5)); }
+  50%       { filter: drop-shadow(0 0 20px rgba(99,102,241,.8)); }
+}
+
+/* Lignes de connexion pointillées — défilement de dash */
+.dash-line {
+  animation: dash-flow 3s linear infinite;
+}
+
+@keyframes dash-flow {
+  to { stroke-dashoffset: -30; }
+}
+
+/* --- Contenu texte hero --- */
+.hero-content {
+  flex: 1;
+  min-width: 0;
 }
 
 .hero-badge {
   display: inline-block;
-  background: rgba(167, 139, 250, 0.12);
-  border: 1px solid rgba(167, 139, 250, 0.28);
-  color: #c4b5fd;
+  font-family: var(--font-mono);
   font-size: 10px;
   letter-spacing: 3px;
-  padding: 5px 16px;
-  border-radius: 20px;
+  color: var(--indigo);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 5px 14px;
   margin-bottom: 24px;
-  font-family: var(--font-mono);
 }
 
 .hero-name {
+  font-size: clamp(36px, 5vw, 64px);
+  font-weight: 900;
+  line-height: 1.05;
+  margin-bottom: 16px;
   color: var(--text);
-  font-size: clamp(32px, 6vw, 52px);
-  font-weight: 800;
-  letter-spacing: -1.5px;
-  line-height: 1.06;
-  margin-bottom: 14px;
 }
-.hero-name span { color: var(--accent); }
+.hero-name span { color: var(--indigo-lt); }
 
 .hero-sub {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 1px;
   color: var(--text-muted);
-  font-size: 13px;
   margin-bottom: 20px;
 }
 
 .hero-desc {
-  color: var(--text-dim);
-  font-size: 13px;
-  line-height: 1.8;
-  max-width: 420px;
-  margin-bottom: 34px;
+  font-size: 15px;
+  color: rgba(224, 231, 255, .6);
+  max-width: 380px;
+  margin-bottom: 40px;
+  line-height: 1.7;
 }
 
-.hero-cta {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: rgba(167, 139, 250, 0.12);
-  border: 1px solid rgba(167, 139, 250, 0.32);
-  color: #c4b5fd;
+.hero-actions {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.btn-primary {
+  display: inline-block;
+  background: var(--indigo);
+  color: #fff;
+  font-family: var(--font-mono);
   font-size: 12px;
   letter-spacing: 1px;
-  padding: 11px 24px;
+  padding: 12px 28px;
   border-radius: 8px;
-  transition: background .2s, border-color .2s;
+  transition: background 200ms, transform 150ms;
 }
-.hero-cta:hover {
-  background: rgba(167, 139, 250, 0.2);
-  border-color: rgba(167, 139, 250, 0.5);
-}
-
-/* ===== SECTIONS ===== */
-.section {
-  position: relative;
-  z-index: 1;
-  padding: 60px 40px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-}
-
-/* ===== PROJETS ===== */
-.projects-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-}
-
-.project-card {
-  background: var(--glass);
-  border: 1px solid var(--glass-border);
-  border-radius: 14px;
-  padding: 26px;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  transition: background .25s, border-color .25s, transform .25s;
-}
-.project-card:hover {
-  background: rgba(167, 139, 250, 0.08);
-  border-color: var(--accent-border);
+.btn-primary:hover {
+  background: #6366f1;
+  color: #fff;
   transform: translateY(-2px);
 }
 
-.project-name {
+.btn-secondary {
+  display: inline-block;
+  background: transparent;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 1px;
+  padding: 12px 28px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  transition: border-color 200ms, color 200ms, transform 150ms;
+}
+.btn-secondary:hover {
+  border-color: var(--indigo);
   color: var(--text);
-  font-size: 15px;
-  font-weight: 700;
-  margin-bottom: 10px;
+  transform: translateY(-2px);
+}
+
+/* ================================================================
+   9. PROJETS — Blocs isométriques CSS 3D
+   ================================================================ */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 40px;
+}
+
+/* Carte projet avec face isométrique décorative en haut */
+.iso-block-card {
+  background: rgba(30, 27, 75, 0.5);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  transition: transform 300ms var(--ease-out), box-shadow 300ms;
+  cursor: default;
+}
+.iso-block-card:hover {
+  transform: translateY(-6px) scale(1.01);
+  box-shadow: 0 20px 60px rgba(79, 70, 229, 0.2);
+}
+
+/* Bloc isométrique décoratif (CSS pur — 3 faces) */
+.iso-block {
+  height: 90px;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  overflow: hidden;
+  background: linear-gradient(135deg, #1e1b4b, #0a0a0f);
+}
+
+/* Face du dessus (top) */
+.iso-face-top {
+  position: absolute;
+  width: 120px; height: 35px;
+  background: linear-gradient(135deg,
+    var(--top-a, #6366f1),
+    var(--top-b, #4f46e5));
+  clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+  top: 14px; left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Face gauche */
+.iso-face-left {
+  position: absolute;
+  width: 60px; height: 42px;
+  background: linear-gradient(to right,
+    var(--left-a, #1e1b4b),
+    var(--left-b, #312e81));
+  clip-path: polygon(50% 0%, 100% 25%, 100% 100%, 50% 75%);
+  top: 32px; left: calc(50% - 60px);
+}
+
+/* Face droite */
+.iso-face-right {
+  position: absolute;
+  width: 60px; height: 42px;
+  background: linear-gradient(to right,
+    var(--right-a, #3730a3),
+    var(--right-b, #4338ca));
+  clip-path: polygon(0% 25%, 50% 0%, 50% 75%, 0% 100%);
+  top: 32px; left: 50%;
+}
+
+/* Corps de la carte */
+.card-body {
+  padding: 28px 28px 32px;
+}
+
+.project-name {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 12px;
 }
 
 .project-desc {
-  font-size: 12px;
-  color: rgba(255, 255, 255, 0.38);
-  line-height: 1.75;
-  margin-bottom: 16px;
+  font-size: 13.5px;
+  color: rgba(224, 231, 255, .6);
+  line-height: 1.7;
+  margin-bottom: 20px;
 }
 
 .project-tags {
   display: flex;
-  gap: 6px;
   flex-wrap: wrap;
-  list-style: none;
-  margin-bottom: 18px;
+  gap: 8px;
+  margin-bottom: 24px;
 }
-
 .project-tags li {
-  background: rgba(167, 139, 250, 0.1);
-  border: 1px solid rgba(167, 139, 250, 0.2);
-  color: #c4b5fd;
-  font-size: 10px;
-  padding: 3px 10px;
-  border-radius: 6px;
   font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 1px;
+  background: rgba(99, 102, 241, 0.15);
+  border: 1px solid rgba(99, 102, 241, 0.35);
+  color: var(--indigo-lt);
+  padding: 4px 12px;
+  border-radius: 4px;
 }
 
 .project-link {
-  color: rgba(167, 139, 250, 0.6);
-  font-size: 11px;
   font-family: var(--font-mono);
-  transition: color .2s;
+  font-size: 12px;
+  color: var(--indigo-lt);
+  letter-spacing: 1px;
+  transition: color 200ms, letter-spacing 200ms;
 }
-.project-link:hover { color: var(--accent); }
+.project-link:hover {
+  color: #fff;
+  letter-spacing: 2px;
+}
 
-/* ===== STACK ===== */
+/* ================================================================
+   10. STACK — Mini-cubes isométriques CSS
+   ================================================================ */
 .stack-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+  max-width: 640px;
 }
 
-.skill-item {
+.stack-cube {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+/* Conteneur du cube iso miniature */
+.cube-iso {
+  position: relative;
+  width: 60px;
+  height: 52px;
+  transition: transform 300ms var(--ease-out);
+}
+.stack-cube:hover .cube-iso {
+  transform: translateY(-6px) scale(1.1);
+}
+
+/* Face top du mini-cube */
+.cube-top {
+  position: absolute;
+  width: 60px; height: 20px;
+  background: linear-gradient(135deg, #818cf8, #6366f1);
+  clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+  top: 0; left: 0;
+}
+
+/* Face gauche */
+.cube-left {
+  position: absolute;
+  width: 30px; height: 32px;
+  background: linear-gradient(to bottom, #312e81, #1e1b4b);
+  clip-path: polygon(50% 0%, 100% 15%, 100% 100%, 50% 85%);
+  top: 18px; left: 0;
+}
+
+/* Face droite */
+.cube-right {
+  position: absolute;
+  width: 30px; height: 32px;
+  background: linear-gradient(to bottom, #4f46e5, #3730a3);
+  clip-path: polygon(0% 15%, 50% 0%, 50% 85%, 0% 100%);
+  top: 18px; left: 30px;
+}
+
+.cube-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* ================================================================
+   11. CONTACT
+   ================================================================ */
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  max-width: 680px;
+}
+
+.contact-card {
   display: flex;
   align-items: center;
-  gap: 10px;
-  background: var(--glass);
-  border: 1px solid var(--glass-border);
-  padding: 10px 18px;
-  border-radius: 8px;
-  font-size: 12px;
-  color: rgba(255, 255, 255, 0.55);
-  backdrop-filter: blur(8px);
-  transition: border-color .2s, color .2s;
+  gap: 20px;
+  padding: 22px 24px;
+  background: rgba(30, 27, 75, 0.4);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  transition: border-color 200ms, background 200ms;
 }
-.skill-item:hover {
-  border-color: var(--accent-border);
-  color: var(--text);
+.contact-card:hover {
+  border-color: var(--indigo);
+  background: rgba(79, 70, 229, 0.08);
 }
 
-.skill-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--accent);
-  box-shadow: 0 0 6px var(--accent);
+.contact-icon {
+  font-family: var(--font-mono);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--indigo);
+  width: 36px;
+  text-align: center;
   flex-shrink: 0;
 }
 
-/* ===== CONTACT ===== */
-.contact-grid {
+.contact-info {
   display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  list-style: none;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
 }
-
-.contact-item {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  background: var(--glass);
-  border: 1px solid var(--glass-border);
-  padding: 14px 22px;
-  border-radius: 10px;
-  font-size: 12px;
-  color: rgba(255, 255, 255, 0.45);
-  backdrop-filter: blur(8px);
-  transition: border-color .2s;
-}
-.contact-item:hover { border-color: var(--accent-border); }
-
-.contact-item a {
-  color: rgba(255, 255, 255, 0.45);
-  transition: color .2s;
-}
-.contact-item a:hover { color: var(--accent); }
-
-.contact-prefix {
+.contact-label {
   font-family: var(--font-mono);
-  color: var(--accent);
-  font-size: 12px;
-  font-weight: 700;
+  font-size: 9px;
+  letter-spacing: 2px;
+  color: rgba(165, 180, 252, .45);
+  text-transform: uppercase;
+}
+.contact-info a,
+.contact-info span {
+  font-size: 13px;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-/* ===== FOOTER ===== */
+/* ================================================================
+   12. FOOTER
+   ================================================================ */
 .footer {
   position: relative;
   z-index: 1;
-  padding: 24px 40px;
   text-align: center;
   font-family: var(--font-mono);
   font-size: 10px;
   letter-spacing: 3px;
-  color: rgba(255, 255, 255, 0.1);
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  color: rgba(165, 180, 252, .25);
+  padding: 48px 32px;
+  border-top: 1px solid rgba(99, 102, 241, .08);
 }
 
-/* ===== RESPONSIVE ===== */
+/* ================================================================
+   13. RESPONSIVE MOBILE — breakpoint 640px
+   ================================================================ */
 @media (max-width: 640px) {
-  .nav { padding: 0 20px; }
+
+  /* Navigation */
+  .nav { padding: 14px 20px; }
   .nav-links { gap: 16px; }
-  .nav-links a { font-size: 11px; }
+  .nav-link-tableau { display: none; }
 
-  .hero { padding: 52px 20px 44px; }
-  .section { padding: 44px 20px; }
+  /* Hero : colonne, SVG simplifié */
+  .hero {
+    flex-direction: column;
+    padding: 100px 24px 60px;
+    gap: 32px;
+    text-align: center;
+    min-height: auto;
+  }
 
+  .hero-iso {
+    width: 90vw;
+    max-width: 320px;
+  }
+
+  /* Cacher satellites sur mobile — trop chargé */
+  .sat-java, .sat-python, .sat-docker,
+  .sat-sql, .sat-git, .sat-js, .sat-html,
+  .iso-connections { display: none; }
+
+  .hero-desc { max-width: 100%; }
+  .hero-actions { justify-content: center; }
+
+  /* Projets : 1 colonne */
   .projects-grid { grid-template-columns: 1fr; }
-  .contact-grid { flex-direction: column; }
+
+  /* Stack : flat cards au lieu de cubes iso */
+  .stack-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .cube-iso { display: none; }
+
+  .stack-cube {
+    flex-direction: row;
+    background: rgba(30, 27, 75, 0.5);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 16px;
+    gap: 10px;
+  }
+
+  /* Losange simple en remplacement du cube */
+  .stack-cube::before {
+    content: '◈';
+    color: var(--indigo);
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+
+  .cube-label {
+    font-size: 11px;
+    color: var(--text);
+  }
+
+  /* Contact : 1 colonne */
+  .contact-grid { grid-template-columns: 1fr; }
+
+  /* Sections */
+  .section { padding: 80px 20px 48px; }
+
+  /* Curseur custom désactivé sur touch */
+  .cursor { display: none; }
 }

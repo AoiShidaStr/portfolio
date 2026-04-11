@@ -8,112 +8,374 @@
 </head>
 <body>
 
-  <!-- Blobs d'arrière-plan -->
-  <div class="blob blob-1"></div>
-  <div class="blob blob-2"></div>
-  <div class="blob blob-3"></div>
+  <!-- ============================================================
+       CURSEUR PERSONNALISÉ (losange indigo)
+  ============================================================ -->
+  <div class="cursor" id="cursor"></div>
 
-  <!-- Navigation -->
+  <!-- ============================================================
+       PARTICULES D'ARRIÈRE-PLAN (losanges SVG driftants)
+  ============================================================ -->
+  <div class="particles" id="particles" aria-hidden="true"></div>
+
+  <!-- ============================================================
+       NAVIGATION
+  ============================================================ -->
   <nav class="nav" id="nav">
     <a class="nav-logo" href="#">M<span>.</span>HT</a>
     <ul class="nav-links">
       <li><a href="#projets">projets</a></li>
       <li><a href="#stack">stack</a></li>
       <li><a href="#contact">contact</a></li>
+      <li><a class="nav-link-tableau" href="Tableau de synthèse.html">tableau E5</a></li>
     </ul>
   </nav>
 
   <main>
 
-    <!-- Hero -->
-    <section class="hero fade-in">
-      <div class="hero-badge">BTS SIO · OPTION SLAM</div>
-      <h1 class="hero-name">Meven<br><span>Hoarau Techer</span></h1>
-      <p class="hero-sub">Lycée Pierre Poivre — La Réunion · 2024–2026</p>
-      <p class="hero-desc">
-        Passionné par le développement d'applications et les solutions open source.
-      </p>
-      <a class="hero-cta" href="#projets">voir mes projets →</a>
-      <a class="hero-cta" href="Tableau de synthèse.html" style="margin-left:12px;background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.12);color:rgba(255,255,255,.45);">tableau E5 →</a>
+    <!-- ==========================================================
+         HERO — Illustration SVG isométrique animée
+    ========================================================== -->
+    <section class="hero fade-in" id="hero">
+
+      <!-- SVG isométrique principal -->
+      <div class="hero-iso" aria-hidden="true">
+        <svg class="iso-svg" viewBox="0 0 600 420" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <!-- Gradient faces cubes -->
+            <linearGradient id="face-top" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#6366f1"/>
+              <stop offset="100%" stop-color="#4f46e5"/>
+            </linearGradient>
+            <linearGradient id="face-left" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#312e81"/>
+              <stop offset="100%" stop-color="#1e1b4b"/>
+            </linearGradient>
+            <linearGradient id="face-right" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#3730a3"/>
+              <stop offset="100%" stop-color="#4338ca"/>
+            </linearGradient>
+            <!-- Gradient satellites -->
+            <linearGradient id="sat-top" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#818cf8"/>
+              <stop offset="100%" stop-color="#6366f1"/>
+            </linearGradient>
+            <linearGradient id="sat-left" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#1e1b4b"/>
+              <stop offset="100%" stop-color="#312e81"/>
+            </linearGradient>
+            <linearGradient id="sat-right" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#3730a3"/>
+              <stop offset="100%" stop-color="#4f46e5"/>
+            </linearGradient>
+            <!-- Filtre glow -->
+            <filter id="glow">
+              <feGaussianBlur stdDeviation="3" result="blur"/>
+              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+          </defs>
+
+          <!-- ---- Lignes de connexion en pointillés animées ---- -->
+          <g class="iso-connections" stroke="#6366f1" stroke-width="1" fill="none" opacity="0.4">
+            <!-- Centre → Java -->
+            <line class="dash-line" x1="300" y1="210" x2="160" y2="140" stroke-dasharray="6 4"/>
+            <!-- Centre → Python -->
+            <line class="dash-line" x1="300" y1="210" x2="440" y2="135" stroke-dasharray="6 4" style="animation-delay:.4s"/>
+            <!-- Centre → Docker -->
+            <line class="dash-line" x1="300" y1="210" x2="150" y2="300" stroke-dasharray="6 4" style="animation-delay:.8s"/>
+            <!-- Centre → SQL -->
+            <line class="dash-line" x1="300" y1="210" x2="450" y2="300" stroke-dasharray="6 4" style="animation-delay:1.2s"/>
+            <!-- Centre → Git -->
+            <line class="dash-line" x1="300" y1="210" x2="300" y2="340" stroke-dasharray="6 4" style="animation-delay:1.6s"/>
+            <!-- Centre → JS -->
+            <line class="dash-line" x1="300" y1="210" x2="510" y2="210" stroke-dasharray="6 4" style="animation-delay:2s"/>
+            <!-- Centre → HTML -->
+            <line class="dash-line" x1="300" y1="210" x2="90" y2="210" stroke-dasharray="6 4" style="animation-delay:2.4s"/>
+          </g>
+
+          <!-- ---- CUBE CENTRAL "MHT" ---- -->
+          <g class="iso-center-cube" filter="url(#glow)">
+            <!-- Face top -->
+            <polygon points="300,140 380,185 300,230 220,185" fill="url(#face-top)"/>
+            <!-- Face left -->
+            <polygon points="220,185 300,230 300,280 220,235" fill="url(#face-left)"/>
+            <!-- Face right -->
+            <polygon points="380,185 300,230 300,280 380,235" fill="url(#face-right)"/>
+            <!-- Initiales -->
+            <text x="300" y="195" text-anchor="middle" font-family="monospace" font-size="18"
+                  font-weight="800" fill="#e0e7ff" letter-spacing="2">MHT</text>
+          </g>
+
+          <!-- ---- CUBE SATELLITE : Java ---- -->
+          <g class="iso-cube sat-java" style="--dx:0px;--dy:0px">
+            <polygon points="160,100 196,120 160,140 124,120" fill="url(#sat-top)"/>
+            <polygon points="124,120 160,140 160,165 124,145" fill="url(#sat-left)"/>
+            <polygon points="196,120 160,140 160,165 196,145" fill="url(#sat-right)"/>
+            <text x="160" y="127" text-anchor="middle" font-family="monospace" font-size="9"
+                  font-weight="700" fill="#e0e7ff">Java</text>
+          </g>
+
+          <!-- ---- CUBE SATELLITE : Python ---- -->
+          <g class="iso-cube sat-python" style="--dx:0px;--dy:0px">
+            <polygon points="440,95 476,115 440,135 404,115" fill="url(#sat-top)"/>
+            <polygon points="404,115 440,135 440,160 404,140" fill="url(#sat-left)"/>
+            <polygon points="476,115 440,135 440,160 476,140" fill="url(#sat-right)"/>
+            <text x="440" y="122" text-anchor="middle" font-family="monospace" font-size="8"
+                  font-weight="700" fill="#e0e7ff">Python</text>
+          </g>
+
+          <!-- ---- CUBE SATELLITE : Docker ---- -->
+          <g class="iso-cube sat-docker" style="--dx:0px;--dy:0px">
+            <polygon points="150,265 186,285 150,305 114,285" fill="url(#sat-top)"/>
+            <polygon points="114,285 150,305 150,330 114,310" fill="url(#sat-left)"/>
+            <polygon points="186,285 150,305 150,330 186,310" fill="url(#sat-right)"/>
+            <text x="150" y="292" text-anchor="middle" font-family="monospace" font-size="8"
+                  font-weight="700" fill="#e0e7ff">Docker</text>
+          </g>
+
+          <!-- ---- CUBE SATELLITE : SQL ---- -->
+          <g class="iso-cube sat-sql" style="--dx:0px;--dy:0px">
+            <polygon points="450,265 486,285 450,305 414,285" fill="url(#sat-top)"/>
+            <polygon points="414,285 450,305 450,330 414,310" fill="url(#sat-left)"/>
+            <polygon points="486,285 450,305 450,330 486,310" fill="url(#sat-right)"/>
+            <text x="450" y="292" text-anchor="middle" font-family="monospace" font-size="9"
+                  font-weight="700" fill="#e0e7ff">SQL</text>
+          </g>
+
+          <!-- ---- CUBE SATELLITE : Git ---- -->
+          <g class="iso-cube sat-git" style="--dx:0px;--dy:0px">
+            <polygon points="300,315 336,335 300,355 264,335" fill="url(#sat-top)"/>
+            <polygon points="264,335 300,355 300,380 264,360" fill="url(#sat-left)"/>
+            <polygon points="336,335 300,355 300,380 336,360" fill="url(#sat-right)"/>
+            <text x="300" y="342" text-anchor="middle" font-family="monospace" font-size="9"
+                  font-weight="700" fill="#e0e7ff">Git</text>
+          </g>
+
+          <!-- ---- CUBE SATELLITE : JS ---- -->
+          <g class="iso-cube sat-js" style="--dx:0px;--dy:0px">
+            <polygon points="510,175 546,195 510,215 474,195" fill="url(#sat-top)"/>
+            <polygon points="474,195 510,215 510,240 474,220" fill="url(#sat-left)"/>
+            <polygon points="546,195 510,215 510,240 546,220" fill="url(#sat-right)"/>
+            <text x="510" y="202" text-anchor="middle" font-family="monospace" font-size="9"
+                  font-weight="700" fill="#e0e7ff">JS</text>
+          </g>
+
+          <!-- ---- CUBE SATELLITE : HTML/CSS ---- -->
+          <g class="iso-cube sat-html" style="--dx:0px;--dy:0px">
+            <polygon points="90,175 126,195 90,215 54,195" fill="url(#sat-top)"/>
+            <polygon points="54,195 90,215 90,240 54,220" fill="url(#sat-left)"/>
+            <polygon points="126,195 90,215 90,240 126,220" fill="url(#sat-right)"/>
+            <text x="90" y="202" text-anchor="middle" font-family="monospace" font-size="7.5"
+                  font-weight="700" fill="#e0e7ff">HTML</text>
+          </g>
+
+        </svg>
+      </div>
+
+      <!-- Texte hero -->
+      <div class="hero-content">
+        <div class="hero-badge">BTS SIO · OPTION SLAM</div>
+        <h1 class="hero-name">Meven<br><span>Hoarau Techer</span></h1>
+        <p class="hero-sub">Lycée Pierre Poivre — La Réunion · 2024–2026</p>
+        <p class="hero-desc">
+          Passionné par le développement d'applications et les solutions open source.
+        </p>
+        <div class="hero-actions">
+          <a class="btn-primary" href="#projets">voir mes projets →</a>
+          <a class="btn-secondary" href="Tableau de synthèse.html">tableau E5 →</a>
+        </div>
+      </div>
+
     </section>
 
-    <!-- Projets -->
+    <!-- ==========================================================
+         PROJETS — Blocs isométriques 3D CSS
+    ========================================================== -->
     <section class="section fade-in" id="projets">
       <div class="section-badge">RÉALISATIONS</div>
       <h2 class="section-title">Projets</h2>
+
       <div class="projects-grid">
 
-        <article class="project-card">
-          <h3 class="project-name">PharmaPays++</h3>
-          <p class="project-desc">
-            Application desktop de gestion et consultation de médicaments.
-            Interface graphique JavaFX, persistance SQLite, architecture MVC.
-          </p>
-          <ul class="project-tags">
-            <li>Java</li>
-            <li>JavaFX</li>
-            <li>SQLite</li>
-            <li>Maven</li>
-          </ul>
-          <a class="project-link" href="https://github.com/AoiShidaStr/pharmapays2" target="_blank" rel="noopener">[ GitHub ] →</a>
+        <!-- PharmaPays++ -->
+        <article class="iso-block-card">
+          <div class="iso-block">
+            <div class="iso-face iso-face-top"></div>
+            <div class="iso-face iso-face-left"></div>
+            <div class="iso-face iso-face-right"></div>
+          </div>
+          <div class="card-body">
+            <h3 class="project-name">PharmaPays++</h3>
+            <p class="project-desc">
+              Application desktop de gestion et consultation de médicaments.
+              Interface graphique JavaFX, persistance SQLite, architecture MVC.
+            </p>
+            <ul class="project-tags">
+              <li>Java</li>
+              <li>JavaFX</li>
+              <li>SQLite</li>
+              <li>Maven</li>
+            </ul>
+            <a class="project-link" href="https://github.com/AoiShidaStr/pharmapays2"
+               target="_blank" rel="noopener">[ GitHub ] →</a>
+          </div>
         </article>
 
-        <article class="project-card">
-          <h3 class="project-name">Lespass / TiBillet</h3>
-          <p class="project-desc">
-            Étude et déploiement d'une solution de billetterie open source coopérative.
-            Configuration Docker, exploration Django et architecture microservices.
-          </p>
-          <ul class="project-tags">
-            <li>Python</li>
-            <li>Django</li>
-            <li>Docker</li>
-            <li>GitHub</li>
-          </ul>
-          <a class="project-link" href="https://github.com/AoiShidaStr/Lespass" target="_blank" rel="noopener">[ GitHub ] →</a>
+        <!-- Lespass / TiBillet -->
+        <article class="iso-block-card">
+          <div class="iso-block">
+            <div class="iso-face iso-face-top" style="--top-a:#818cf8;--top-b:#6366f1"></div>
+            <div class="iso-face iso-face-left" style="--left-a:#1e1b4b;--left-b:#312e81"></div>
+            <div class="iso-face iso-face-right" style="--right-a:#4338ca;--right-b:#3730a3"></div>
+          </div>
+          <div class="card-body">
+            <h3 class="project-name">Lespass / TiBillet</h3>
+            <p class="project-desc">
+              Étude et déploiement d'une solution de billetterie open source coopérative.
+              Configuration Docker, exploration Django et architecture microservices.
+            </p>
+            <ul class="project-tags">
+              <li>Python</li>
+              <li>Django</li>
+              <li>Docker</li>
+              <li>GitHub</li>
+            </ul>
+            <a class="project-link" href="https://github.com/AoiShidaStr/Lespass"
+               target="_blank" rel="noopener">[ GitHub ] →</a>
+          </div>
         </article>
 
       </div>
     </section>
 
-    <!-- Stack -->
+    <!-- ==========================================================
+         STACK — Grille de mini-cubes isométriques
+    ========================================================== -->
     <section class="section fade-in" id="stack">
       <div class="section-badge">OUTILS</div>
       <h2 class="section-title">Stack technique</h2>
-      <ul class="stack-grid">
-        <li class="skill-item"><span class="skill-dot"></span>Java</li>
-        <li class="skill-item"><span class="skill-dot"></span>Python</li>
-        <li class="skill-item"><span class="skill-dot"></span>Django</li>
-        <li class="skill-item"><span class="skill-dot"></span>HTML / CSS</li>
-        <li class="skill-item"><span class="skill-dot"></span>JavaScript</li>
-        <li class="skill-item"><span class="skill-dot"></span>SQL</li>
-        <li class="skill-item"><span class="skill-dot"></span>Docker</li>
-        <li class="skill-item"><span class="skill-dot"></span>Git / GitHub</li>
-      </ul>
+
+      <div class="stack-grid">
+
+        <div class="stack-cube fade-in" data-delay="0">
+          <div class="cube-iso">
+            <div class="cube-face cube-top"></div>
+            <div class="cube-face cube-left"></div>
+            <div class="cube-face cube-right"></div>
+          </div>
+          <span class="cube-label">Java</span>
+        </div>
+
+        <div class="stack-cube fade-in" data-delay="1">
+          <div class="cube-iso">
+            <div class="cube-face cube-top"></div>
+            <div class="cube-face cube-left"></div>
+            <div class="cube-face cube-right"></div>
+          </div>
+          <span class="cube-label">Python</span>
+        </div>
+
+        <div class="stack-cube fade-in" data-delay="2">
+          <div class="cube-iso">
+            <div class="cube-face cube-top"></div>
+            <div class="cube-face cube-left"></div>
+            <div class="cube-face cube-right"></div>
+          </div>
+          <span class="cube-label">Django</span>
+        </div>
+
+        <div class="stack-cube fade-in" data-delay="3">
+          <div class="cube-iso">
+            <div class="cube-face cube-top"></div>
+            <div class="cube-face cube-left"></div>
+            <div class="cube-face cube-right"></div>
+          </div>
+          <span class="cube-label">HTML/CSS</span>
+        </div>
+
+        <div class="stack-cube fade-in" data-delay="4">
+          <div class="cube-iso">
+            <div class="cube-face cube-top"></div>
+            <div class="cube-face cube-left"></div>
+            <div class="cube-face cube-right"></div>
+          </div>
+          <span class="cube-label">JavaScript</span>
+        </div>
+
+        <div class="stack-cube fade-in" data-delay="5">
+          <div class="cube-iso">
+            <div class="cube-face cube-top"></div>
+            <div class="cube-face cube-left"></div>
+            <div class="cube-face cube-right"></div>
+          </div>
+          <span class="cube-label">SQL</span>
+        </div>
+
+        <div class="stack-cube fade-in" data-delay="6">
+          <div class="cube-iso">
+            <div class="cube-face cube-top"></div>
+            <div class="cube-face cube-left"></div>
+            <div class="cube-face cube-right"></div>
+          </div>
+          <span class="cube-label">Docker</span>
+        </div>
+
+        <div class="stack-cube fade-in" data-delay="7">
+          <div class="cube-iso">
+            <div class="cube-face cube-top"></div>
+            <div class="cube-face cube-left"></div>
+            <div class="cube-face cube-right"></div>
+          </div>
+          <span class="cube-label">Git/GitHub</span>
+        </div>
+
+      </div>
     </section>
 
-    <!-- Contact -->
+    <!-- ==========================================================
+         CONTACT
+    ========================================================== -->
     <section class="section fade-in" id="contact">
       <div class="section-badge">CONTACT</div>
       <h2 class="section-title">Me contacter</h2>
+
       <ul class="contact-grid">
-        <li class="contact-item">
-          <span class="contact-prefix">@</span>
-          <a href="mailto:meventecher@gmail.com">meventecher@gmail.com</a>
+        <li class="contact-card">
+          <span class="contact-icon">@</span>
+          <div class="contact-info">
+            <span class="contact-label">email</span>
+            <a href="mailto:meventecher@gmail.com">meventecher@gmail.com</a>
+          </div>
         </li>
-        <li class="contact-item">
-          <span class="contact-prefix">gh</span>
-          <a href="https://github.com/AoiShidaStr" target="_blank" rel="noopener">AoiShidaStr</a>
+        <li class="contact-card">
+          <span class="contact-icon">gh</span>
+          <div class="contact-info">
+            <span class="contact-label">github</span>
+            <a href="https://github.com/AoiShidaStr" target="_blank" rel="noopener">AoiShidaStr</a>
+          </div>
         </li>
-        <li class="contact-item">
-          <span class="contact-prefix">☎</span>
-          <span>+262 693 827 100</span>
+        <li class="contact-card">
+          <span class="contact-icon">☎</span>
+          <div class="contact-info">
+            <span class="contact-label">téléphone</span>
+            <span>+262 693 827 100</span>
+          </div>
+        </li>
+        <li class="contact-card">
+          <span class="contact-icon">◈</span>
+          <div class="contact-info">
+            <span class="contact-label">portfolio</span>
+            <a href="https://aoishidastr.github.io/portfolio" target="_blank" rel="noopener">aoishidastr.github.io/portfolio</a>
+          </div>
         </li>
       </ul>
     </section>
 
   </main>
 
+  <!-- ============================================================
+       FOOTER
+  ============================================================ -->
   <footer class="footer">
     MEVEN HOARAU TECHER &nbsp;·&nbsp; BTS SIO SLAM &nbsp;·&nbsp; 2026
   </footer>
