@@ -5,6 +5,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tableau de synthèse E5 — Meven Hoarau Techer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <style>
     /* ===== OVERRIDES LOCAUX ===== */
@@ -253,19 +256,27 @@
        CURSEUR PERSONNALISÉ (losange indigo)
   ============================================================ -->
   <div class="cursor" id="cursor"></div>
+  <div class="cursor-halo" id="cursor-halo"></div>
+  <canvas id="canvas-bg" aria-hidden="true"></canvas>
+  <div class="ambient-light" id="ambient-light" aria-hidden="true"></div>
+  <div class="progress-bar" id="progress-bar"></div>
 
   <div class="blob blob-1"></div>
   <div class="blob blob-2"></div>
   <div class="blob blob-3"></div>
 
-  <nav class="nav">
+  <header class="nav" id="nav">
     <a class="nav-logo" href="index.html">M<span>.</span>HT</a>
     <ul class="nav-links">
+      <li><a href="index.html#presentation">profil</a></li>
+      <li><a href="index.html#stages">stages</a></li>
       <li><a href="index.html#projets">projets</a></li>
-      <li><a href="index.html#stack">stack</a></li>
+      <li><a href="index.html#competences">E5</a></li>
       <li><a href="index.html#contact">contact</a></li>
+      <li><a href="veille.html">veille</a></li>
+      <li><a class="nav-link-highlight" href="Tableau de synthèse.html" style="color:var(--indigo-lt)">tableau E5</a></li>
     </ul>
-  </nav>
+  </header>
 
   <div class="page-wrapper">
 

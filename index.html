@@ -4,49 +4,67 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Meven Hoarau Techer — Portfolio BTS SIO SLAM</title>
+  <meta name="description" content="Portfolio BTS SIO SLAM de Meven Hoarau Techer — Lycée Pierre Poivre, La Réunion. Développeur passionné, projets Java, Python, Docker.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- Curseur losange personnalisé -->
+  <!-- ── Curseur personnalisé ── -->
   <div class="cursor" id="cursor"></div>
+  <div class="cursor-halo" id="cursor-halo"></div>
 
-  <!-- Particules d'arrière-plan -->
-  <div class="particles" id="particles" aria-hidden="true"></div>
+  <!-- ── Canvas particules ── -->
+  <canvas id="canvas-bg" aria-hidden="true"></canvas>
 
-  <!-- ============================================================
-       MODAL — Fiche détaillée projet
-  ============================================================ -->
+  <!-- ── Lumière ambiante scroll ── -->
+  <div class="ambient-light" id="ambient-light" aria-hidden="true"></div>
+
+  <!-- ── Barre de progression ── -->
+  <div class="progress-bar" id="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+
+  <!-- ── Navigation points (droite) ── -->
+  <nav class="dot-nav" id="dot-nav" aria-label="Navigation par section">
+    <a href="#hero"         class="dot-nav-item" data-label="Accueil"><span class="dot"></span></a>
+    <a href="#presentation" class="dot-nav-item" data-label="Présentation"><span class="dot"></span></a>
+    <a href="#stages"       class="dot-nav-item" data-label="Stages"><span class="dot"></span></a>
+    <a href="#projets"      class="dot-nav-item" data-label="Projets"><span class="dot"></span></a>
+    <a href="#competences"  class="dot-nav-item" data-label="Compétences E5"><span class="dot"></span></a>
+    <a href="#veille"       class="dot-nav-item" data-label="Veille"><span class="dot"></span></a>
+    <a href="#perspectives" class="dot-nav-item" data-label="Perspectives"><span class="dot"></span></a>
+    <a href="#documents"    class="dot-nav-item" data-label="Documents"><span class="dot"></span></a>
+    <a href="#contact"      class="dot-nav-item" data-label="Contact"><span class="dot"></span></a>
+  </nav>
+
+  <!-- ── Modal fiche projet ── -->
   <div class="modal-overlay" id="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title">
     <div class="modal-card">
       <button class="modal-close" id="modal-close" aria-label="Fermer">✕</button>
-      <div class="modal-content" id="modal-content">
-        <!-- injecté par JS -->
-      </div>
+      <div class="modal-content" id="modal-content"></div>
     </div>
   </div>
 
-  <!-- ============================================================
-       NAVIGATION
-  ============================================================ -->
-  <nav class="nav" id="nav">
-    <a class="nav-logo" href="#">M<span>.</span>HT</a>
+  <!-- ── Navigation principale ── -->
+  <header class="nav" id="nav">
+    <a class="nav-logo" href="#hero">M<span>.</span>HT</a>
     <ul class="nav-links">
+      <li><a href="#presentation">profil</a></li>
+      <li><a href="#stages">stages</a></li>
       <li><a href="#projets">projets</a></li>
       <li><a href="#competences">E5</a></li>
-      <li><a href="#stack">stack</a></li>
-      <li><a href="#devpro">parcours</a></li>
       <li><a href="#contact">contact</a></li>
       <li><a href="veille.html">veille</a></li>
-      <li><a class="nav-link-tableau" href="Tableau de synthèse.html">tableau E5</a></li>
+      <li><a class="nav-link-highlight" href="Tableau de synthèse.html">tableau E5</a></li>
     </ul>
-  </nav>
+  </header>
 
   <main>
 
-    <!-- ==========================================================
-         HERO — SVG isométrique
-    ========================================================== -->
+    <!-- ============================================================
+         CHAPITRE I — HERO
+    ============================================================ -->
     <section class="hero fade-in" id="hero">
 
       <div class="hero-iso" aria-hidden="true">
@@ -77,20 +95,24 @@
               <stop offset="100%" stop-color="#4f46e5"/>
             </linearGradient>
             <filter id="glow">
-              <feGaussianBlur stdDeviation="3" result="blur"/>
+              <feGaussianBlur stdDeviation="4" result="blur"/>
+              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+            <filter id="glow-sm">
+              <feGaussianBlur stdDeviation="2" result="blur"/>
               <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
             </filter>
           </defs>
 
-          <!-- Lignes de connexion pointillées animées -->
-          <g class="iso-connections" stroke="#6366f1" stroke-width="1" fill="none" opacity="0.4">
+          <!-- Lignes de connexion animées -->
+          <g class="iso-connections" stroke="#6366f1" stroke-width="1" fill="none" opacity="0.35">
             <line class="dash-line" x1="300" y1="210" x2="160" y2="140" stroke-dasharray="6 4"/>
-            <line class="dash-line" x1="300" y1="210" x2="440" y2="135" stroke-dasharray="6 4" style="animation-delay:.4s"/>
-            <line class="dash-line" x1="300" y1="210" x2="150" y2="300" stroke-dasharray="6 4" style="animation-delay:.8s"/>
-            <line class="dash-line" x1="300" y1="210" x2="450" y2="300" stroke-dasharray="6 4" style="animation-delay:1.2s"/>
-            <line class="dash-line" x1="300" y1="210" x2="300" y2="340" stroke-dasharray="6 4" style="animation-delay:1.6s"/>
-            <line class="dash-line" x1="300" y1="210" x2="510" y2="210" stroke-dasharray="6 4" style="animation-delay:2s"/>
-            <line class="dash-line" x1="300" y1="210" x2="90" y2="210" stroke-dasharray="6 4" style="animation-delay:2.4s"/>
+            <line class="dash-line" x1="300" y1="210" x2="440" y2="135" stroke-dasharray="6 4" style="animation-delay:.5s"/>
+            <line class="dash-line" x1="300" y1="210" x2="150" y2="300" stroke-dasharray="6 4" style="animation-delay:1s"/>
+            <line class="dash-line" x1="300" y1="210" x2="450" y2="300" stroke-dasharray="6 4" style="animation-delay:1.5s"/>
+            <line class="dash-line" x1="300" y1="210" x2="300" y2="340" stroke-dasharray="6 4" style="animation-delay:2s"/>
+            <line class="dash-line" x1="300" y1="210" x2="510" y2="210" stroke-dasharray="6 4" style="animation-delay:2.5s"/>
+            <line class="dash-line" x1="300" y1="210" x2="90" y2="210" stroke-dasharray="6 4" style="animation-delay:3s"/>
           </g>
 
           <!-- Cube central MHT -->
@@ -98,52 +120,52 @@
             <polygon points="300,140 380,185 300,230 220,185" fill="url(#face-top)"/>
             <polygon points="220,185 300,230 300,280 220,235" fill="url(#face-left)"/>
             <polygon points="380,185 300,230 300,280 380,235" fill="url(#face-right)"/>
-            <text x="300" y="195" text-anchor="middle" font-family="monospace" font-size="18"
-                  font-weight="800" fill="#e0e7ff" letter-spacing="2">MHT</text>
+            <text x="300" y="195" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="18"
+                  font-weight="700" fill="#e0e7ff" letter-spacing="3">MHT</text>
           </g>
 
-          <!-- Cubes satellites techno -->
-          <g class="iso-cube sat-java">
+          <!-- Cubes satellites -->
+          <g class="iso-cube sat-java" filter="url(#glow-sm)">
             <polygon points="160,100 196,120 160,140 124,120" fill="url(#sat-top)"/>
             <polygon points="124,120 160,140 160,165 124,145" fill="url(#sat-left)"/>
             <polygon points="196,120 160,140 160,165 196,145" fill="url(#sat-right)"/>
-            <text x="160" y="127" text-anchor="middle" font-family="monospace" font-size="9" font-weight="700" fill="#e0e7ff">Java</text>
+            <text x="160" y="127" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="700" fill="#e0e7ff">Java</text>
           </g>
-          <g class="iso-cube sat-python">
+          <g class="iso-cube sat-python" filter="url(#glow-sm)">
             <polygon points="440,95 476,115 440,135 404,115" fill="url(#sat-top)"/>
             <polygon points="404,115 440,135 440,160 404,140" fill="url(#sat-left)"/>
             <polygon points="476,115 440,135 440,160 476,140" fill="url(#sat-right)"/>
-            <text x="440" y="122" text-anchor="middle" font-family="monospace" font-size="8" font-weight="700" fill="#e0e7ff">Python</text>
+            <text x="440" y="122" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="8" font-weight="700" fill="#e0e7ff">Python</text>
           </g>
-          <g class="iso-cube sat-docker">
+          <g class="iso-cube sat-docker" filter="url(#glow-sm)">
             <polygon points="150,265 186,285 150,305 114,285" fill="url(#sat-top)"/>
             <polygon points="114,285 150,305 150,330 114,310" fill="url(#sat-left)"/>
             <polygon points="186,285 150,305 150,330 186,310" fill="url(#sat-right)"/>
-            <text x="150" y="292" text-anchor="middle" font-family="monospace" font-size="8" font-weight="700" fill="#e0e7ff">Docker</text>
+            <text x="150" y="292" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="8" font-weight="700" fill="#e0e7ff">Docker</text>
           </g>
-          <g class="iso-cube sat-sql">
+          <g class="iso-cube sat-sql" filter="url(#glow-sm)">
             <polygon points="450,265 486,285 450,305 414,285" fill="url(#sat-top)"/>
             <polygon points="414,285 450,305 450,330 414,310" fill="url(#sat-left)"/>
             <polygon points="486,285 450,305 450,330 486,310" fill="url(#sat-right)"/>
-            <text x="450" y="292" text-anchor="middle" font-family="monospace" font-size="9" font-weight="700" fill="#e0e7ff">SQL</text>
+            <text x="450" y="292" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="700" fill="#e0e7ff">SQL</text>
           </g>
-          <g class="iso-cube sat-git">
+          <g class="iso-cube sat-git" filter="url(#glow-sm)">
             <polygon points="300,315 336,335 300,355 264,335" fill="url(#sat-top)"/>
             <polygon points="264,335 300,355 300,380 264,360" fill="url(#sat-left)"/>
             <polygon points="336,335 300,355 300,380 336,360" fill="url(#sat-right)"/>
-            <text x="300" y="342" text-anchor="middle" font-family="monospace" font-size="9" font-weight="700" fill="#e0e7ff">Git</text>
+            <text x="300" y="342" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="700" fill="#e0e7ff">Git</text>
           </g>
-          <g class="iso-cube sat-js">
+          <g class="iso-cube sat-js" filter="url(#glow-sm)">
             <polygon points="510,175 546,195 510,215 474,195" fill="url(#sat-top)"/>
             <polygon points="474,195 510,215 510,240 474,220" fill="url(#sat-left)"/>
             <polygon points="546,195 510,215 510,240 546,220" fill="url(#sat-right)"/>
-            <text x="510" y="202" text-anchor="middle" font-family="monospace" font-size="9" font-weight="700" fill="#e0e7ff">JS</text>
+            <text x="510" y="202" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="700" fill="#e0e7ff">JS</text>
           </g>
-          <g class="iso-cube sat-html">
+          <g class="iso-cube sat-html" filter="url(#glow-sm)">
             <polygon points="90,175 126,195 90,215 54,195" fill="url(#sat-top)"/>
             <polygon points="54,195 90,215 90,240 54,220" fill="url(#sat-left)"/>
             <polygon points="126,195 90,215 90,240 126,220" fill="url(#sat-right)"/>
-            <text x="90" y="202" text-anchor="middle" font-family="monospace" font-size="7.5" font-weight="700" fill="#e0e7ff">HTML</text>
+            <text x="90" y="202" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="7.5" font-weight="700" fill="#e0e7ff">HTML</text>
           </g>
         </svg>
       </div>
@@ -153,26 +175,187 @@
         <h1 class="hero-name">Meven<br><span>Hoarau Techer</span></h1>
         <p class="hero-sub">Lycée Pierre Poivre — La Réunion · 2024–2026</p>
         <p class="hero-desc">
-          Passionné par le développement d'applications et les solutions open source.
+          Développeur passionné par les applications métier, l'open source et les technologies émergentes.
         </p>
         <div class="hero-actions">
           <a class="btn-primary" href="#projets">voir mes projets →</a>
-          <a class="btn-secondary" href="Tableau de synthèse.html">tableau E5 →</a>
+          <a class="btn-secondary" href="#documents">documents →</a>
+        </div>
+        <div class="hero-scroll-hint" aria-hidden="true">
+          <span class="scroll-line"></span>
+          <span class="scroll-text">scroll</span>
         </div>
       </div>
     </section>
 
-    <!-- ==========================================================
-         PROJETS — 5 réalisations avec fiches détaillées
-    ========================================================== -->
+    <!-- ============================================================
+         CHAPITRE II — PRÉSENTATION
+    ============================================================ -->
+    <section class="section fade-in" id="presentation">
+      <div class="chapter-eyebrow">Chapitre I · Présentation</div>
+      <h2 class="section-title">Qui suis-je ?</h2>
+
+      <div class="presentation-layout">
+
+        <div class="bio-block fade-in">
+          <p class="bio-text">
+            Étudiant en <strong>BTS SIO option SLAM</strong> au Lycée Pierre Poivre (Saint-Paul, La Réunion),
+            je développe depuis deux ans des compétences en développement logiciel, bases de données et déploiement.
+            Passionné par les projets concrets, j'aime apprendre par la pratique — qu'il s'agisse d'analyser
+            une codebase open source complexe ou de créer un jeu de zéro en dehors des cours.
+          </p>
+          <div class="lang-badges">
+            <div class="lang-badge">
+              <span class="lang-name">Français</span>
+              <span class="lang-level">Natif</span>
+              <div class="lang-bar"><div class="lang-fill" style="--w:100%"></div></div>
+            </div>
+            <div class="lang-badge">
+              <span class="lang-name">Anglais</span>
+              <span class="lang-level">B2 · 15,40/20</span>
+              <div class="lang-bar"><div class="lang-fill" style="--w:77%"></div></div>
+            </div>
+            <div class="lang-badge">
+              <span class="lang-name">Allemand</span>
+              <span class="lang-level">B1 · 14,10/20</span>
+              <div class="lang-bar"><div class="lang-fill" style="--w:63%"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block fade-in">
+          <h3 class="timeline-title">Parcours</h3>
+          <ol class="timeline">
+            <li class="timeline-item">
+              <div class="tl-marker"></div>
+              <div class="tl-content">
+                <span class="tl-date">2021 — 2023</span>
+                <h4>Bac ST2S</h4>
+                <p>Lycée Le Tampon · Mention Assez Bien (13,64/20)</p>
+              </div>
+            </li>
+            <li class="timeline-item">
+              <div class="tl-marker"></div>
+              <div class="tl-content">
+                <span class="tl-date">Sept. 2024</span>
+                <h4>BTS SIO SLAM</h4>
+                <p>Lycée Pierre Poivre, Saint-Paul — La Réunion</p>
+              </div>
+            </li>
+            <li class="timeline-item">
+              <div class="tl-marker"></div>
+              <div class="tl-content">
+                <span class="tl-date">Juin 2025</span>
+                <h4>Stage — EURL EPP</h4>
+                <p>4 semaines · Le Tampon · Refonte site internet</p>
+              </div>
+            </li>
+            <li class="timeline-item">
+              <div class="tl-marker"></div>
+              <div class="tl-content">
+                <span class="tl-date">Jan. — Fév. 2026</span>
+                <h4>Stage — Komidi</h4>
+                <p>6 semaines · Saint-Joseph · Déploiement TiBillet</p>
+              </div>
+            </li>
+            <li class="timeline-item timeline-item--future">
+              <div class="tl-marker"></div>
+              <div class="tl-content">
+                <span class="tl-date">2026 →</span>
+                <h4>Obtention du BTS SIO</h4>
+                <p>Poursuite d'études — Licence Pro / Polytech / INSA</p>
+              </div>
+            </li>
+          </ol>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============================================================
+         CHAPITRE III — STAGES
+    ============================================================ -->
+    <section class="section fade-in" id="stages">
+      <div class="chapter-eyebrow">Chapitre II · Stages</div>
+      <h2 class="section-title">Expériences en entreprise</h2>
+
+      <div class="stages-grid">
+
+        <!-- Stage 1 : EPP -->
+        <article class="stage-card fade-in">
+          <div class="stage-card-header">
+            <div class="stage-number">01</div>
+            <div class="stage-header-info">
+              <h3 class="stage-company">EURL EPP</h3>
+              <p class="stage-period">2 juin — 27 juin 2025 · 4 semaines</p>
+              <p class="stage-location">15a rue Fidélio Robert, 97430 Le Tampon</p>
+            </div>
+          </div>
+          <div class="stage-card-body">
+            <div class="stage-mission">
+              <h4>Mission principale</h4>
+              <p>Refonte complète du site internet de l'entreprise — conception, développement et mise en ligne.</p>
+            </div>
+            <ul class="stage-tasks">
+              <li>Analyse des besoins et maquettage de la nouvelle interface</li>
+              <li>Développement front-end du site refait (HTML, CSS, JavaScript)</li>
+              <li>Mise en ligne et configuration de l'hébergement</li>
+            </ul>
+            <div class="stage-tags">
+              <span>HTML</span><span>CSS</span><span>JavaScript</span><span>Hébergement web</span>
+            </div>
+            <div class="stage-comp">
+              <span class="comp-badge">C3</span>
+              <span class="comp-badge">C5</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Stage 2 : Komidi -->
+        <article class="stage-card fade-in stage-card--accent">
+          <div class="stage-card-header">
+            <div class="stage-number">02</div>
+            <div class="stage-header-info">
+              <h3 class="stage-company">Association Komidi</h3>
+              <p class="stage-period">14 janvier — 24 février 2026 · 6 semaines</p>
+              <p class="stage-location">463 bis rue Raphaël Babet, 97480 Saint-Joseph</p>
+            </div>
+          </div>
+          <div class="stage-card-body">
+            <div class="stage-mission">
+              <h4>Mission principale</h4>
+              <p>Étude et déploiement de la solution open source <strong>TiBillet</strong> (billetterie coopérative) pour l'association.</p>
+            </div>
+            <ul class="stage-tasks">
+              <li>Analyse de l'architecture microservices de TiBillet (~2 semaines)</li>
+              <li>Déploiement de l'environnement via Docker Compose</li>
+              <li>Cartographie des modules Django/Python</li>
+              <li>Documentation et propositions d'adaptation</li>
+            </ul>
+            <div class="stage-tags">
+              <span>Python</span><span>Django</span><span>Docker</span><span>Linux</span><span>GitHub</span>
+            </div>
+            <div class="stage-comp">
+              <span class="comp-badge">C2</span>
+              <span class="comp-badge">C5</span>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ============================================================
+         CHAPITRE IV — PROJETS
+    ============================================================ -->
     <section class="section fade-in" id="projets">
-      <div class="section-badge">RÉALISATIONS</div>
+      <div class="chapter-eyebrow">Chapitre III · Réalisations</div>
       <h2 class="section-title">Projets</h2>
 
       <div class="projects-grid">
 
-        <!-- ── PharmaPays++ ── -->
-        <article class="iso-block-card">
+        <!-- PharmaPays++ -->
+        <article class="iso-block-card fade-in">
           <div class="iso-block">
             <div class="iso-face iso-face-top"></div>
             <div class="iso-face iso-face-left"></div>
@@ -182,19 +365,11 @@
             <div class="card-meta">
               <span class="card-type">TD · Groupe · 2024</span>
               <span class="card-comp-badges">
-                <span class="comp-badge">C1</span>
-                <span class="comp-badge">C4</span>
+                <span class="comp-badge">C1</span><span class="comp-badge">C4</span>
               </span>
             </div>
             <h3 class="project-name">PharmaPays++</h3>
-            <p class="project-desc">
-              Application desktop de gestion et consultation de médicaments.
-              Interface graphique JavaFX, persistance SQLite, architecture MVC.
-            </p>
-            <!-- Placeholder capture d'écran -->
-            <div class="screenshot-placeholder">
-              <span>📸 Capture à ajouter</span>
-            </div>
+            <p class="project-desc">Application desktop de gestion et consultation de médicaments. Interface JavaFX, persistance SQLite, architecture MVC.</p>
             <ul class="project-tags">
               <li>Java</li><li>JavaFX</li><li>SQLite</li><li>Maven</li>
             </ul>
@@ -205,8 +380,8 @@
           </div>
         </article>
 
-        <!-- ── Lespass / TiBillet ── -->
-        <article class="iso-block-card">
+        <!-- Lespass / TiBillet -->
+        <article class="iso-block-card fade-in">
           <div class="iso-block">
             <div class="iso-face iso-face-top" style="--top-a:#818cf8;--top-b:#6366f1"></div>
             <div class="iso-face iso-face-left" style="--left-a:#1e1b4b;--left-b:#312e81"></div>
@@ -214,20 +389,13 @@
           </div>
           <div class="card-body">
             <div class="card-meta">
-              <span class="card-type">Stage · Komidi · 6 semaines</span>
+              <span class="card-type">Stage · Komidi · 6 sem.</span>
               <span class="card-comp-badges">
-                <span class="comp-badge">C2</span>
-                <span class="comp-badge">C5</span>
+                <span class="comp-badge">C2</span><span class="comp-badge">C5</span>
               </span>
             </div>
             <h3 class="project-name">Lespass / TiBillet</h3>
-            <p class="project-desc">
-              Étude et déploiement d'une solution de billetterie open source coopérative.
-              Configuration Docker, exploration Django et architecture microservices.
-            </p>
-            <div class="screenshot-placeholder">
-              <span>📸 Capture à ajouter</span>
-            </div>
+            <p class="project-desc">Étude et déploiement d'une solution de billetterie open source coopérative. Docker, Django, microservices.</p>
             <ul class="project-tags">
               <li>Python</li><li>Django</li><li>Docker</li><li>GitHub</li>
             </ul>
@@ -238,8 +406,8 @@
           </div>
         </article>
 
-        <!-- ── Tetris ── -->
-        <article class="iso-block-card">
+        <!-- Tetris -->
+        <article class="iso-block-card fade-in">
           <div class="iso-block">
             <div class="iso-face iso-face-top" style="--top-a:#a78bfa;--top-b:#7c3aed"></div>
             <div class="iso-face iso-face-left" style="--left-a:#2e1065;--left-b:#4c1d95"></div>
@@ -247,19 +415,13 @@
           </div>
           <div class="card-body">
             <div class="card-meta">
-              <span class="card-type">Projet personnel · 2024–2025</span>
+              <span class="card-type">Projet perso · 2024–2025</span>
               <span class="card-comp-badges">
                 <span class="comp-badge">C6</span>
               </span>
             </div>
             <h3 class="project-name">Tetris</h3>
-            <p class="project-desc">
-              Jeu Tetris complet développé en autonomie. Architecture orientée objet,
-              moteur de jeu, système de menu et gestion du meilleur score.
-            </p>
-            <div class="screenshot-placeholder">
-              <span>📸 Capture à ajouter</span>
-            </div>
+            <p class="project-desc">Jeu Tetris complet développé en autonomie. Architecture POO, moteur de jeu, menu, gestion du meilleur score.</p>
             <ul class="project-tags">
               <li>Python</li><li>Pygame</li><li>POO</li>
             </ul>
@@ -270,8 +432,8 @@
           </div>
         </article>
 
-        <!-- ── App Mobile Parking ── -->
-        <article class="iso-block-card">
+        <!-- App Parking -->
+        <article class="iso-block-card fade-in">
           <div class="iso-block">
             <div class="iso-face iso-face-top" style="--top-a:#67e8f9;--top-b:#0891b2"></div>
             <div class="iso-face iso-face-left" style="--left-a:#0c4a6e;--left-b:#075985"></div>
@@ -285,13 +447,7 @@
               </span>
             </div>
             <h3 class="project-name">App Mobile Parking</h3>
-            <p class="project-desc">
-              Application mobile de gestion de places de stationnement.
-              Consultation de disponibilité, réservation et suivi en temps réel.
-            </p>
-            <div class="screenshot-placeholder">
-              <span>📸 Capture à ajouter</span>
-            </div>
+            <p class="project-desc">Application Android de gestion de places de stationnement. Consultation, réservation et suivi en temps réel.</p>
             <ul class="project-tags">
               <li>Android</li><li>Java</li><li>SQLite</li>
             </ul>
@@ -301,8 +457,8 @@
           </div>
         </article>
 
-        <!-- ── App Cinéma ── -->
-        <article class="iso-block-card">
+        <!-- App Cinéma -->
+        <article class="iso-block-card fade-in">
           <div class="iso-block">
             <div class="iso-face iso-face-top" style="--top-a:#f9a8d4;--top-b:#db2777"></div>
             <div class="iso-face iso-face-left" style="--left-a:#500724;--left-b:#831843"></div>
@@ -316,13 +472,7 @@
               </span>
             </div>
             <h3 class="project-name">Application Cinéma</h3>
-            <p class="project-desc">
-              Application de gestion d'une salle de cinéma. Catalogue de films,
-              gestion des séances et réservation de places.
-            </p>
-            <div class="screenshot-placeholder">
-              <span>📸 Capture à ajouter</span>
-            </div>
+            <p class="project-desc">Application de gestion d'une salle de cinéma. Catalogue de films, séances, réservation de places.</p>
             <ul class="project-tags">
               <li>Java</li><li>JavaFX</li><li>SQL</li>
             </ul>
@@ -332,223 +482,293 @@
           </div>
         </article>
 
+        <!-- Portfolio -->
+        <article class="iso-block-card fade-in">
+          <div class="iso-block">
+            <div class="iso-face iso-face-top" style="--top-a:#34d399;--top-b:#059669"></div>
+            <div class="iso-face iso-face-left" style="--left-a:#022c22;--left-b:#064e3b"></div>
+            <div class="iso-face iso-face-right" style="--right-a:#047857;--right-b:#065f46"></div>
+          </div>
+          <div class="card-body">
+            <div class="card-meta">
+              <span class="card-type">Projet perso · 2025–2026</span>
+              <span class="card-comp-badges">
+                <span class="comp-badge">C3</span>
+              </span>
+            </div>
+            <h3 class="project-name">Ce portfolio</h3>
+            <p class="project-desc">Site vitrine isométrique déployé sur GitHub Pages. HTML/CSS/JS pur, animations canvas, design low-poly.</p>
+            <ul class="project-tags">
+              <li>HTML</li><li>CSS</li><li>JavaScript</li><li>GitHub Pages</li>
+            </ul>
+            <div class="card-actions">
+              <a class="project-link" href="https://github.com/AoiShidaStr/portfolio" target="_blank" rel="noopener">[ GitHub ] →</a>
+              <button class="btn-fiche" data-project="portfolio">Voir la fiche →</button>
+            </div>
+          </div>
+        </article>
+
       </div>
     </section>
 
-    <!-- ==========================================================
-         COMPÉTENCES E5 — Mapping officiel BTS SIO
-    ========================================================== -->
+    <!-- ============================================================
+         CHAPITRE V — COMPÉTENCES E5
+    ============================================================ -->
     <section class="section fade-in" id="competences">
-      <div class="section-badge">ÉPREUVE E5</div>
+      <div class="chapter-eyebrow">Chapitre IV · Épreuve E5</div>
       <h2 class="section-title">Compétences couvertes</h2>
       <p class="section-intro">
         Chaque réalisation couvre une ou plusieurs des 6 compétences officielles du bloc E5
         « Support et mise à disposition de services informatiques ».
+        <a class="section-intro-link" href="Tableau de synthèse.html">Voir le tableau de synthèse complet →</a>
       </p>
 
       <div class="competences-grid">
-
-        <div class="comp-block fade-in" data-delay="0">
+        <div class="comp-block fade-in">
           <div class="comp-id">C1</div>
           <div class="comp-body">
             <h4>Gérer le patrimoine informatique</h4>
-            <p>Conception du schéma entité-relation et déploiement de la base de données SQLite sur machine virtuelle.</p>
-            <div class="comp-projects">
-              <span class="comp-tag">PharmaPays++</span>
-            </div>
+            <p>Conception du schéma entité-relation et déploiement de la base SQLite sur machine virtuelle.</p>
+            <div class="comp-projects"><span class="comp-tag">PharmaPays++</span></div>
           </div>
         </div>
-
-        <div class="comp-block fade-in" data-delay="1">
+        <div class="comp-block fade-in">
           <div class="comp-id">C2</div>
           <div class="comp-body">
             <h4>Répondre aux incidents et demandes</h4>
             <p>Analyse et compréhension d'une large codebase open source (TiBillet) pour l'adapter aux besoins client.</p>
-            <div class="comp-projects">
-              <span class="comp-tag">Lespass / TiBillet</span>
-            </div>
+            <div class="comp-projects"><span class="comp-tag">Lespass / TiBillet</span></div>
           </div>
         </div>
-
-        <div class="comp-block fade-in" data-delay="2">
+        <div class="comp-block fade-in">
           <div class="comp-id">C3</div>
           <div class="comp-body">
             <h4>Développer la présence en ligne</h4>
-            <p>Conception et déploiement de ce portfolio sur GitHub Pages. Site vitrine statique accessible publiquement.</p>
-            <div class="comp-projects">
-              <span class="comp-tag">Ce portfolio</span>
-            </div>
+            <p>Refonte du site EPP en stage. Développement et déploiement de ce portfolio sur GitHub Pages.</p>
+            <div class="comp-projects"><span class="comp-tag">Stage EPP</span><span class="comp-tag">Portfolio</span></div>
           </div>
         </div>
-
-        <div class="comp-block fade-in" data-delay="3">
+        <div class="comp-block fade-in">
           <div class="comp-id">C4</div>
           <div class="comp-body">
             <h4>Travailler en mode projet</h4>
-            <p>Travail en groupe de 4, répartition des tâches après modélisation commune du schéma de BDD.</p>
-            <div class="comp-projects">
-              <span class="comp-tag">PharmaPays++</span>
-            </div>
+            <p>Travail en groupe de 4, répartition des tâches après modélisation commune du schéma BDD.</p>
+            <div class="comp-projects"><span class="comp-tag">PharmaPays++</span></div>
           </div>
         </div>
-
-        <div class="comp-block fade-in" data-delay="4">
+        <div class="comp-block fade-in">
           <div class="comp-id">C5</div>
           <div class="comp-body">
             <h4>Mettre à disposition un service informatique</h4>
-            <p>Déploiement local de TiBillet via Docker, développement d'applications fonctionnelles (Parking, Cinéma).</p>
-            <div class="comp-projects">
-              <span class="comp-tag">TiBillet</span>
-              <span class="comp-tag">App Parking</span>
-              <span class="comp-tag">App Cinéma</span>
-            </div>
+            <p>Déploiement TiBillet via Docker. Applications fonctionnelles (Parking, Cinéma). Refonte site EPP.</p>
+            <div class="comp-projects"><span class="comp-tag">TiBillet</span><span class="comp-tag">App Parking</span><span class="comp-tag">App Cinéma</span></div>
           </div>
         </div>
-
-        <div class="comp-block fade-in" data-delay="5">
+        <div class="comp-block fade-in">
           <div class="comp-id">C6</div>
           <div class="comp-body">
             <h4>Organiser son développement professionnel</h4>
-            <p>Veille technologique sur l'IA, certification PIX, formation RGPD, projets personnels en autonomie.</p>
-            <div class="comp-projects">
-              <span class="comp-tag">Tetris</span>
-              <span class="comp-tag">Veille IA</span>
-              <span class="comp-tag">PIX</span>
-            </div>
+            <p>Veille IA depuis sept. 2024, certification PIX, formation RGPD, initiative personnelle Tetris.</p>
+            <div class="comp-projects"><span class="comp-tag">Tetris</span><span class="comp-tag">Veille IA</span><span class="comp-tag">PIX · RGPD</span></div>
           </div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- ==========================================================
-         STACK TECHNIQUE
-    ========================================================== -->
-    <section class="section fade-in" id="stack">
-      <div class="section-badge">OUTILS</div>
-      <h2 class="section-title">Stack technique</h2>
-
-      <div class="stack-grid">
-        <div class="stack-cube fade-in" data-delay="0">
-          <div class="cube-iso"><div class="cube-face cube-top"></div><div class="cube-face cube-left"></div><div class="cube-face cube-right"></div></div>
-          <span class="cube-label">Java</span>
-        </div>
-        <div class="stack-cube fade-in" data-delay="1">
-          <div class="cube-iso"><div class="cube-face cube-top"></div><div class="cube-face cube-left"></div><div class="cube-face cube-right"></div></div>
-          <span class="cube-label">Python</span>
-        </div>
-        <div class="stack-cube fade-in" data-delay="2">
-          <div class="cube-iso"><div class="cube-face cube-top"></div><div class="cube-face cube-left"></div><div class="cube-face cube-right"></div></div>
-          <span class="cube-label">Django</span>
-        </div>
-        <div class="stack-cube fade-in" data-delay="3">
-          <div class="cube-iso"><div class="cube-face cube-top"></div><div class="cube-face cube-left"></div><div class="cube-face cube-right"></div></div>
-          <span class="cube-label">HTML/CSS</span>
-        </div>
-        <div class="stack-cube fade-in" data-delay="4">
-          <div class="cube-iso"><div class="cube-face cube-top"></div><div class="cube-face cube-left"></div><div class="cube-face cube-right"></div></div>
-          <span class="cube-label">JavaScript</span>
-        </div>
-        <div class="stack-cube fade-in" data-delay="5">
-          <div class="cube-iso"><div class="cube-face cube-top"></div><div class="cube-face cube-left"></div><div class="cube-face cube-right"></div></div>
-          <span class="cube-label">SQL</span>
-        </div>
-        <div class="stack-cube fade-in" data-delay="6">
-          <div class="cube-iso"><div class="cube-face cube-top"></div><div class="cube-face cube-left"></div><div class="cube-face cube-right"></div></div>
-          <span class="cube-label">Docker</span>
-        </div>
-        <div class="stack-cube fade-in" data-delay="7">
-          <div class="cube-iso"><div class="cube-face cube-top"></div><div class="cube-face cube-left"></div><div class="cube-face cube-right"></div></div>
-          <span class="cube-label">Git/GitHub</span>
         </div>
       </div>
     </section>
 
-    <!-- ==========================================================
-         DÉVELOPPEMENT PROFESSIONNEL — C6
-    ========================================================== -->
-    <section class="section fade-in" id="devpro">
-      <div class="section-badge">COMPÉTENCE C6</div>
-      <h2 class="section-title">Développement professionnel</h2>
+    <!-- ============================================================
+         CHAPITRE VI — VEILLE TECHNOLOGIQUE
+    ============================================================ -->
+    <section class="section fade-in" id="veille">
+      <div class="chapter-eyebrow">Chapitre V · Veille</div>
+      <h2 class="section-title">Veille technologique</h2>
+      <p class="section-intro">
+        Depuis septembre 2024, je réalise une veille mensuelle sur l'Intelligence Artificielle et son
+        impact sur le développement logiciel.
+      </p>
 
-      <div class="devpro-grid">
+      <div class="veille-preview">
+        <div class="veille-stat fade-in">
+          <div class="veille-number">20</div>
+          <div class="veille-label">mois de veille</div>
+        </div>
+        <div class="veille-stat fade-in">
+          <div class="veille-number">50+</div>
+          <div class="veille-label">événements recensés</div>
+        </div>
+        <div class="veille-stat fade-in">
+          <div class="veille-number">4</div>
+          <div class="veille-label">axes thématiques</div>
+        </div>
+      </div>
 
-        <!-- Veille technologique -->
-        <div class="devpro-card fade-in">
-          <div class="devpro-icon">◈</div>
-          <div class="devpro-body">
-            <h4>Veille technologique — Intelligence Artificielle</h4>
-            <p class="devpro-period">Depuis septembre 2024</p>
+      <div class="veille-axes fade-in">
+        <div class="veille-axe">
+          <span class="veille-axe-icon">◈</span>
+          <span>Modèles LLM (GPT, Claude, Gemini, Mistral…)</span>
+        </div>
+        <div class="veille-axe">
+          <span class="veille-axe-icon">◈</span>
+          <span>IA appliquée au code (Copilot, Cursor, Claude Code…)</span>
+        </div>
+        <div class="veille-axe">
+          <span class="veille-axe-icon">◈</span>
+          <span>Open source & IA locale (LLaMA, Ollama, Mistral…)</span>
+        </div>
+        <div class="veille-axe">
+          <span class="veille-axe-icon">◈</span>
+          <span>Enjeux éthiques & réglementaires (EU AI Act, vie privée…)</span>
+        </div>
+      </div>
+
+      <div class="veille-cta">
+        <a class="btn-primary" href="veille.html">Consulter la veille complète →</a>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         CHAPITRE VII — PERSPECTIVES
+    ============================================================ -->
+    <section class="section fade-in" id="perspectives">
+      <div class="chapter-eyebrow">Chapitre VI · Perspectives</div>
+      <h2 class="section-title">Et après ?</h2>
+
+      <div class="perspectives-layout">
+        <div class="persp-block fade-in">
+          <div class="persp-icon">→</div>
+          <div class="persp-content">
+            <h3>Licence Pro ou Bachelor</h3>
             <p>
-              Suivi régulier de l'évolution des modèles de langage (LLMs), des outils d'IA générative
-              et de leur intégration dans le développement logiciel.
-            </p>
-            <ul class="devpro-topics">
-              <li>Modèles LLM : GPT-4, Claude, Gemini — comparatifs et usages</li>
-              <li>IA appliquée au développement : GitHub Copilot, génération de code</li>
-              <li>Open source et IA : LLaMA, Mistral, Ollama (local inference)</li>
-              <li>Enjeux éthiques et réglementaires de l'IA</li>
-            </ul>
-          </div>
-        </div>
-
-        <!-- Certifications -->
-        <div class="devpro-card fade-in">
-          <div class="devpro-icon">✦</div>
-          <div class="devpro-body">
-            <h4>Certifications & Formations</h4>
-            <p class="devpro-period">2024–2025</p>
-            <ul class="devpro-topics">
-              <li><strong>PIX</strong> — Certification nationale des compétences numériques</li>
-              <li><strong>RGPD</strong> — Formation aux règles de protection des données personnelles (CNIL)</li>
-            </ul>
-          </div>
-        </div>
-
-        <!-- Environnement de travail -->
-        <div class="devpro-card fade-in">
-          <div class="devpro-icon">⬡</div>
-          <div class="devpro-body">
-            <h4>Environnement & outils personnels</h4>
-            <p class="devpro-period">Utilisés en dehors des cours</p>
-            <ul class="devpro-topics">
-              <li><strong>VS Code</strong> — Éditeur principal avec extensions (GitLens, Pylance, IntelliCode)</li>
-              <li><strong>Docker</strong> — Conteneurisation d'environnements de développement</li>
-              <li><strong>Linux</strong> — Utilisation en VM et en environnement de stage</li>
-              <li><strong>Git</strong> — Gestion de version sur tous les projets personnels</li>
-            </ul>
-          </div>
-        </div>
-
-        <!-- Initiative personnelle -->
-        <div class="devpro-card fade-in">
-          <div class="devpro-icon">▲</div>
-          <div class="devpro-body">
-            <h4>Initiative personnelle</h4>
-            <p class="devpro-period">Projet hors cursus</p>
-            <p>
-              Développement du jeu <strong>Tetris</strong> en Python/Pygame en dehors des cours,
-              démontrant une capacité à apprendre par la pratique et à mener un projet de A à Z
-              sans encadrement.
+              Après l'obtention du BTS SIO, je souhaite poursuivre en
+              <strong>Licence Professionnelle</strong> dans le domaine du développement ou de l'intelligence artificielle,
+              idéalement à Lyon ou dans une ville universitaire offrant un parcours solide en informatique.
             </p>
           </div>
         </div>
-
+        <div class="persp-block fade-in">
+          <div class="persp-icon">◈</div>
+          <div class="persp-content">
+            <h3>Polytech / INSA</h3>
+            <p>
+              Je cible également les formations d'ingénieur à <strong>Polytech Lyon</strong> ou à l'<strong>INSA Lyon</strong>
+              en filière informatique ou systèmes intelligents, pour approfondir mes bases théoriques
+              et accéder à des projets industriels ambitieux.
+            </p>
+          </div>
+        </div>
+        <div class="persp-block fade-in">
+          <div class="persp-icon">▲</div>
+          <div class="persp-content">
+            <h3>Domaine visé : IA & Développement</h3>
+            <p>
+              Mon intérêt pour l'Intelligence Artificielle, renforcé par deux ans de veille active,
+              m'oriente vers des spécialités mêlant <strong>développement logiciel</strong> et
+              <strong>IA appliquée</strong> — que ce soit dans le conseil, la R&D ou l'édition logicielle.
+            </p>
+          </div>
+        </div>
       </div>
     </section>
 
-    <!-- ==========================================================
-         CONTACT
-    ========================================================== -->
+    <!-- ============================================================
+         CHAPITRE VIII — DOCUMENTS
+    ============================================================ -->
+    <section class="section fade-in" id="documents">
+      <div class="chapter-eyebrow">Chapitre VII · Documents</div>
+      <h2 class="section-title">Documents officiels</h2>
+      <p class="section-intro">Pièces justificatives disponibles en téléchargement.</p>
+
+      <div class="docs-grid">
+
+        <a class="doc-card fade-in" href="docs/cv.pdf" download>
+          <div class="doc-icon">↓</div>
+          <div class="doc-info">
+            <h4>Curriculum Vitae</h4>
+            <p>CV Meven Hoarau Techer — BTS SIO SLAM</p>
+          </div>
+          <span class="doc-format">PDF</span>
+        </a>
+
+        <a class="doc-card fade-in" href="docs/attestation-stage-epp.pdf" download>
+          <div class="doc-icon">↓</div>
+          <div class="doc-info">
+            <h4>Attestation Stage — EURL EPP</h4>
+            <p>Juin 2025 · Le Tampon · 4 semaines</p>
+          </div>
+          <span class="doc-format">PDF</span>
+        </a>
+
+        <a class="doc-card fade-in" href="docs/attestation-stage-komidi.pdf" download>
+          <div class="doc-icon">↓</div>
+          <div class="doc-info">
+            <h4>Attestation Stage — Komidi</h4>
+            <p>Jan. — Fév. 2026 · Saint-Joseph · 6 semaines</p>
+          </div>
+          <span class="doc-format">PDF</span>
+        </a>
+
+        <a class="doc-card fade-in" href="docs/bac-st2s.pdf" download>
+          <div class="doc-icon">↓</div>
+          <div class="doc-info">
+            <h4>Baccalauréat ST2S</h4>
+            <p>Session 2023 · Lycée Le Tampon · Mention Assez Bien</p>
+          </div>
+          <span class="doc-format">PDF</span>
+        </a>
+
+        <a class="doc-card fade-in" href="docs/rgpd-attestation.pdf" download>
+          <div class="doc-icon">↓</div>
+          <div class="doc-info">
+            <h4>Attestation RGPD</h4>
+            <p>CNIL · Module 2 · Déc. 2024 · 83%</p>
+          </div>
+          <span class="doc-format">PDF</span>
+        </a>
+
+        <a class="doc-card fade-in" href="Tableau de synthèse.html" target="_blank">
+          <div class="doc-icon">◈</div>
+          <div class="doc-info">
+            <h4>Tableau de synthèse E5</h4>
+            <p>Grille de compétences BTS SIO SLAM — Épreuve E5</p>
+          </div>
+          <span class="doc-format">HTML</span>
+        </a>
+
+      </div>
+
+      <!-- PIX -->
+      <div class="pix-block fade-in">
+        <div class="pix-header">
+          <span class="pix-icon">★</span>
+          <div>
+            <h4>Certification PIX</h4>
+            <p class="pix-sub">25 mars 2026 · Code : P-WBV69HM3</p>
+          </div>
+        </div>
+        <div class="pix-score">
+          <div class="pix-bar-wrap">
+            <div class="pix-bar" style="--score: 52%"></div>
+          </div>
+          <div class="pix-details">
+            <span class="pix-num">467 / 895</span>
+            <span class="pix-level">Niveau Indépendant 2</span>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ============================================================
+         CHAPITRE IX — CONTACT
+    ============================================================ -->
     <section class="section fade-in" id="contact">
-      <div class="section-badge">CONTACT</div>
+      <div class="chapter-eyebrow">Chapitre VIII · Contact</div>
       <h2 class="section-title">Me contacter</h2>
 
       <ul class="contact-grid">
         <li class="contact-card">
           <span class="contact-icon">@</span>
           <div class="contact-info">
-            <span class="contact-label">email</span>
+            <span class="contact-label">e-mail</span>
             <a href="mailto:meventecher@gmail.com">meventecher@gmail.com</a>
           </div>
         </li>
@@ -566,12 +786,11 @@
             <span>+262 693 827 100</span>
           </div>
         </li>
-        <!-- CV téléchargeable -->
-        <li class="contact-card contact-card-cv">
+        <li class="contact-card">
           <span class="contact-icon">↓</span>
           <div class="contact-info">
             <span class="contact-label">curriculum vitae</span>
-            <a href="CV_MevenHoarauTecher.pdf" download>Télécharger mon CV (PDF)</a>
+            <a href="docs/cv.pdf" download>Télécharger mon CV (PDF)</a>
           </div>
         </li>
       </ul>
@@ -580,13 +799,17 @@
   </main>
 
   <footer class="footer">
-    MEVEN HOARAU TECHER &nbsp;·&nbsp; BTS SIO SLAM &nbsp;·&nbsp; 2026 &nbsp;·&nbsp;
-    <a href="https://aoishidastr.github.io/portfolio" style="color:inherit;opacity:.5">aoishidastr.github.io/portfolio</a>
+    <span>Meven Hoarau Techer &nbsp;·&nbsp; BTS SIO SLAM &nbsp;·&nbsp; 2026</span>
+    <a href="https://aoishidastr.github.io/portfolio" style="color:inherit;opacity:.4">aoishidastr.github.io/portfolio</a>
   </footer>
 
-  <!-- ============================================================
-       DONNÉES DES FICHES — injectées dans le modal par JS
-  ============================================================ -->
+  <!-- ── Bannière RGPD ── -->
+  <div class="rgpd-banner" id="rgpd-banner" role="region" aria-label="Politique de confidentialité">
+    <p>Ce site utilise uniquement du stockage local pour mémoriser vos préférences (aucun tracking, aucun cookie tiers).</p>
+    <button class="rgpd-close" id="rgpd-close">J'ai compris</button>
+  </div>
+
+  <!-- ── Données des fiches projet ── -->
   <script type="application/json" id="fiches-data">
   {
     "pharmapays": {
@@ -617,7 +840,7 @@
         "Cartographie des modules et de la structure Django",
         "Identification des points d'adaptation aux besoins de Komidi"
       ],
-      "obstacle": "Compréhension d'une codebase de grande envergure (plusieurs milliers de lignes, architecture microservices) sans documentation interne suffisante — résolution par lecture systématique du code et tests unitaires.",
+      "obstacle": "Compréhension d'une codebase de grande envergure sans documentation interne suffisante — résolution par lecture systématique du code et tests.",
       "resultat": "Environnement de développement opérationnel, rapport d'analyse de l'architecture, propositions d'adaptation documentées.",
       "competences": ["C2 — Répondre aux incidents et demandes", "C5 — Mettre à disposition un service informatique"],
       "tags": ["Python", "Django", "Docker", "GitHub", "Linux"],
@@ -629,13 +852,13 @@
       "contexte": "Projet développé entièrement en autonomie en dehors du cursus scolaire, pour approfondir la maîtrise de Python et de la programmation orientée objet via un cas concret et motivant.",
       "role": "Développement complet du projet : conception, architecture, implémentation et tests.",
       "realise": [
-        "Architecture POO : séparation Logique (Tetris.py) / Affichage (Graphics.py) / Menu (menu.py)",
-        "Moteur de jeu complet : gestion des pièces, rotations, détection de collision, suppression de lignes",
+        "Architecture POO : séparation Logique / Affichage / Menu",
+        "Moteur de jeu complet : pièces, rotations, collisions, suppression de lignes",
         "Système de menu principal et écran de game over",
         "Persistance du meilleur score dans un fichier texte",
         "Animations et rendu graphique via Pygame"
       ],
-      "obstacle": "Gestion des rotations de pièces et des collisions en bord de grille — résolu par une matrice de collision et tests exhaustifs.",
+      "obstacle": "Gestion des rotations et des collisions en bord de grille — résolu par une matrice de collision et tests exhaustifs.",
       "resultat": "Jeu Tetris complet et fonctionnel, démontrant une capacité à concevoir et mener un projet de A à Z sans encadrement.",
       "competences": ["C6 — Organiser son développement professionnel"],
       "tags": ["Python", "Pygame", "POO"],
@@ -644,14 +867,14 @@
     "parking": {
       "titre": "Application Mobile Parking",
       "type": "TD · Lycée Pierre Poivre · 2024–2025",
-      "contexte": "Projet réalisé en cours de développement mobile au Lycée Pierre Poivre. Objectif : créer une application Android de gestion de places de stationnement.",
-      "role": "Développement de l'application mobile (à compléter).",
+      "contexte": "Projet réalisé en cours de développement mobile. Objectif : créer une application Android de gestion de places de stationnement.",
+      "role": "Développement de l'application mobile Android.",
       "realise": [
         "Interface de consultation des places disponibles",
         "Système de réservation de places",
-        "Persistance des données"
+        "Persistance des données avec SQLite"
       ],
-      "obstacle": "À compléter.",
+      "obstacle": "Gestion de la synchronisation des données entre l'interface et la base locale.",
       "resultat": "Application mobile fonctionnelle de gestion de stationnement.",
       "competences": ["C5 — Mettre à disposition un service informatique"],
       "tags": ["Android", "Java", "SQLite"],
@@ -660,18 +883,35 @@
     "cinema": {
       "titre": "Application Cinéma",
       "type": "TD · Lycée Pierre Poivre · 2024–2025",
-      "contexte": "Projet réalisé en cours de développement au Lycée Pierre Poivre. Objectif : développer une application de gestion d'une salle de cinéma.",
-      "role": "Développement de l'application (à compléter).",
+      "contexte": "Projet réalisé en cours de développement. Objectif : développer une application de gestion d'une salle de cinéma.",
+      "role": "Développement de l'application Java/JavaFX avec base de données SQL.",
       "realise": [
         "Catalogue de films et gestion des séances",
         "Réservation et gestion des places",
         "Modélisation et implémentation de la base de données"
       ],
-      "obstacle": "À compléter.",
+      "obstacle": "Modélisation des relations entre films, séances et réservations dans le schéma BDD.",
       "resultat": "Application fonctionnelle de gestion de cinéma.",
       "competences": ["C5 — Mettre à disposition un service informatique"],
       "tags": ["Java", "JavaFX", "SQL"],
       "github": null
+    },
+    "portfolio": {
+      "titre": "Portfolio BTS SIO",
+      "type": "Projet personnel · 2025–2026",
+      "contexte": "Création d'un portfolio web pour l'épreuve E5 du BTS SIO SLAM. Objectif : présenter les réalisations, les compétences et le parcours de manière professionnelle et mémorable.",
+      "role": "Conception et développement complets — design, HTML/CSS/JS, déploiement.",
+      "realise": [
+        "Design isométrique / low-poly en SVG animé",
+        "Canvas particles en JavaScript natif",
+        "Système de fiches projet en modal (données JSON embarquées)",
+        "Déploiement continu via GitHub Actions sur GitHub Pages"
+      ],
+      "obstacle": "Réaliser un design original et mémorable sans framework CSS ni JavaScript.",
+      "resultat": "Site vitrine déployé sur GitHub Pages, accessible publiquement.",
+      "competences": ["C3 — Développer la présence en ligne"],
+      "tags": ["HTML", "CSS", "JavaScript", "GitHub Pages"],
+      "github": "https://github.com/AoiShidaStr/portfolio"
     }
   }
   </script>

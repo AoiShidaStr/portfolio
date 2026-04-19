@@ -1,184 +1,239 @@
 /* ================================================================
-   PORTFOLIO — MEVEN HOARAU TECHER — script.js
-   - Curseur losange personnalisé
-   - Particules losanges en arrière-plan
-   - Scroll reveal (IntersectionObserver)
-   - Modal fiches projets
-   - Navigation au scroll
+   PORTFOLIO — MEVEN HOARAU TECHER — script.js v3
    ================================================================ */
 
-/* ----------------------------------------------------------------
-   1. CURSEUR PERSONNALISÉ
-   ---------------------------------------------------------------- */
-(function initCursor() {
-  const cursor = document.getElementById('cursor');
-  if (!cursor) return;
+/* ── Curseur losange + halo ─────────────────────────────────── */
+const cursor = document.getElementById('cursor');
+const halo   = document.getElementById('cursor-halo');
 
-  document.addEventListener('mousemove', (e) => {
-    cursor.style.left = e.clientX + 'px';
-    cursor.style.top  = e.clientY + 'px';
+let mx = -100, my = -100;
+let hx = -100, hy = -100;
+
+document.addEventListener('mousemove', e => {
+  mx = e.clientX;
+  my = e.clientY;
+  cursor.style.left = mx + 'px';
+  cursor.style.top  = my + 'px';
+});
+
+(function animHalo() {
+  hx += (mx - hx) * 0.1;
+  hy += (my - hy) * 0.1;
+  halo.style.left = hx + 'px';
+  halo.style.top  = hy + 'px';
+  requestAnimationFrame(animHalo);
+})();
+
+/* ── Canvas particules losanges ─────────────────────────────── */
+const canvas = document.getElementById('canvas-bg');
+const ctx    = canvas.getContext('2d');
+
+function resizeCanvas() {
+  canvas.width  = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+const PARTICLE_COUNT = 55;
+const particles = [];
+
+function randBetween(a, b) { return a + Math.random() * (b - a); }
+
+class Particle {
+  constructor() { this.reset(true); }
+
+  reset(init) {
+    this.x      = randBetween(0, canvas.width);
+    this.y      = init ? randBetween(0, canvas.height) : canvas.height + 10;
+    this.size   = randBetween(2, 5);
+    this.speedX = randBetween(-0.3, 0.3);
+    this.speedY = randBetween(-0.6, -0.15);
+    this.alpha  = randBetween(0.08, 0.35);
+    this.fadeDir   = Math.random() > .5 ? 1 : -1;
+    this.fadeDelta = randBetween(0.002, 0.006);
+  }
+
+  update() {
+    this.x += this.speedX;
+    this.y += this.speedY;
+    this.alpha += this.fadeDelta * this.fadeDir;
+    if (this.alpha > .35 || this.alpha < .05) this.fadeDir *= -1;
+    if (this.y < -10) this.reset(false);
+  }
+
+  draw() {
+    ctx.save();
+    ctx.globalAlpha = this.alpha;
+    ctx.translate(this.x, this.y);
+    ctx.rotate(Math.PI / 4);
+    ctx.fillStyle = '#818cf8';
+    ctx.fillRect(-this.size / 2, -this.size / 2, this.size, this.size);
+    ctx.restore();
+  }
+}
+
+for (let i = 0; i < PARTICLE_COUNT; i++) particles.push(new Particle());
+
+function animParticles() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  particles.forEach(p => { p.update(); p.draw(); });
+  requestAnimationFrame(animParticles);
+}
+animParticles();
+
+/* ── Barre de progression ────────────────────────────────────── */
+const progressBar = document.getElementById('progress-bar');
+
+function updateProgress() {
+  const scrolled = window.scrollY;
+  const total    = document.documentElement.scrollHeight - window.innerHeight;
+  const pct      = total > 0 ? (scrolled / total) * 100 : 0;
+  progressBar.style.width = pct + '%';
+  progressBar.setAttribute('aria-valuenow', Math.round(pct));
+}
+window.addEventListener('scroll', updateProgress, { passive: true });
+
+/* ── Nav opacité au scroll ────────────────────────────────────── */
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 30);
+}, { passive: true });
+
+/* ── Ambient light scroll-driven ─────────────────────────────── */
+const ambientLight = document.getElementById('ambient-light');
+const SECTION_COLORS = [
+  'rgba(79,70,229,.13)',
+  'rgba(99,102,241,.10)',
+  'rgba(67,56,202,.12)',
+  'rgba(79,70,229,.13)',
+  'rgba(55,48,163,.10)',
+  'rgba(99,102,241,.11)',
+  'rgba(79,70,229,.09)',
+  'rgba(55,48,163,.10)',
+  'rgba(79,70,229,.08)',
+];
+const sectionIds = ['hero','presentation','stages','projets','competences','veille','perspectives','documents','contact'];
+
+function updateAmbient() {
+  const scrollY = window.scrollY + window.innerHeight * 0.4;
+  let activeIdx = 0;
+  sectionIds.forEach((id, i) => {
+    const el = document.getElementById(id);
+    if (el && el.offsetTop <= scrollY) activeIdx = i;
   });
+  const c    = SECTION_COLORS[activeIdx] || SECTION_COLORS[0];
+  const yPos = 10 + (activeIdx / (sectionIds.length - 1)) * 80;
+  ambientLight.style.background =
+    `radial-gradient(ellipse 70% 60% at 50% ${yPos}%, ${c} 0%, transparent 70%)`;
+}
+window.addEventListener('scroll', updateAmbient, { passive: true });
+updateAmbient();
 
-  document.addEventListener('mouseleave', () => { cursor.style.opacity = '0'; });
-  document.addEventListener('mouseenter', () => { cursor.style.opacity = '1'; });
-})();
+/* ── Dot-nav synchronisation ─────────────────────────────────── */
+const dotItems   = document.querySelectorAll('.dot-nav-item');
+const dotTargets = Array.from(dotItems).map(d => d.getAttribute('href').slice(1));
 
-/* ----------------------------------------------------------------
-   2. PARTICULES LOSANGES EN ARRIÈRE-PLAN
-   ---------------------------------------------------------------- */
-(function initParticles() {
-  const container = document.getElementById('particles');
-  if (!container) return;
-
-  for (let i = 0; i < 25; i++) {
-    const p = document.createElement('div');
-    p.className = 'particle';
-    const dur   = 14 + Math.random() * 16;
-    const delay = -(Math.random() * dur);
-    const size  = 5 + Math.random() * 8;
-    const op    = 0.06 + Math.random() * 0.14;
-    p.style.cssText = `left:${Math.random()*100}%;width:${size}px;height:${size}px;--dur:${dur}s;--delay:${delay}s;--op:${op};`;
-    container.appendChild(p);
-  }
-})();
-
-/* ----------------------------------------------------------------
-   3. SCROLL REVEAL — IntersectionObserver
-   ---------------------------------------------------------------- */
-(function initScrollReveal() {
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    },
-    { threshold: 0.08 }
-  );
-
-  document.querySelectorAll('.fade-in').forEach((el) => observer.observe(el));
-
-  // Hero visible immédiatement
-  const hero = document.querySelector('.hero');
-  if (hero) requestAnimationFrame(() => hero.classList.add('visible'));
-})();
-
-/* ----------------------------------------------------------------
-   4. NAVIGATION — fond opaque au scroll
-   ---------------------------------------------------------------- */
-(function initNav() {
-  const nav = document.getElementById('nav');
-  if (!nav) return;
-  window.addEventListener('scroll', () => {
-    nav.style.background = window.scrollY > 40
-      ? 'rgba(10,10,15,0.92)'
-      : 'rgba(10,10,15,0.7)';
-  }, { passive: true });
-})();
-
-/* ----------------------------------------------------------------
-   5. MODAL FICHES PROJETS
-   ---------------------------------------------------------------- */
-(function initModal() {
-  const overlay  = document.getElementById('modal-overlay');
-  const closeBtn = document.getElementById('modal-close');
-  const content  = document.getElementById('modal-content');
-  if (!overlay || !content) return;
-
-  // Charger les données JSON embarquées dans le HTML
-  let fiches = {};
-  try {
-    fiches = JSON.parse(document.getElementById('fiches-data').textContent);
-  } catch (e) {
-    console.error('Erreur de lecture des fiches:', e);
-  }
-
-  // Ouvrir le modal
-  function openModal(projectKey) {
-    const f = fiches[projectKey];
-    if (!f) return;
-
-    content.innerHTML = buildFicheHTML(f);
-    overlay.classList.add('open');
-    document.body.style.overflow = 'hidden';
-
-    // Focus piège (accessibilité)
-    closeBtn.focus();
-  }
-
-  // Fermer le modal
-  function closeModal() {
-    overlay.classList.remove('open');
-    document.body.style.overflow = '';
-  }
-
-  // Générer le HTML de la fiche
-  function buildFicheHTML(f) {
-    const realiseLi = f.realise.map(r => `<li>${r}</li>`).join('');
-    const compSpans  = f.competences.map(c => `<span>${c}</span>`).join('');
-    const tagSpans   = f.tags.map(t => `<span>${t}</span>`).join('');
-    const githubLink = f.github
-      ? `<a class="fiche-github" href="${f.github}" target="_blank" rel="noopener">[ GitHub ] →</a>`
-      : '';
-
-    return `
-      <div class="fiche-type">${escHtml(f.type)}</div>
-      <h3 class="fiche-titre">${escHtml(f.titre)}</h3>
-
-      <h5>Contexte</h5>
-      <p>${escHtml(f.contexte)}</p>
-
-      <h5>Mon rôle</h5>
-      <p>${escHtml(f.role)}</p>
-
-      <h5>Ce qui a été réalisé</h5>
-      <ul>${realiseLi}</ul>
-
-      <h5>Obstacle &amp; solution</h5>
-      <p>${escHtml(f.obstacle)}</p>
-
-      <h5>Résultat</h5>
-      <p>${escHtml(f.resultat)}</p>
-
-      <h5>Capture d'écran</h5>
-      <div class="modal-screenshot">📸 Capture à ajouter</div>
-
-      <h5>Technologies</h5>
-      <div class="fiche-tags">${tagSpans}</div>
-
-      <h5>Compétences E5 couvertes</h5>
-      <div class="fiche-comps">${compSpans}</div>
-
-      ${githubLink}
-    `;
-  }
-
-  // Échapper les caractères HTML pour éviter XSS
-  function escHtml(str) {
-    return String(str)
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;');
-  }
-
-  // Boutons "Voir la fiche"
-  document.querySelectorAll('.btn-fiche').forEach((btn) => {
-    btn.addEventListener('click', () => openModal(btn.dataset.project));
+function updateDotNav() {
+  const scrollY = window.scrollY + window.innerHeight * 0.35;
+  let activeIdx = 0;
+  dotTargets.forEach((id, i) => {
+    const el = document.getElementById(id);
+    if (el && el.offsetTop <= scrollY) activeIdx = i;
   });
+  dotItems.forEach((d, i) => d.classList.toggle('active', i === activeIdx));
+}
+window.addEventListener('scroll', updateDotNav, { passive: true });
+updateDotNav();
 
-  // Fermer avec le bouton ✕
-  closeBtn.addEventListener('click', closeModal);
-
-  // Fermer en cliquant sur l'overlay (hors de la card)
-  overlay.addEventListener('click', (e) => {
-    if (e.target === overlay) closeModal();
+/* ── IntersectionObserver — fade-in ──────────────────────────── */
+const fadeObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      fadeObserver.unobserve(e.target);
+    }
   });
+}, { threshold: 0.12 });
 
-  // Fermer avec Échap
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && overlay.classList.contains('open')) closeModal();
+document.querySelectorAll('.fade-in').forEach(el => fadeObserver.observe(el));
+
+/* ── RGPD banner ─────────────────────────────────────────────── */
+const rgpdBanner = document.getElementById('rgpd-banner');
+const rgpdClose  = document.getElementById('rgpd-close');
+
+if (rgpdBanner && !localStorage.getItem('rgpd-ok')) {
+  setTimeout(() => rgpdBanner.classList.add('visible'), 1200);
+}
+if (rgpdClose) {
+  rgpdClose.addEventListener('click', () => {
+    rgpdBanner.classList.remove('visible');
+    localStorage.setItem('rgpd-ok', '1');
   });
-})();
+}
+
+/* ── Modal fiches projet ─────────────────────────────────────── */
+function escHtml(str) {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+const fichesDataEl = document.getElementById('fiches-data');
+if (!fichesDataEl) return;
+
+const fichesData = JSON.parse(fichesDataEl.textContent);
+
+const modalOverlay = document.getElementById('modal-overlay');
+const modalClose   = document.getElementById('modal-close');
+const modalContent = document.getElementById('modal-content');
+
+function openModal(projectKey) {
+  const d = fichesData[projectKey];
+  if (!d) return;
+
+  const liItems = d.realise.map(r => `<li>${escHtml(r)}</li>`).join('');
+  const tagHtml = d.tags.map(t => `<span class="modal-tag">${escHtml(t)}</span>`).join('');
+  const compHtml = d.competences.map(c => `<li>${escHtml(c)}</li>`).join('');
+  const githubHtml = d.github
+    ? `<a class="modal-github" href="${escHtml(d.github)}" target="_blank" rel="noopener">[ GitHub ] →</a>`
+    : '';
+
+  modalContent.innerHTML = `
+    <p class="modal-type">${escHtml(d.type)}</p>
+    <h2 id="modal-title">${escHtml(d.titre)}</h2>
+    <h3>Contexte</h3>
+    <p>${escHtml(d.contexte)}</p>
+    <h3>Mon rôle</h3>
+    <p>${escHtml(d.role)}</p>
+    <h3>Ce que j'ai réalisé</h3>
+    <ul>${liItems}</ul>
+    <h3>Obstacle rencontré</h3>
+    <p>${escHtml(d.obstacle)}</p>
+    <h3>Résultat</h3>
+    <p>${escHtml(d.resultat)}</p>
+    <h3>Compétences E5</h3>
+    <ul>${compHtml}</ul>
+    <h3>Technologies</h3>
+    <div class="modal-tags">${tagHtml}</div>
+    ${githubHtml}
+  `;
+
+  modalOverlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  modalOverlay.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.querySelectorAll('.btn-fiche').forEach(btn => {
+  btn.addEventListener('click', () => openModal(btn.dataset.project));
+});
+
+modalClose.addEventListener('click', closeModal);
+modalOverlay.addEventListener('click', e => { if (e.target === modalOverlay) closeModal(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
