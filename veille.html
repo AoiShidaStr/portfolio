@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Veille Technologique — Meven Hoarau Techer</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* ===== OVERRIDES VEILLE ===== */
+    .veille-wrapper {
+      position: relative;
+      z-index: 1;
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 100px 32px 80px;
+    }
+
+    /* En-tête */
+    .veille-header {
+      margin-bottom: 48px;
+    }
+    .veille-header .section-badge { margin-bottom: 10px; }
+    .veille-header h1 {
+      font-size: clamp(26px, 4vw, 40px);
+      font-weight: 900;
+      color: var(--text);
+      margin-bottom: 16px;
+      line-height: 1.1;
+    }
+    .veille-header h1 span { color: var(--indigo-lt); }
+    .veille-header p {
+      font-size: 14px;
+      color: rgba(224,231,255,.55);
+      max-width: 560px;
+      line-height: 1.7;
+    }
+
+    /* Thèmes surveillés */
+    .veille-themes {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 24px 0 48px;
+    }
+    .theme-pill {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 1.5px;
+      color: var(--indigo-lt);
+      background: rgba(79,70,229,.12);
+      border: 1px solid rgba(79,70,229,.3);
+      border-radius: 6px;
+      padding: 6px 14px;
+    }
+
+    /* Timeline */
+    .timeline {
+      position: relative;
+      padding-left: 32px;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 8px; bottom: 0;
+      width: 1px;
+      background: linear-gradient(to bottom, var(--indigo), transparent);
+    }
+
+    /* Entrée mensuelle */
+    .month-entry {
+      position: relative;
+      margin-bottom: 40px;
+      opacity: 0;
+      transform: translateX(-16px);
+      transition: opacity 600ms var(--ease-out), transform 600ms var(--ease-out);
+    }
+    .month-entry.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    /* Losange marqueur sur la timeline */
+    .month-entry::before {
+      content: '◈';
+      position: absolute;
+      left: -40px;
+      top: 4px;
+      color: var(--indigo);
+      font-size: 14px;
+    }
+
+    /* En-tête du mois */
+    .month-header {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    .month-label {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: 1px;
+    }
+    .month-count {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      color: rgba(165,180,252,.35);
+      letter-spacing: 2px;
+    }
+
+    /* Carte d'item de veille */
+    .veille-items {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .veille-item {
+      background: rgba(30,27,75,.4);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 20px;
+      transition: border-color 200ms, background 200ms;
+    }
+    .veille-item:hover {
+      border-color: rgba(99,102,241,.5);
+      background: rgba(79,70,229,.07);
+    }
+    .item-topic {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+    .item-desc {
+      font-size: 12.5px;
+      color: rgba(224,231,255,.55);
+      line-height: 1.65;
+    }
+    .item-source {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 1px;
+      color: rgba(165,180,252,.3);
+      margin-top: 8px;
+    }
+    .item-tag {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 9px;
+      background: rgba(99,102,241,.15);
+      border: 1px solid rgba(99,102,241,.25);
+      color: var(--indigo-lt);
+      border-radius: 4px;
+      padding: 2px 8px;
+      margin-bottom: 8px;
+    }
+
+    /* Sources habituelles */
+    .sources-section {
+      margin-top: 64px;
+      padding-top: 32px;
+      border-top: 1px solid rgba(99,102,241,.1);
+    }
+    .sources-section h3 {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 20px;
+    }
+    .sources-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    .source-card {
+      background: rgba(30,27,75,.4);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+    }
+    .source-name {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--indigo-lt);
+      margin-bottom: 4px;
+    }
+    .source-desc {
+      font-size: 11px;
+      color: rgba(224,231,255,.4);
+      line-height: 1.5;
+    }
+
+    /* Retour portfolio */
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 8px 16px;
+      margin-bottom: 40px;
+      transition: border-color 200ms, color 200ms;
+    }
+    .back-link:hover { border-color: var(--indigo); color: var(--text); }
+
+    @media (max-width: 640px) {
+      .veille-wrapper { padding: 80px 20px 48px; }
+      .timeline { padding-left: 24px; }
+      .month-entry::before { left: -30px; font-size: 11px; }
+      .sources-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="cursor" id="cursor"></div>
+  <div class="particles" id="particles" aria-hidden="true"></div>
+
+  <nav class="nav" id="nav">
+    <a class="nav-logo" href="index.html">M<span>.</span>HT</a>
+    <ul class="nav-links">
+      <li><a href="index.html#projets">projets</a></li>
+      <li><a href="index.html#competences">E5</a></li>
+      <li><a href="index.html#stack">stack</a></li>
+      <li><a href="index.html#devpro">parcours</a></li>
+      <li><a class="nav-link-tableau" href="Tableau de synthèse.html">tableau E5</a></li>
+    </ul>
+  </nav>
+
+  <div class="veille-wrapper">
+
+    <a class="back-link" href="index.html">← retour au portfolio</a>
+
+    <div class="veille-header fade-in">
+      <div class="section-badge">COMPÉTENCE C6 · DÉVELOPPEMENT PROFESSIONNEL</div>
+      <h1>Veille Technologique<br><span>Intelligence Artificielle</span></h1>
+      <p>
+        Suivi mensuel de l'actualité de l'intelligence artificielle et de son impact
+        sur le développement logiciel. Veille réalisée depuis le début de la formation
+        BTS SIO SLAM au Lycée Pierre Poivre, La Réunion.
+      </p>
+      <div class="veille-themes">
+        <span class="theme-pill">Modèles de langage (LLM)</span>
+        <span class="theme-pill">IA générative</span>
+        <span class="theme-pill">IA appliquée au développement</span>
+        <span class="theme-pill">Open source IA</span>
+        <span class="theme-pill">Éthique & réglementation</span>
+      </div>
+    </div>
+
+    <!-- ================================================================
+         TIMELINE MENSUELLE
+    ================================================================ -->
+    <div class="timeline">
+
+      <!-- ── Septembre 2024 ── -->
+      <div class="month-entry fade-in">
+        <div class="month-header">
+          <span class="month-label">Septembre 2024</span>
+          <span class="month-count">3 articles</span>
+        </div>
+        <div class="veille-items">
+          <div class="veille-item">
+            <span class="item-tag">LLM</span>
+            <div class="item-topic">OpenAI lance o1 « Strawberry » — un modèle qui réfléchit avant de répondre</div>
+            <div class="item-desc">
+              OpenAI présente o1, un modèle conçu pour raisonner en plusieurs étapes avant de donner sa réponse.
+              Contrairement aux modèles précédents, o1 prend le temps de « penser » à des problèmes complexes
+              (maths, code, logique). C'est une rupture majeure : la qualité de la réponse prime sur la vitesse.
+            </div>
+            <div class="item-source">Source : OpenAI blog · openai.com</div>
+          </div>
+          <div class="veille-item">
+            <span class="item-tag">Open source</span>
+            <div class="item-topic">Meta publie Llama 3.1 — des modèles open source rivalisant avec GPT-4</div>
+            <div class="item-desc">
+              Meta rend disponibles ses modèles Llama 3.1 (8B, 70B, 405B paramètres) sous licence open source.
+              Le modèle 405B rivalise avec GPT-4 Turbo sur plusieurs benchmarks. Impact direct : il devient possible
+              de faire tourner des LLMs puissants localement ou sur ses propres serveurs.
+            </div>
+            <div class="item-source">Source : Meta AI blog · ai.meta.com</div>
+          </div>
+          <div class="veille-item">
+            <span class="item-tag">Développement</span>
+            <div class="item-topic">GitHub Copilot s'ouvre à tous les éditeurs de code</div>
+            <div class="item-desc">
+              GitHub Copilot devient disponible dans davantage d'environnements (VS Code, JetBrains, Neovim).
+              L'assistant IA de complétion de code gagne des fonctionnalités de refactoring et de génération
+              de tests. Intérêt pour le SLAM : accélération du développement quotidien.
+            </div>
+            <div class="item-source">Source : GitHub blog · github.blog</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Octobre 2024 ── -->
+      <div class="month-entry fade-in">
+        <div class="month-header">
+          <span class="month-label">Octobre 2024</span>
+          <span class="month-count">3 articles</span>
+        </div>
+        <div class="veille-items">
+          <div class="veille-item">
+            <span class="item-tag">LLM</span>
+            <div class="item-topic">Claude 3.5 Haiku — Anthropic publie un modèle rapide et économique</div>
+            <div class="item-desc">
+              Anthropic sort Claude 3.5 Haiku, un modèle léger mais performant, conçu pour les tâches courantes
+              (résumé, code basique, Q&A). Il surpasse Claude 3 Opus sur la plupart des benchmarks tout en étant
+              beaucoup moins coûteux à utiliser. Utile pour intégrer l'IA dans des applications à budget limité.
+            </div>
+            <div class="item-source">Source : Anthropic · anthropic.com</div>
+          </div>
+          <div class="veille-item">
+            <span class="item-tag">Outils IA</span>
+            <div class="item-topic">Google NotebookLM devient viral — l'IA qui génère des podcasts depuis vos documents</div>
+            <div class="item-desc">
+              Google NotebookLM, un outil permettant d'interroger ses propres documents via une IA,
+              intègre une fonctionnalité de génération de podcast audio réaliste. L'outil devient viral
+              sur les réseaux sociaux. Exemple d'application concrète de l'IA générative au-delà du texte.
+            </div>
+            <div class="item-source">Source : Google Labs · notebooklm.google.com</div>
+          </div>
+          <div class="veille-item">
+            <span class="item-tag">Réglementation</span>
+            <div class="item-topic">EU AI Act — premières obligations pour les systèmes à haut risque</div>
+            <div class="item-desc">
+              Le règlement européen sur l'intelligence artificielle (EU AI Act) entre progressivement en vigueur.
+              Les premières obligations concernent les systèmes IA à risque inacceptable (manipulation, scoring
+              social). Les développeurs européens doivent anticiper la classification de leurs applications.
+            </div>
+            <div class="item-source">Source : Parlement européen · europarl.europa.eu</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Novembre 2024 ── -->
+      <div class="month-entry fade-in">
+        <div class="month-header">
+          <span class="month-label">Novembre 2024</span>
+          <span class="month-count">3 articles</span>
+        </div>
+        <div class="veille-items">
+          <div class="veille-item">
+            <span class="item-tag">LLM</span>
+            <div class="item-topic">Claude 3.5 Sonnet v2 — meilleure compréhension du code et de l'image</div>
+            <div class="item-desc">
+              Anthropic améliore Claude 3.5 Sonnet avec de meilleures performances en coding (classé #1 sur
+              SWE-bench, un benchmark de résolution de bugs réels) et une meilleure compréhension visuelle.
+              La fonctionnalité « Computer Use » permet à Claude d'interagir avec un ordinateur comme un humain.
+            </div>
+            <div class="item-source">Source : Anthropic · anthropic.com</div>
+          </div>
+          <div class="veille-item">
+            <span class="item-tag">Développement</span>
+            <div class="item-topic">Cursor — l'IDE IA qui dépasse VS Code dans les sondages développeurs</div>
+            <div class="item-desc">
+              Cursor, un éditeur de code intégrant un LLM directement dans l'environnement de développement,
+              gagne rapidement des parts de marché. Il permet d'écrire, refactorer et déboguer du code
+              en langage naturel. Signe que l'IA s'intègre de plus en plus dans le flux de travail du développeur.
+            </div>
+            <div class="item-source">Source : Cursor.sh · cursor.com</div>
+          </div>
+          <div class="veille-item">
+            <span class="item-tag">Open source</span>
+            <div class="item-topic">Ollama simplifie l'exécution de LLMs en local</div>
+            <div class="item-desc">
+              Ollama est un outil qui permet de télécharger et faire tourner des modèles de langage (Llama,
+              Mistral, Phi…) directement sur sa machine, sans envoi de données sur le cloud. Intérêt pour
+              la confidentialité des données et pour les développeurs souhaitant tester des LLMs gratuitement.
+            </div>
+            <div class="item-source">Source : Ollama · ollama.com</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Décembre 2024 ── -->
+      <div class="month-entry fade-in">
+        <div class="month-header">
+          <span class="month-label">Décembre 2024</span>
+          <span class="month-count">4 articles</span>
+        </div>
+        <div class="veille-items">
+          <div class="veille-item">
+            <span class="item-tag">LLM</span>
+            <div class="item-topic">Google Gemini 2.0 Flash — multimodal, rapide, et gratuit pour les développeurs</div>
+            <div class="item-desc">
+              Google annonce Gemini 2.0 Flash, un modèle multimodal (texte, image, audio, vidéo) accessible
+              via API. Il dispose d'une fenêtre de contexte d'1 million de tokens, permettant de traiter
+              de très longs documents. Google positionne ce modèle comme la base de ses futurs agents IA.
+            </div>
+            <div class="item-source">Source : Google DeepMind blog · deepmind.google</div>
+          </div>
+          <div class="veille-item">
+            <span class="item-tag">IA générative</span>
+            <div class="item-topic">Sora — OpenAI lance la génération de vidéo par texte</div>
+            <div class="item-desc">
+              OpenAI rend Sora disponible au public : un modèle capable de générer des vidéos réalistes
+              à partir d'une description textuelle. Cela ouvre de nouvelles possibilités pour la création
+              de contenu mais soulève aussi des questions sur les deepfakes et la désinformation.
+            </div>
+            <div class="item-source">Source : OpenAI · openai.com/sora</div>
+          </div>
+          <div class="veille-item">
+            <span class="item-tag">LLM</span>
+            <div class="item-topic">OpenAI o1 Pro — raisonnement augmenté pour les cas complexes</div>
+            <div class="item-desc">
+              OpenAI publie o1 Pro, une version améliorée d'o1 qui utilise encore plus de temps de calcul
+              pour les problèmes difficiles. Malgré un coût élevé, il atteint des performances proches
+              des experts humains en mathématiques et programmation avancée.
+            </div>
+            <div class="item-source">Source : OpenAI · openai.com</div>
+          </div>
+          <div class="veille-item">
+            <span class="item-tag">Éthique</span>
+            <div class="item-topic">Bilan 2024 : l'IA transforme le marché du travail dans l'IT</div>
+            <div class="item-desc">
+              Plusieurs études publient en fin d'année leurs conclusions sur l'impact de l'IA sur les métiers
+              de l'informatique. Les développeurs juniors voient leurs tâches répétitives automatisées,
+              mais les profils capables de travailler avec l'IA sont de plus en plus recherchés.
+            </div>
+            <div class="item-source">Source : Stack Overflow Developer Survey 2024 · stackoverflow.blog</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Janvier 2025 ── -->
+      <div class="month-entry fade-in">
+        <div class="month-header">
+          <span class="month-label">Janvier 2025</span>
+          <span class="month-count">3 articles</span>
+        </div>
+        <div class="veille-items">
+          <div class="veille-item">
+            <span class="item-tag">Open source · MAJEUR</span>
+            <div class="item-topic">DeepSeek R1 — un modèle chinois open source rivalisant avec o1 à 1/30e du coût</div>
+            <div class="item-desc">
+              DeepSeek publie R1, un modèle de raisonnement open source développé en Chine qui égale
+              les performances d'OpenAI o1 sur les benchmarks mathématiques et de code. Entraîné pour
+              environ 6 millions de dollars vs des centaines de millions pour les modèles US, il ébranle
+              les certitudes sur la nécessité de budgets massifs pour atteindre l'état de l'art.
+              L'action Nvidia perd 17% en une journée suite à cette annonce.
+            </div>
+            <div class="item-source">Source : DeepSeek · deepseek.com / The Verge</div>
+          </div>
+          <div class="veille-item">
+            <span class="item-tag">LLM</span>
+            <div class="item-topic">OpenAI annonce o3 — le modèle le plus puissant jamais évalué sur ARC-AGI</div>
+            <div class="item-desc">
+              OpenAI présente o3, un modèle obtenant 87% sur le benchmark ARC-AGI, conçu pour mesurer
+              une forme de raisonnement général (vs mémorisation). Le modèle dépasse les meilleurs humains
+              sur plusieurs tâches. Débat relancé sur l'approche de l'AGI (intelligence artificielle générale).
+            </div>
+            <div class="item-source">Source : OpenAI · openai.com</div>
+          </div>
+          <div class="veille-item">
+            <span class="item-tag">Développement</span>
+            <div class="item-topic">Microsoft Phi-4 — un petit modèle très efficace pour les développeurs</div>
+            <div class="item-desc">
+              Microsoft publie Phi-4, un modèle de 14 milliards de paramètres surpassant des modèles
+              beaucoup plus grands sur des tâches de raisonnement. La tendance "small but mighty" :
+              des modèles compacts, déployables localement, deviennent compétitifs avec les géants.
+            </div>
+            <div class="item-source">Source : Microsoft Research · microsoft.com</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Février 2025 ── -->
+      <div class="month-entry fade-in">
+        <div class="month-header">
+          <span class="month-label">Février 2025</span>
+          <span class="month-count">3 articles</span>
+        </div>
+        <div class="veille-items">
+          <div class="veille-item">
+            <span class="item-tag">LLM</span>
+            <div class="item-topic">Grok 3 — xAI (Elon Musk) publie son modèle le plus avancé</div>
+            <div class="item-desc">
+              xAI lance Grok 3, entraîné sur le supercluster Colossus (200 000 GPU). Le modèle affiche
+              des performances comparables à GPT-4o et Claude 3.5 Sonnet. La compétition entre
+              laboratoires s'intensifie et bénéficie aux utilisateurs via une amélioration continue
+              et une baisse des prix.
+            </div>
+            <div class="item-source">Source : xAI · x.ai</div>
+          </div>
+          <div class="veille-item">
+            <span class="item-tag">Débat</span>
+            <div class="item-topic">Open source vs Closed source : quel impact pour la sécurité des IA ?</div>
+            <div class="item-desc">
+              Suite au succès de DeepSeek R1, le débat sur l'open source dans l'IA s'intensifie.
+              Arguments pour : transparence, auditabilité, accessibilité. Arguments contre : risque
+              de détournement malveillant, absence de garde-fous. La communauté de sécurité s'implique
+              de plus en plus dans l'évaluation des modèles open source.
+            </div>
+            <div class="item-source">Source : MIT Technology Review · technologyreview.com</div>
+          </div>
+          <div class="veille-item">
+            <span class="item-tag">Développement</span>
+            <div class="item-topic">Windsurf — un nouvel IDE IA concurrent de Cursor</div>
+            <div class="item-desc">
+              Codeium lance Windsurf, un éditeur de code IA avec une approche « agentic » :
+              l'IA peut lire, écrire et exécuter du code de manière autonome pour résoudre des tâches
+              complexes. Le marché des outils de développement assistés par IA devient très compétitif.
+            </div>
+            <div class="item-source">Source : Codeium blog · codeium.com</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Mars 2025 ── -->
+      <div class="month-entry fade-in">
+        <div class="month-header">
+          <span class="month-label">Mars 2025</span>
+          <span class="month-count">3 articles</span>
+        </div>
+        <div class="veille-items">
+          <div class="veille-item">
+            <span class="item-tag">LLM · MAJEUR</span>
+            <div class="item-topic">Claude 3.7 Sonnet — "extended thinking" et performances de codage record</div>
+            <div class="item-desc">
+              Anthropic publie Claude 3.7 avec un mode « extended thinking » qui permet au modèle
+              de raisonner longuement avant de répondre, similaire à o1. Sur SWE-bench (résolution
+              autonome de bugs GitHub réels), il atteint 70% — un record. Il peut désormais corriger
+              des bugs dans de vrais projets open source de manière autonome.
+            </div>
+            <div class="item-source">Source : Anthropic · anthropic.com</div>
+          </div>
+          <div class="veille-item">
+            <span class="item-tag">Agents IA</span>
+            <div class="item-topic">Les agents IA autonomes : de la démonstration à la production</div>
+            <div class="item-desc">
+              2025 voit les premiers déploiements en production d'agents IA autonomes capables d'exécuter
+              des séquences de tâches (recherche web, écriture de code, envoi d'emails). Des frameworks
+              comme LangGraph, AutoGen et CrewAI facilitent leur développement. Enjeu pour les développeurs
+              SLAM : comprendre ces architectures multi-agents.
+            </div>
+            <div class="item-source">Source : LangChain blog · blog.langchain.dev</div>
+          </div>
+          <div class="veille-item">
+            <span class="item-tag">Développement</span>
+            <div class="item-topic">GitHub Copilot intègre des agents autonomes dans les pull requests</div>
+            <div class="item-desc">
+              GitHub annonce que Copilot peut désormais lire les commentaires de code review et
+              appliquer les corrections automatiquement dans les pull requests. L'IA passe du rôle
+              d'assistant à celui de collaborateur actif dans le workflow de développement.
+            </div>
+            <div class="item-source">Source : GitHub blog · github.blog</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Avril 2025 ── -->
+      <div class="month-entry fade-in">
+        <div class="month-header">
+          <span class="month-label">Avril 2025</span>
+          <span class="month-count">3 articles</span>
+        </div>
+        <div class="veille-items">
+          <div class="veille-item">
+            <span class="item-tag">Open source</span>
+            <div class="item-topic">Meta Llama 4 — modèle multimodal open source de nouvelle génération</div>
+            <div class="item-desc">
+              Meta publie Llama 4, une famille de modèles multimodaux (texte + image) en open source.
+              La variante Scout (17B paramètres actifs en MoE) offre un contexte de 10 millions de tokens.
+              L'open source IA se démocratise : des modèles de très haute qualité deviennent accessibles
+              à tous les développeurs sans coût d'API.
+            </div>
+            <div class="item-source">Source : Meta AI · ai.meta.com</div>
+          </div>
+          <div class="veille-item">
+            <span class="item-tag">LLM</span>
+            <div class="item-topic">OpenAI GPT-4.1 — optimisé pour le suivi d'instructions longues</div>
+            <div class="item-desc">
+              OpenAI lance GPT-4.1 avec une fenêtre de contexte d'1 million de tokens et de meilleures
+              performances dans le suivi d'instructions complexes. Les variantes mini et nano ciblent
+              les cas d'usage nécessitant vitesse et faible coût (chatbots, complétion de code basique).
+            </div>
+            <div class="item-source">Source : OpenAI · openai.com</div>
+          </div>
+          <div class="veille-item">
+            <span class="item-tag">Éthique</span>
+            <div class="item-topic">IA et plagiat académique : comment les établissements répondent</div>
+            <div class="item-desc">
+              De nombreux lycées et universités publient leurs politiques sur l'usage de l'IA dans
+              les travaux scolaires. Les détecteurs IA se révèlent peu fiables. Le débat porte sur
+              l'adaptation des évaluations plutôt que sur l'interdiction — sujet directement pertinent
+              pour la formation BTS SIO.
+            </div>
+            <div class="item-source">Source : Le Monde · lemonde.fr</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Mai 2025 ── -->
+      <div class="month-entry fade-in">
+        <div class="month-header">
+          <span class="month-label">Mai 2025</span>
+          <span class="month-count">2 articles</span>
+        </div>
+        <div class="veille-items">
+          <div class="veille-item">
+            <span class="item-tag">Développement</span>
+            <div class="item-topic">Microsoft Build 2025 — GitHub Copilot Workspace devient GA</div>
+            <div class="item-desc">
+              Microsoft Build 2025 place l'IA au centre de toutes ses annonces. GitHub Copilot Workspace
+              passe en disponibilité générale : un environnement permettant de passer d'une issue GitHub
+              à un plan d'implémentation puis à du code révisable, entièrement guidé par l'IA.
+              Les outils Microsoft 365 Copilot s'intègrent aux workflows de développement.
+            </div>
+            <div class="item-source">Source : Microsoft Build · build.microsoft.com</div>
+          </div>
+          <div class="veille-item">
+            <span class="item-tag">Développement</span>
+            <div class="item-topic">Le vibe coding — programmer en décrivant ce qu'on veut à une IA</div>
+            <div class="item-desc">
+              Le terme "vibe coding" (forgé par Andrej Karpathy, co-fondateur d'OpenAI) décrit
+              une nouvelle pratique : déléguer entièrement l'écriture du code à une IA en décrivant
+              ses intentions. Débat dans la communauté : gain de productivité réel mais risque de perte
+              de compréhension du code généré. Sujet important pour les futurs développeurs SLAM.
+            </div>
+            <div class="item-source">Source : X (Twitter) @karpathy · Medium</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Juin 2025 ── -->
+      <div class="month-entry fade-in">
+        <div class="month-header">
+          <span class="month-label">Juin 2025</span>
+          <span class="month-count">2 articles</span>
+        </div>
+        <div class="veille-items">
+          <div class="veille-item">
+            <span class="item-tag">LLM</span>
+            <div class="item-topic">Google I/O 2025 — Gemini 2.5 et Project Astra pour les agents mobiles</div>
+            <div class="item-desc">
+              Google I/O 2025 présente Gemini 2.5 Pro, leader sur plusieurs benchmarks de coding et
+              de raisonnement. Project Astra montre un agent IA capable de voir via une caméra et
+              d'interagir avec l'environnement physique en temps réel. L'IA sort définitivement
+              du seul domaine textuel.
+            </div>
+            <div class="item-source">Source : Google I/O · io.google</div>
+          </div>
+          <div class="veille-item">
+            <span class="item-tag">Réglementation</span>
+            <div class="item-topic">EU AI Act — les obligations de transparence entrent en vigueur</div>
+            <div class="item-desc">
+              Les premières obligations majeures de l'AI Act européen entrent en application :
+              transparence sur les contenus générés par IA, obligations pour les modèles à usage général
+              (GPAI). Les entreprises tech européennes commencent à adapter leurs produits.
+              Impact concret sur les applications web et mobiles développées en France.
+            </div>
+            <div class="item-source">Source : CNIL · cnil.fr / Journal officiel UE</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Juillet 2025 ── -->
+      <div class="month-entry fade-in">
+        <div class="month-header">
+          <span class="month-label">Juillet 2025</span>
+          <span class="month-count">2 articles</span>
+        </div>
+        <div class="veille-items">
+          <div class="veille-item">
+            <span class="item-tag">Sécurité</span>
+            <div class="item-topic">Prompt injection — la principale faille de sécurité des agents IA</div>
+            <div class="item-desc">
+              Les chercheurs en cybersécurité documentent massivement les attaques par "prompt injection"
+              sur les agents IA : un contenu malveillant dans une page web ou un email peut détourner
+              le comportement de l'agent. Nouveau vecteur d'attaque critique pour les développeurs SLAM
+              qui intègrent des LLMs dans leurs applications.
+            </div>
+            <div class="item-source">Source : OWASP LLM Top 10 · owasp.org</div>
+          </div>
+          <div class="veille-item">
+            <span class="item-tag">Open source</span>
+            <div class="item-topic">Mistral — l'IA européenne confirme sa place parmi les leaders</div>
+            <div class="item-desc">
+              La startup française Mistral AI continue de publier des modèles open source compétitifs
+              (Mistral Large 2, Codestral pour le code). Codestral est spécifiquement optimisé pour
+              la complétion et la génération de code, et disponible gratuitement pour les développeurs.
+              Un acteur européen à suivre de près.
+            </div>
+            <div class="item-source">Source : Mistral AI · mistral.ai</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Août 2025 ── -->
+      <div class="month-entry fade-in">
+        <div class="month-header">
+          <span class="month-label">Août 2025</span>
+          <span class="month-count">2 articles</span>
+        </div>
+        <div class="veille-items">
+          <div class="veille-item">
+            <span class="item-tag">Tendances</span>
+            <div class="item-topic">IA embarquée : les LLMs arrivent sur les appareils mobiles</div>
+            <div class="item-desc">
+              Apple, Google et Qualcomm accélèrent le déploiement de LLMs directement sur les smartphones
+              (on-device AI). Apple Intelligence, Google Gemini Nano intégré dans Android… Le traitement
+              local préserve la vie privée et réduit la latence. Enjeu pour les développeurs mobiles
+              (Android/iOS) : apprendre à intégrer ces modèles dans les applications.
+            </div>
+            <div class="item-source">Source : The Verge · theverge.com</div>
+          </div>
+          <div class="veille-item">
+            <span class="item-tag">Développement</span>
+            <div class="item-topic">Bilan mi-2025 : l'IA dans le développement logiciel — état des lieux</div>
+            <div class="item-desc">
+              À mi-2025, plus de 75% des développeurs professionnels utilisent au moins un outil IA
+              dans leur workflow selon le Stack Overflow Survey. Les gains de productivité sont réels
+              sur les tâches répétitives (tests, boilerplate, documentation). La maîtrise des prompts
+              devient une compétence clé pour les développeurs.
+            </div>
+            <div class="item-source">Source : Stack Overflow Developer Survey 2025</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Septembre 2025 ── -->
+      <div class="month-entry fade-in">
+        <div class="month-header">
+          <span class="month-label">Septembre 2025</span>
+          <span class="month-count">2 articles</span>
+        </div>
+        <div class="veille-items">
+          <div class="veille-item">
+            <span class="item-tag">Éducation</span>
+            <div class="item-topic">IA et formation professionnelle : l'adaptation des référentiels BTS</div>
+            <div class="item-desc">
+              Le Ministère de l'Éducation nationale publie ses premières recommandations sur l'usage
+              de l'IA dans la formation BTS et les examens professionnels. Les référentiels commencent
+              à intégrer des compétences IA explicites. Directement pertinent pour la filière SIO SLAM.
+            </div>
+            <div class="item-source">Source : Éduscol · eduscol.education.fr</div>
+          </div>
+          <div class="veille-item">
+            <span class="item-tag">Agents IA</span>
+            <div class="item-topic">Nouveaux frameworks d'agents : standardisation en cours</div>
+            <div class="item-desc">
+              L'écosystème des agents IA se structure avec l'émergence de standards (Model Context
+              Protocol d'Anthropic, API d'agents OpenAI). Les entreprises commencent à déployer des
+              agents en production pour des tâches métier (support client, analyse de données, génération
+              de rapports). La compréhension de ces architectures devient un avantage concurrentiel
+              pour les développeurs SLAM.
+            </div>
+            <div class="item-source">Source : Anthropic MCP · anthropic.com</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Octobre 2025 ── -->
+      <div class="month-entry fade-in">
+        <div class="month-header">
+          <span class="month-label">Octobre 2025</span>
+          <span class="month-count">2 articles</span>
+        </div>
+        <div class="veille-items">
+          <div class="veille-item">
+            <span class="item-tag">LLM</span>
+            <div class="item-topic">Course aux modèles multimodaux : texte, image, audio et vidéo unifiés</div>
+            <div class="item-desc">
+              Les grands laboratoires (OpenAI, Google, Anthropic, Meta) publient des modèles capables
+              de traiter simultanément texte, image, audio et vidéo dans une architecture unifiée.
+              Cette convergence multimodale ouvre de nouveaux cas d'usage dans le développement d'applications
+              (analyse d'images produits, transcription automatique, génération de médias).
+            </div>
+            <div class="item-source">Source : The Verge · theverge.com</div>
+          </div>
+          <div class="veille-item">
+            <span class="item-tag">Cybersécurité</span>
+            <div class="item-topic">IA et cybersécurité : double tranchant pour les développeurs</div>
+            <div class="item-desc">
+              L'IA est utilisée à la fois pour détecter les vulnérabilités (analyse statique de code,
+              détection d'anomalies) et pour les exploiter (génération de malwares, phishing amélioré).
+              Les développeurs SLAM doivent intégrer la sécurité by design et se familiariser avec
+              les nouveaux outils d'analyse IA comme GitHub Advanced Security.
+            </div>
+            <div class="item-source">Source : ANSSI · ssi.gouv.fr</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Novembre 2025 ── -->
+      <div class="month-entry fade-in">
+        <div class="month-header">
+          <span class="month-label">Novembre 2025</span>
+          <span class="month-count">2 articles</span>
+        </div>
+        <div class="veille-items">
+          <div class="veille-item">
+            <span class="item-tag">Open source</span>
+            <div class="item-topic">L'open source IA mûrit : qualité, gouvernance et licences</div>
+            <div class="item-desc">
+              La communauté open source IA se structure autour de questions de gouvernance et de licences.
+              Des modèles publiés sous licence "open" voient leurs conditions précisées (restrictions
+              commerciales, usage militaire). Hugging Face centralise l'écosystème avec plus de 500 000
+              modèles disponibles. Pour un développeur, savoir naviguer dans cet écosystème est essentiel.
+            </div>
+            <div class="item-source">Source : Hugging Face blog · huggingface.co</div>
+          </div>
+          <div class="veille-item">
+            <span class="item-tag">Développement</span>
+            <div class="item-topic">Tests automatisés par IA : les LLMs écrivent et maintiennent les tests</div>
+            <div class="item-desc">
+              De nouveaux outils permettent aux LLMs de générer automatiquement des suites de tests
+              unitaires et d'intégration, de les mettre à jour lors d'une refactorisation, et de détecter
+              les cas non couverts. La couverture de test s'améliore sans effort manuel supplémentaire.
+              Impact direct sur les pratiques TDD en SLAM.
+            </div>
+            <div class="item-source">Source : GitHub blog · github.blog</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Décembre 2025 ── -->
+      <div class="month-entry fade-in">
+        <div class="month-header">
+          <span class="month-label">Décembre 2025</span>
+          <span class="month-count">2 articles</span>
+        </div>
+        <div class="veille-items">
+          <div class="veille-item">
+            <span class="item-tag">Bilan</span>
+            <div class="item-topic">Bilan 2025 : une année de rupture pour l'IA dans le développement</div>
+            <div class="item-desc">
+              2025 aura été l'année de la démocratisation des agents IA autonomes, de l'explosion
+              des modèles open source compétitifs, et de l'intégration profonde de l'IA dans les IDEs.
+              Les développeurs qui maîtrisent ces outils gagnent significativement en productivité.
+              La question n'est plus "faut-il utiliser l'IA ?" mais "comment bien l'utiliser ?".
+            </div>
+            <div class="item-source">Source : Stack Overflow / GitHub Octoverse 2025</div>
+          </div>
+          <div class="veille-item">
+            <span class="item-tag">Réglementation</span>
+            <div class="item-topic">RGPD et IA : quelles données peut-on utiliser pour entraîner un modèle ?</div>
+            <div class="item-desc">
+              La CNIL française et le Comité européen de la protection des données publient des lignes
+              directrices sur l'entraînement de modèles IA avec des données personnelles. Distinction
+              entre données publiques et privées, droit à l'opposition des personnes concernées.
+              Compétence directement liée à la formation RGPD réalisée en BTS SIO.
+            </div>
+            <div class="item-source">Source : CNIL · cnil.fr</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Janvier 2026 ── -->
+      <div class="month-entry fade-in">
+        <div class="month-header">
+          <span class="month-label">Janvier 2026</span>
+          <span class="month-count">2 articles</span>
+        </div>
+        <div class="veille-items">
+          <div class="veille-item">
+            <span class="item-tag">LLM</span>
+            <div class="item-topic">Nouvelles architectures : vers des modèles plus efficaces en énergie</div>
+            <div class="item-desc">
+              Face aux critiques sur la consommation énergétique des grands modèles, les laboratoires
+              publient des travaux sur des architectures plus sobres (Mixture of Experts amélioré,
+              distillation de connaissance, quantification avancée). L'efficacité énergétique de l'IA
+              devient un enjeu réglementaire et économique majeur en Europe.
+            </div>
+            <div class="item-source">Source : MIT Technology Review · technologyreview.com</div>
+          </div>
+          <div class="veille-item">
+            <span class="item-tag">Développement</span>
+            <div class="item-topic">L'IA dans les applications métier : retours d'expérience du terrain</div>
+            <div class="item-desc">
+              Des entreprises publient leurs premiers retours d'expérience sur le déploiement d'IA
+              en production : gains de productivité sur le support client (+30%), réduction des bugs
+              détectés après déploiement, mais aussi cas d'hallucinations coûteuses. Les bonnes pratiques
+              d'intégration (RAG, garde-fous, évaluation continue) font consensus.
+            </div>
+            <div class="item-source">Source : InfoQ · infoq.com</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Février 2026 ── -->
+      <div class="month-entry fade-in">
+        <div class="month-header">
+          <span class="month-label">Février 2026</span>
+          <span class="month-count">2 articles</span>
+        </div>
+        <div class="veille-items">
+          <div class="veille-item">
+            <span class="item-tag">Agents IA</span>
+            <div class="item-topic">Agents IA en entreprise : les premiers déploiements à grande échelle</div>
+            <div class="item-desc">
+              Des entreprises du CAC 40 et PME françaises déploient des agents IA pour automatiser
+              des workflows internes (gestion documentaire, onboarding RH, support IT de niveau 1).
+              Le profil de développeur capable de concevoir et maintenir ces systèmes est très recherché.
+              Lien direct avec les compétences développées en BTS SIO SLAM (C2, C5).
+            </div>
+            <div class="item-source">Source : ZDNet France · zdnet.fr</div>
+          </div>
+          <div class="veille-item">
+            <span class="item-tag">Formation</span>
+            <div class="item-topic">Prompt engineering : une compétence à part entière pour les développeurs</div>
+            <div class="item-desc">
+              Le "prompt engineering" — l'art de formuler des instructions efficaces pour les LLMs —
+              est reconnu comme compétence professionnelle à part entière. Des certifications apparaissent,
+              et les offres d'emploi le mentionnent explicitement. Maîtriser ces techniques améliore
+              la qualité des résultats des outils IA utilisés quotidiennement (Copilot, Claude, Cursor).
+            </div>
+            <div class="item-source">Source : LinkedIn Learning / Coursera</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Mars 2026 ── -->
+      <div class="month-entry fade-in">
+        <div class="month-header">
+          <span class="month-label">Mars 2026</span>
+          <span class="month-count">2 articles</span>
+        </div>
+        <div class="veille-items">
+          <div class="veille-item">
+            <span class="item-tag">Réglementation</span>
+            <div class="item-topic">EU AI Act — obligation de marquage des contenus générés par IA</span>
+            <div class="item-desc">
+              L'obligation de marquage des contenus générés par IA (textes, images, vidéos, audio)
+              entre en application dans l'UE. Les plateformes et développeurs d'applications doivent
+              implémenter des mécanismes de détection et d'étiquetage. Impact direct sur le développement
+              d'applications web intégrant de la génération IA (C3 — présence en ligne).
+            </div>
+            <div class="item-source">Source : Journal officiel UE / CNIL · cnil.fr</div>
+          </div>
+          <div class="veille-item">
+            <span class="item-tag">Développement</span>
+            <div class="item-topic">IA générative et développement web : intégration dans les CMS et frameworks</div>
+            <div class="item-desc">
+              Les principaux frameworks web (Next.js, Django, Laravel) et CMS (WordPress, Drupal)
+              intègrent nativement des fonctionnalités IA. Génération de contenu, personnalisation
+              dynamique, traduction automatique… L'IA devient une couche standard du stack web.
+              Pour un développeur SLAM, ne pas connaître ces intégrations devient un désavantage.
+            </div>
+            <div class="item-source">Source : CSS-Tricks / Smashing Magazine</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Avril 2026 ── -->
+      <div class="month-entry fade-in">
+        <div class="month-header">
+          <span class="month-label">Avril 2026</span>
+          <span class="month-count">2 articles</span>
+        </div>
+        <div class="veille-items">
+          <div class="veille-item">
+            <span class="item-tag">Bilan personnel</span>
+            <div class="item-topic">Synthèse de la veille — apports pour la formation BTS SIO SLAM</div>
+            <div class="item-desc">
+              Après 20 mois de veille sur l'IA, les principaux apports pour ma formation : compréhension
+              des architectures LLM, maîtrise des outils d'assistance au développement (Copilot, Cursor),
+              sensibilisation aux enjeux RGPD/EU AI Act directement liés aux compétences E5 C3 et C6.
+              L'IA est passée d'un sujet d'actualité à un outil quotidien de mon développement professionnel.
+            </div>
+            <div class="item-source">Bilan personnel · Meven Hoarau Techer</div>
+          </div>
+          <div class="veille-item">
+            <span class="item-tag">Perspective</span>
+            <div class="item-topic">IA et métiers du développement : quelles compétences pour 2026–2030 ?</div>
+            <div class="item-desc">
+              Les rapports prospectifs (World Economic Forum, OCDE) s'accordent : les développeurs
+              ne seront pas remplacés par l'IA, mais ceux qui savent travailler avec l'IA remplaceront
+              ceux qui ne le peuvent pas. Les compétences clés : architecture logicielle, compréhension
+              des systèmes, sens critique sur les sorties IA, et éthique numérique.
+            </div>
+            <div class="item-source">Source : WEF Future of Jobs 2025 / OCDE</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <!-- /timeline -->
+
+    <!-- Sources habituelles -->
+    <div class="sources-section fade-in">
+      <h3>Sources consultées régulièrement</h3>
+      <div class="sources-grid">
+        <div class="source-card">
+          <div class="source-name">The Verge / Wired</div>
+          <div class="source-desc">Actualités tech grand public et analyses approfondies</div>
+        </div>
+        <div class="source-card">
+          <div class="source-name">Anthropic / OpenAI blogs</div>
+          <div class="source-desc">Annonces officielles des principaux laboratoires IA</div>
+        </div>
+        <div class="source-card">
+          <div class="source-name">GitHub blog</div>
+          <div class="source-desc">Outils de développement et tendances open source</div>
+        </div>
+        <div class="source-card">
+          <div class="source-name">CNIL · cnil.fr</div>
+          <div class="source-desc">Réglementation RGPD et lignes directrices IA en France</div>
+        </div>
+        <div class="source-card">
+          <div class="source-name">MIT Technology Review</div>
+          <div class="source-desc">Analyses techniques et prospectives sur l'IA</div>
+        </div>
+        <div class="source-card">
+          <div class="source-name">Hugging Face blog</div>
+          <div class="source-desc">Modèles open source et communauté IA</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <!-- /veille-wrapper -->
+
+  <footer class="footer">
+    MEVEN HOARAU TECHER &nbsp;·&nbsp; VEILLE TECHNOLOGIQUE &nbsp;·&nbsp; BTS SIO SLAM &nbsp;·&nbsp; 2024–2026
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
