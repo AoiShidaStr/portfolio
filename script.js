@@ -182,9 +182,7 @@ function escHtml(str) {
 }
 
 const fichesDataEl = document.getElementById('fiches-data');
-if (!fichesDataEl) return;
-
-const fichesData = JSON.parse(fichesDataEl.textContent);
+const fichesData = fichesDataEl ? JSON.parse(fichesDataEl.textContent) : {};
 
 const modalOverlay = document.getElementById('modal-overlay');
 const modalClose   = document.getElementById('modal-close');
