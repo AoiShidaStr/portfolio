@@ -3,20 +3,28 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Meven Hoarau Techer — Portfolio</title>
+  <title>Meven Hoarau Techer — Portfolio BTS SIO SLAM</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- ============================================================
-       CURSEUR PERSONNALISÉ (losange indigo)
-  ============================================================ -->
+  <!-- Curseur losange personnalisé -->
   <div class="cursor" id="cursor"></div>
 
-  <!-- ============================================================
-       PARTICULES D'ARRIÈRE-PLAN (losanges SVG driftants)
-  ============================================================ -->
+  <!-- Particules d'arrière-plan -->
   <div class="particles" id="particles" aria-hidden="true"></div>
+
+  <!-- ============================================================
+       MODAL — Fiche détaillée projet
+  ============================================================ -->
+  <div class="modal-overlay" id="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-card">
+      <button class="modal-close" id="modal-close" aria-label="Fermer">✕</button>
+      <div class="modal-content" id="modal-content">
+        <!-- injecté par JS -->
+      </div>
+    </div>
+  </div>
 
   <!-- ============================================================
        NAVIGATION
@@ -25,7 +33,9 @@
     <a class="nav-logo" href="#">M<span>.</span>HT</a>
     <ul class="nav-links">
       <li><a href="#projets">projets</a></li>
+      <li><a href="#competences">E5</a></li>
       <li><a href="#stack">stack</a></li>
+      <li><a href="#devpro">parcours</a></li>
       <li><a href="#contact">contact</a></li>
       <li><a class="nav-link-tableau" href="Tableau de synthèse.html">tableau E5</a></li>
     </ul>
@@ -34,15 +44,13 @@
   <main>
 
     <!-- ==========================================================
-         HERO — Illustration SVG isométrique animée
+         HERO — SVG isométrique
     ========================================================== -->
     <section class="hero fade-in" id="hero">
 
-      <!-- SVG isométrique principal -->
       <div class="hero-iso" aria-hidden="true">
         <svg class="iso-svg" viewBox="0 0 600 420" xmlns="http://www.w3.org/2000/svg">
           <defs>
-            <!-- Gradient faces cubes -->
             <linearGradient id="face-top" x1="0" y1="0" x2="0" y2="1">
               <stop offset="0%" stop-color="#6366f1"/>
               <stop offset="100%" stop-color="#4f46e5"/>
@@ -55,7 +63,6 @@
               <stop offset="0%" stop-color="#3730a3"/>
               <stop offset="100%" stop-color="#4338ca"/>
             </linearGradient>
-            <!-- Gradient satellites -->
             <linearGradient id="sat-top" x1="0" y1="0" x2="0" y2="1">
               <stop offset="0%" stop-color="#818cf8"/>
               <stop offset="100%" stop-color="#6366f1"/>
@@ -68,111 +75,78 @@
               <stop offset="0%" stop-color="#3730a3"/>
               <stop offset="100%" stop-color="#4f46e5"/>
             </linearGradient>
-            <!-- Filtre glow -->
             <filter id="glow">
               <feGaussianBlur stdDeviation="3" result="blur"/>
               <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
             </filter>
           </defs>
 
-          <!-- ---- Lignes de connexion en pointillés animées ---- -->
+          <!-- Lignes de connexion pointillées animées -->
           <g class="iso-connections" stroke="#6366f1" stroke-width="1" fill="none" opacity="0.4">
-            <!-- Centre → Java -->
             <line class="dash-line" x1="300" y1="210" x2="160" y2="140" stroke-dasharray="6 4"/>
-            <!-- Centre → Python -->
             <line class="dash-line" x1="300" y1="210" x2="440" y2="135" stroke-dasharray="6 4" style="animation-delay:.4s"/>
-            <!-- Centre → Docker -->
             <line class="dash-line" x1="300" y1="210" x2="150" y2="300" stroke-dasharray="6 4" style="animation-delay:.8s"/>
-            <!-- Centre → SQL -->
             <line class="dash-line" x1="300" y1="210" x2="450" y2="300" stroke-dasharray="6 4" style="animation-delay:1.2s"/>
-            <!-- Centre → Git -->
             <line class="dash-line" x1="300" y1="210" x2="300" y2="340" stroke-dasharray="6 4" style="animation-delay:1.6s"/>
-            <!-- Centre → JS -->
             <line class="dash-line" x1="300" y1="210" x2="510" y2="210" stroke-dasharray="6 4" style="animation-delay:2s"/>
-            <!-- Centre → HTML -->
             <line class="dash-line" x1="300" y1="210" x2="90" y2="210" stroke-dasharray="6 4" style="animation-delay:2.4s"/>
           </g>
 
-          <!-- ---- CUBE CENTRAL "MHT" ---- -->
+          <!-- Cube central MHT -->
           <g class="iso-center-cube" filter="url(#glow)">
-            <!-- Face top -->
             <polygon points="300,140 380,185 300,230 220,185" fill="url(#face-top)"/>
-            <!-- Face left -->
             <polygon points="220,185 300,230 300,280 220,235" fill="url(#face-left)"/>
-            <!-- Face right -->
             <polygon points="380,185 300,230 300,280 380,235" fill="url(#face-right)"/>
-            <!-- Initiales -->
             <text x="300" y="195" text-anchor="middle" font-family="monospace" font-size="18"
                   font-weight="800" fill="#e0e7ff" letter-spacing="2">MHT</text>
           </g>
 
-          <!-- ---- CUBE SATELLITE : Java ---- -->
-          <g class="iso-cube sat-java" style="--dx:0px;--dy:0px">
+          <!-- Cubes satellites techno -->
+          <g class="iso-cube sat-java">
             <polygon points="160,100 196,120 160,140 124,120" fill="url(#sat-top)"/>
             <polygon points="124,120 160,140 160,165 124,145" fill="url(#sat-left)"/>
             <polygon points="196,120 160,140 160,165 196,145" fill="url(#sat-right)"/>
-            <text x="160" y="127" text-anchor="middle" font-family="monospace" font-size="9"
-                  font-weight="700" fill="#e0e7ff">Java</text>
+            <text x="160" y="127" text-anchor="middle" font-family="monospace" font-size="9" font-weight="700" fill="#e0e7ff">Java</text>
           </g>
-
-          <!-- ---- CUBE SATELLITE : Python ---- -->
-          <g class="iso-cube sat-python" style="--dx:0px;--dy:0px">
+          <g class="iso-cube sat-python">
             <polygon points="440,95 476,115 440,135 404,115" fill="url(#sat-top)"/>
             <polygon points="404,115 440,135 440,160 404,140" fill="url(#sat-left)"/>
             <polygon points="476,115 440,135 440,160 476,140" fill="url(#sat-right)"/>
-            <text x="440" y="122" text-anchor="middle" font-family="monospace" font-size="8"
-                  font-weight="700" fill="#e0e7ff">Python</text>
+            <text x="440" y="122" text-anchor="middle" font-family="monospace" font-size="8" font-weight="700" fill="#e0e7ff">Python</text>
           </g>
-
-          <!-- ---- CUBE SATELLITE : Docker ---- -->
-          <g class="iso-cube sat-docker" style="--dx:0px;--dy:0px">
+          <g class="iso-cube sat-docker">
             <polygon points="150,265 186,285 150,305 114,285" fill="url(#sat-top)"/>
             <polygon points="114,285 150,305 150,330 114,310" fill="url(#sat-left)"/>
             <polygon points="186,285 150,305 150,330 186,310" fill="url(#sat-right)"/>
-            <text x="150" y="292" text-anchor="middle" font-family="monospace" font-size="8"
-                  font-weight="700" fill="#e0e7ff">Docker</text>
+            <text x="150" y="292" text-anchor="middle" font-family="monospace" font-size="8" font-weight="700" fill="#e0e7ff">Docker</text>
           </g>
-
-          <!-- ---- CUBE SATELLITE : SQL ---- -->
-          <g class="iso-cube sat-sql" style="--dx:0px;--dy:0px">
+          <g class="iso-cube sat-sql">
             <polygon points="450,265 486,285 450,305 414,285" fill="url(#sat-top)"/>
             <polygon points="414,285 450,305 450,330 414,310" fill="url(#sat-left)"/>
             <polygon points="486,285 450,305 450,330 486,310" fill="url(#sat-right)"/>
-            <text x="450" y="292" text-anchor="middle" font-family="monospace" font-size="9"
-                  font-weight="700" fill="#e0e7ff">SQL</text>
+            <text x="450" y="292" text-anchor="middle" font-family="monospace" font-size="9" font-weight="700" fill="#e0e7ff">SQL</text>
           </g>
-
-          <!-- ---- CUBE SATELLITE : Git ---- -->
-          <g class="iso-cube sat-git" style="--dx:0px;--dy:0px">
+          <g class="iso-cube sat-git">
             <polygon points="300,315 336,335 300,355 264,335" fill="url(#sat-top)"/>
             <polygon points="264,335 300,355 300,380 264,360" fill="url(#sat-left)"/>
             <polygon points="336,335 300,355 300,380 336,360" fill="url(#sat-right)"/>
-            <text x="300" y="342" text-anchor="middle" font-family="monospace" font-size="9"
-                  font-weight="700" fill="#e0e7ff">Git</text>
+            <text x="300" y="342" text-anchor="middle" font-family="monospace" font-size="9" font-weight="700" fill="#e0e7ff">Git</text>
           </g>
-
-          <!-- ---- CUBE SATELLITE : JS ---- -->
-          <g class="iso-cube sat-js" style="--dx:0px;--dy:0px">
+          <g class="iso-cube sat-js">
             <polygon points="510,175 546,195 510,215 474,195" fill="url(#sat-top)"/>
             <polygon points="474,195 510,215 510,240 474,220" fill="url(#sat-left)"/>
             <polygon points="546,195 510,215 510,240 546,220" fill="url(#sat-right)"/>
-            <text x="510" y="202" text-anchor="middle" font-family="monospace" font-size="9"
-                  font-weight="700" fill="#e0e7ff">JS</text>
+            <text x="510" y="202" text-anchor="middle" font-family="monospace" font-size="9" font-weight="700" fill="#e0e7ff">JS</text>
           </g>
-
-          <!-- ---- CUBE SATELLITE : HTML/CSS ---- -->
-          <g class="iso-cube sat-html" style="--dx:0px;--dy:0px">
+          <g class="iso-cube sat-html">
             <polygon points="90,175 126,195 90,215 54,195" fill="url(#sat-top)"/>
             <polygon points="54,195 90,215 90,240 54,220" fill="url(#sat-left)"/>
             <polygon points="126,195 90,215 90,240 126,220" fill="url(#sat-right)"/>
-            <text x="90" y="202" text-anchor="middle" font-family="monospace" font-size="7.5"
-                  font-weight="700" fill="#e0e7ff">HTML</text>
+            <text x="90" y="202" text-anchor="middle" font-family="monospace" font-size="7.5" font-weight="700" fill="#e0e7ff">HTML</text>
           </g>
-
         </svg>
       </div>
 
-      <!-- Texte hero -->
       <div class="hero-content">
         <div class="hero-badge">BTS SIO · OPTION SLAM</div>
         <h1 class="hero-name">Meven<br><span>Hoarau Techer</span></h1>
@@ -185,11 +159,10 @@
           <a class="btn-secondary" href="Tableau de synthèse.html">tableau E5 →</a>
         </div>
       </div>
-
     </section>
 
     <!-- ==========================================================
-         PROJETS — Blocs isométriques 3D CSS
+         PROJETS — 5 réalisations avec fiches détaillées
     ========================================================== -->
     <section class="section fade-in" id="projets">
       <div class="section-badge">RÉALISATIONS</div>
@@ -197,7 +170,7 @@
 
       <div class="projects-grid">
 
-        <!-- PharmaPays++ -->
+        <!-- ── PharmaPays++ ── -->
         <article class="iso-block-card">
           <div class="iso-block">
             <div class="iso-face iso-face-top"></div>
@@ -205,23 +178,33 @@
             <div class="iso-face iso-face-right"></div>
           </div>
           <div class="card-body">
+            <div class="card-meta">
+              <span class="card-type">TD · Groupe · 2024</span>
+              <span class="card-comp-badges">
+                <span class="comp-badge">C1</span>
+                <span class="comp-badge">C4</span>
+              </span>
+            </div>
             <h3 class="project-name">PharmaPays++</h3>
             <p class="project-desc">
               Application desktop de gestion et consultation de médicaments.
               Interface graphique JavaFX, persistance SQLite, architecture MVC.
             </p>
+            <!-- Placeholder capture d'écran -->
+            <div class="screenshot-placeholder">
+              <span>📸 Capture à ajouter</span>
+            </div>
             <ul class="project-tags">
-              <li>Java</li>
-              <li>JavaFX</li>
-              <li>SQLite</li>
-              <li>Maven</li>
+              <li>Java</li><li>JavaFX</li><li>SQLite</li><li>Maven</li>
             </ul>
-            <a class="project-link" href="https://github.com/AoiShidaStr/pharmapays2"
-               target="_blank" rel="noopener">[ GitHub ] →</a>
+            <div class="card-actions">
+              <a class="project-link" href="https://github.com/AoiShidaStr/pharmapays2" target="_blank" rel="noopener">[ GitHub ] →</a>
+              <button class="btn-fiche" data-project="pharmapays">Voir la fiche →</button>
+            </div>
           </div>
         </article>
 
-        <!-- Lespass / TiBillet -->
+        <!-- ── Lespass / TiBillet ── -->
         <article class="iso-block-card">
           <div class="iso-block">
             <div class="iso-face iso-face-top" style="--top-a:#818cf8;--top-b:#6366f1"></div>
@@ -229,19 +212,122 @@
             <div class="iso-face iso-face-right" style="--right-a:#4338ca;--right-b:#3730a3"></div>
           </div>
           <div class="card-body">
+            <div class="card-meta">
+              <span class="card-type">Stage · Komidi · 6 semaines</span>
+              <span class="card-comp-badges">
+                <span class="comp-badge">C2</span>
+                <span class="comp-badge">C5</span>
+              </span>
+            </div>
             <h3 class="project-name">Lespass / TiBillet</h3>
             <p class="project-desc">
               Étude et déploiement d'une solution de billetterie open source coopérative.
               Configuration Docker, exploration Django et architecture microservices.
             </p>
+            <div class="screenshot-placeholder">
+              <span>📸 Capture à ajouter</span>
+            </div>
             <ul class="project-tags">
-              <li>Python</li>
-              <li>Django</li>
-              <li>Docker</li>
-              <li>GitHub</li>
+              <li>Python</li><li>Django</li><li>Docker</li><li>GitHub</li>
             </ul>
-            <a class="project-link" href="https://github.com/AoiShidaStr/Lespass"
-               target="_blank" rel="noopener">[ GitHub ] →</a>
+            <div class="card-actions">
+              <a class="project-link" href="https://github.com/AoiShidaStr/Lespass" target="_blank" rel="noopener">[ GitHub ] →</a>
+              <button class="btn-fiche" data-project="lespass">Voir la fiche →</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- ── Tetris ── -->
+        <article class="iso-block-card">
+          <div class="iso-block">
+            <div class="iso-face iso-face-top" style="--top-a:#a78bfa;--top-b:#7c3aed"></div>
+            <div class="iso-face iso-face-left" style="--left-a:#2e1065;--left-b:#4c1d95"></div>
+            <div class="iso-face iso-face-right" style="--right-a:#6d28d9;--right-b:#5b21b6"></div>
+          </div>
+          <div class="card-body">
+            <div class="card-meta">
+              <span class="card-type">Projet personnel · 2024–2025</span>
+              <span class="card-comp-badges">
+                <span class="comp-badge">C6</span>
+              </span>
+            </div>
+            <h3 class="project-name">Tetris</h3>
+            <p class="project-desc">
+              Jeu Tetris complet développé en autonomie. Architecture orientée objet,
+              moteur de jeu, système de menu et gestion du meilleur score.
+            </p>
+            <div class="screenshot-placeholder">
+              <span>📸 Capture à ajouter</span>
+            </div>
+            <ul class="project-tags">
+              <li>Python</li><li>Pygame</li><li>POO</li>
+            </ul>
+            <div class="card-actions">
+              <a class="project-link" href="https://github.com/AoiShidaStr/tetris" target="_blank" rel="noopener">[ GitHub ] →</a>
+              <button class="btn-fiche" data-project="tetris">Voir la fiche →</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- ── App Mobile Parking ── -->
+        <article class="iso-block-card">
+          <div class="iso-block">
+            <div class="iso-face iso-face-top" style="--top-a:#67e8f9;--top-b:#0891b2"></div>
+            <div class="iso-face iso-face-left" style="--left-a:#0c4a6e;--left-b:#075985"></div>
+            <div class="iso-face iso-face-right" style="--right-a:#0369a1;--right-b:#0284c7"></div>
+          </div>
+          <div class="card-body">
+            <div class="card-meta">
+              <span class="card-type">TD · Lycée · 2024–2025</span>
+              <span class="card-comp-badges">
+                <span class="comp-badge">C5</span>
+              </span>
+            </div>
+            <h3 class="project-name">App Mobile Parking</h3>
+            <p class="project-desc">
+              Application mobile de gestion de places de stationnement.
+              Consultation de disponibilité, réservation et suivi en temps réel.
+            </p>
+            <div class="screenshot-placeholder">
+              <span>📸 Capture à ajouter</span>
+            </div>
+            <ul class="project-tags">
+              <li>Android</li><li>Java</li><li>SQLite</li>
+            </ul>
+            <div class="card-actions">
+              <button class="btn-fiche" data-project="parking">Voir la fiche →</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- ── App Cinéma ── -->
+        <article class="iso-block-card">
+          <div class="iso-block">
+            <div class="iso-face iso-face-top" style="--top-a:#f9a8d4;--top-b:#db2777"></div>
+            <div class="iso-face iso-face-left" style="--left-a:#500724;--left-b:#831843"></div>
+            <div class="iso-face iso-face-right" style="--right-a:#be185d;--right-b:#9d174d"></div>
+          </div>
+          <div class="card-body">
+            <div class="card-meta">
+              <span class="card-type">TD · Lycée · 2024–2025</span>
+              <span class="card-comp-badges">
+                <span class="comp-badge">C5</span>
+              </span>
+            </div>
+            <h3 class="project-name">Application Cinéma</h3>
+            <p class="project-desc">
+              Application de gestion d'une salle de cinéma. Catalogue de films,
+              gestion des séances et réservation de places.
+            </p>
+            <div class="screenshot-placeholder">
+              <span>📸 Capture à ajouter</span>
+            </div>
+            <ul class="project-tags">
+              <li>Java</li><li>JavaFX</li><li>SQL</li>
+            </ul>
+            <div class="card-actions">
+              <button class="btn-fiche" data-project="cinema">Voir la fiche →</button>
+            </div>
           </div>
         </article>
 
@@ -249,84 +335,202 @@
     </section>
 
     <!-- ==========================================================
-         STACK — Grille de mini-cubes isométriques
+         COMPÉTENCES E5 — Mapping officiel BTS SIO
+    ========================================================== -->
+    <section class="section fade-in" id="competences">
+      <div class="section-badge">ÉPREUVE E5</div>
+      <h2 class="section-title">Compétences couvertes</h2>
+      <p class="section-intro">
+        Chaque réalisation couvre une ou plusieurs des 6 compétences officielles du bloc E5
+        « Support et mise à disposition de services informatiques ».
+      </p>
+
+      <div class="competences-grid">
+
+        <div class="comp-block fade-in" data-delay="0">
+          <div class="comp-id">C1</div>
+          <div class="comp-body">
+            <h4>Gérer le patrimoine informatique</h4>
+            <p>Conception du schéma entité-relation et déploiement de la base de données SQLite sur machine virtuelle.</p>
+            <div class="comp-projects">
+              <span class="comp-tag">PharmaPays++</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="comp-block fade-in" data-delay="1">
+          <div class="comp-id">C2</div>
+          <div class="comp-body">
+            <h4>Répondre aux incidents et demandes</h4>
+            <p>Analyse et compréhension d'une large codebase open source (TiBillet) pour l'adapter aux besoins client.</p>
+            <div class="comp-projects">
+              <span class="comp-tag">Lespass / TiBillet</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="comp-block fade-in" data-delay="2">
+          <div class="comp-id">C3</div>
+          <div class="comp-body">
+            <h4>Développer la présence en ligne</h4>
+            <p>Conception et déploiement de ce portfolio sur GitHub Pages. Site vitrine statique accessible publiquement.</p>
+            <div class="comp-projects">
+              <span class="comp-tag">Ce portfolio</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="comp-block fade-in" data-delay="3">
+          <div class="comp-id">C4</div>
+          <div class="comp-body">
+            <h4>Travailler en mode projet</h4>
+            <p>Travail en groupe de 4, répartition des tâches après modélisation commune du schéma de BDD.</p>
+            <div class="comp-projects">
+              <span class="comp-tag">PharmaPays++</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="comp-block fade-in" data-delay="4">
+          <div class="comp-id">C5</div>
+          <div class="comp-body">
+            <h4>Mettre à disposition un service informatique</h4>
+            <p>Déploiement local de TiBillet via Docker, développement d'applications fonctionnelles (Parking, Cinéma).</p>
+            <div class="comp-projects">
+              <span class="comp-tag">TiBillet</span>
+              <span class="comp-tag">App Parking</span>
+              <span class="comp-tag">App Cinéma</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="comp-block fade-in" data-delay="5">
+          <div class="comp-id">C6</div>
+          <div class="comp-body">
+            <h4>Organiser son développement professionnel</h4>
+            <p>Veille technologique sur l'IA, certification PIX, formation RGPD, projets personnels en autonomie.</p>
+            <div class="comp-projects">
+              <span class="comp-tag">Tetris</span>
+              <span class="comp-tag">Veille IA</span>
+              <span class="comp-tag">PIX</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==========================================================
+         STACK TECHNIQUE
     ========================================================== -->
     <section class="section fade-in" id="stack">
       <div class="section-badge">OUTILS</div>
       <h2 class="section-title">Stack technique</h2>
 
       <div class="stack-grid">
-
         <div class="stack-cube fade-in" data-delay="0">
-          <div class="cube-iso">
-            <div class="cube-face cube-top"></div>
-            <div class="cube-face cube-left"></div>
-            <div class="cube-face cube-right"></div>
-          </div>
+          <div class="cube-iso"><div class="cube-face cube-top"></div><div class="cube-face cube-left"></div><div class="cube-face cube-right"></div></div>
           <span class="cube-label">Java</span>
         </div>
-
         <div class="stack-cube fade-in" data-delay="1">
-          <div class="cube-iso">
-            <div class="cube-face cube-top"></div>
-            <div class="cube-face cube-left"></div>
-            <div class="cube-face cube-right"></div>
-          </div>
+          <div class="cube-iso"><div class="cube-face cube-top"></div><div class="cube-face cube-left"></div><div class="cube-face cube-right"></div></div>
           <span class="cube-label">Python</span>
         </div>
-
         <div class="stack-cube fade-in" data-delay="2">
-          <div class="cube-iso">
-            <div class="cube-face cube-top"></div>
-            <div class="cube-face cube-left"></div>
-            <div class="cube-face cube-right"></div>
-          </div>
+          <div class="cube-iso"><div class="cube-face cube-top"></div><div class="cube-face cube-left"></div><div class="cube-face cube-right"></div></div>
           <span class="cube-label">Django</span>
         </div>
-
         <div class="stack-cube fade-in" data-delay="3">
-          <div class="cube-iso">
-            <div class="cube-face cube-top"></div>
-            <div class="cube-face cube-left"></div>
-            <div class="cube-face cube-right"></div>
-          </div>
+          <div class="cube-iso"><div class="cube-face cube-top"></div><div class="cube-face cube-left"></div><div class="cube-face cube-right"></div></div>
           <span class="cube-label">HTML/CSS</span>
         </div>
-
         <div class="stack-cube fade-in" data-delay="4">
-          <div class="cube-iso">
-            <div class="cube-face cube-top"></div>
-            <div class="cube-face cube-left"></div>
-            <div class="cube-face cube-right"></div>
-          </div>
+          <div class="cube-iso"><div class="cube-face cube-top"></div><div class="cube-face cube-left"></div><div class="cube-face cube-right"></div></div>
           <span class="cube-label">JavaScript</span>
         </div>
-
         <div class="stack-cube fade-in" data-delay="5">
-          <div class="cube-iso">
-            <div class="cube-face cube-top"></div>
-            <div class="cube-face cube-left"></div>
-            <div class="cube-face cube-right"></div>
-          </div>
+          <div class="cube-iso"><div class="cube-face cube-top"></div><div class="cube-face cube-left"></div><div class="cube-face cube-right"></div></div>
           <span class="cube-label">SQL</span>
         </div>
-
         <div class="stack-cube fade-in" data-delay="6">
-          <div class="cube-iso">
-            <div class="cube-face cube-top"></div>
-            <div class="cube-face cube-left"></div>
-            <div class="cube-face cube-right"></div>
-          </div>
+          <div class="cube-iso"><div class="cube-face cube-top"></div><div class="cube-face cube-left"></div><div class="cube-face cube-right"></div></div>
           <span class="cube-label">Docker</span>
         </div>
-
         <div class="stack-cube fade-in" data-delay="7">
-          <div class="cube-iso">
-            <div class="cube-face cube-top"></div>
-            <div class="cube-face cube-left"></div>
-            <div class="cube-face cube-right"></div>
-          </div>
+          <div class="cube-iso"><div class="cube-face cube-top"></div><div class="cube-face cube-left"></div><div class="cube-face cube-right"></div></div>
           <span class="cube-label">Git/GitHub</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================
+         DÉVELOPPEMENT PROFESSIONNEL — C6
+    ========================================================== -->
+    <section class="section fade-in" id="devpro">
+      <div class="section-badge">COMPÉTENCE C6</div>
+      <h2 class="section-title">Développement professionnel</h2>
+
+      <div class="devpro-grid">
+
+        <!-- Veille technologique -->
+        <div class="devpro-card fade-in">
+          <div class="devpro-icon">◈</div>
+          <div class="devpro-body">
+            <h4>Veille technologique — Intelligence Artificielle</h4>
+            <p class="devpro-period">Depuis septembre 2024</p>
+            <p>
+              Suivi régulier de l'évolution des modèles de langage (LLMs), des outils d'IA générative
+              et de leur intégration dans le développement logiciel.
+            </p>
+            <ul class="devpro-topics">
+              <li>Modèles LLM : GPT-4, Claude, Gemini — comparatifs et usages</li>
+              <li>IA appliquée au développement : GitHub Copilot, génération de code</li>
+              <li>Open source et IA : LLaMA, Mistral, Ollama (local inference)</li>
+              <li>Enjeux éthiques et réglementaires de l'IA</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Certifications -->
+        <div class="devpro-card fade-in">
+          <div class="devpro-icon">✦</div>
+          <div class="devpro-body">
+            <h4>Certifications & Formations</h4>
+            <p class="devpro-period">2024–2025</p>
+            <ul class="devpro-topics">
+              <li><strong>PIX</strong> — Certification nationale des compétences numériques</li>
+              <li><strong>RGPD</strong> — Formation aux règles de protection des données personnelles (CNIL)</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Environnement de travail -->
+        <div class="devpro-card fade-in">
+          <div class="devpro-icon">⬡</div>
+          <div class="devpro-body">
+            <h4>Environnement & outils personnels</h4>
+            <p class="devpro-period">Utilisés en dehors des cours</p>
+            <ul class="devpro-topics">
+              <li><strong>VS Code</strong> — Éditeur principal avec extensions (GitLens, Pylance, IntelliCode)</li>
+              <li><strong>Docker</strong> — Conteneurisation d'environnements de développement</li>
+              <li><strong>Linux</strong> — Utilisation en VM et en environnement de stage</li>
+              <li><strong>Git</strong> — Gestion de version sur tous les projets personnels</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Initiative personnelle -->
+        <div class="devpro-card fade-in">
+          <div class="devpro-icon">▲</div>
+          <div class="devpro-body">
+            <h4>Initiative personnelle</h4>
+            <p class="devpro-period">Projet hors cursus</p>
+            <p>
+              Développement du jeu <strong>Tetris</strong> en Python/Pygame en dehors des cours,
+              démontrant une capacité à apprendre par la pratique et à mener un projet de A à Z
+              sans encadrement.
+            </p>
+          </div>
         </div>
 
       </div>
@@ -361,11 +565,12 @@
             <span>+262 693 827 100</span>
           </div>
         </li>
-        <li class="contact-card">
-          <span class="contact-icon">◈</span>
+        <!-- CV téléchargeable -->
+        <li class="contact-card contact-card-cv">
+          <span class="contact-icon">↓</span>
           <div class="contact-info">
-            <span class="contact-label">portfolio</span>
-            <a href="https://aoishidastr.github.io/portfolio" target="_blank" rel="noopener">aoishidastr.github.io/portfolio</a>
+            <span class="contact-label">curriculum vitae</span>
+            <a href="CV_MevenHoarauTecher.pdf" download>Télécharger mon CV (PDF)</a>
           </div>
         </li>
       </ul>
@@ -373,12 +578,102 @@
 
   </main>
 
-  <!-- ============================================================
-       FOOTER
-  ============================================================ -->
   <footer class="footer">
-    MEVEN HOARAU TECHER &nbsp;·&nbsp; BTS SIO SLAM &nbsp;·&nbsp; 2026
+    MEVEN HOARAU TECHER &nbsp;·&nbsp; BTS SIO SLAM &nbsp;·&nbsp; 2026 &nbsp;·&nbsp;
+    <a href="https://aoishidastr.github.io/portfolio" style="color:inherit;opacity:.5">aoishidastr.github.io/portfolio</a>
   </footer>
+
+  <!-- ============================================================
+       DONNÉES DES FICHES — injectées dans le modal par JS
+  ============================================================ -->
+  <script type="application/json" id="fiches-data">
+  {
+    "pharmapays": {
+      "titre": "PharmaPays++",
+      "type": "TD · Groupe (4 personnes) · Oct. 2024 — Jan. 2025",
+      "contexte": "Projet réalisé en 1ère année de BTS SIO SLAM au Lycée Pierre Poivre dans le cadre du module de développement. L'objectif était de créer une application desktop de gestion et consultation de médicaments.",
+      "role": "Conception du schéma entité-relation de la base de données, création et déploiement de la base SQLite sur machine virtuelle, participation à l'intégration de l'interface JavaFX.",
+      "realise": [
+        "Modélisation du schéma entité-relation (MCD/MLD)",
+        "Création et configuration d'une machine virtuelle dédiée",
+        "Implémentation de la base de données SQLite à partir du schéma",
+        "Répartition des tâches avec l'équipe après validation du modèle BDD"
+      ],
+      "obstacle": "Coordination d'une équipe de 4 développeurs sans outil de gestion de projet formel — résolution par une répartition claire des modules dès le départ.",
+      "resultat": "Application desktop fonctionnelle permettant la recherche, consultation et gestion de médicaments.",
+      "competences": ["C1 — Gérer le patrimoine informatique", "C4 — Travailler en mode projet"],
+      "tags": ["Java", "JavaFX", "SQLite", "Maven"],
+      "github": "https://github.com/AoiShidaStr/pharmapays2"
+    },
+    "lespass": {
+      "titre": "Lespass / TiBillet — Stage Komidi",
+      "type": "Stage entreprise · 6 semaines · Komidi, Saint-Joseph, La Réunion",
+      "contexte": "Stage de 1ère année BTS SIO chez Komidi, association culturelle de Saint-Joseph (La Réunion). Mission : étudier et adapter la solution open source TiBillet (billetterie coopérative) aux besoins spécifiques de l'organisation.",
+      "role": "Analyse de l'architecture de TiBillet, déploiement de l'environnement de développement local via Docker, exploration du code source Django/Python.",
+      "realise": [
+        "Étude approfondie de l'architecture microservices de TiBillet (~2 semaines)",
+        "Déploiement local de l'application via Docker Compose",
+        "Cartographie des modules et de la structure Django",
+        "Identification des points d'adaptation aux besoins de Komidi"
+      ],
+      "obstacle": "Compréhension d'une codebase de grande envergure (plusieurs milliers de lignes, architecture microservices) sans documentation interne suffisante — résolution par lecture systématique du code et tests unitaires.",
+      "resultat": "Environnement de développement opérationnel, rapport d'analyse de l'architecture, propositions d'adaptation documentées.",
+      "competences": ["C2 — Répondre aux incidents et demandes", "C5 — Mettre à disposition un service informatique"],
+      "tags": ["Python", "Django", "Docker", "GitHub", "Linux"],
+      "github": "https://github.com/AoiShidaStr/Lespass"
+    },
+    "tetris": {
+      "titre": "Tetris",
+      "type": "Projet personnel · 2024–2025",
+      "contexte": "Projet développé entièrement en autonomie en dehors du cursus scolaire, pour approfondir la maîtrise de Python et de la programmation orientée objet via un cas concret et motivant.",
+      "role": "Développement complet du projet : conception, architecture, implémentation et tests.",
+      "realise": [
+        "Architecture POO : séparation Logique (Tetris.py) / Affichage (Graphics.py) / Menu (menu.py)",
+        "Moteur de jeu complet : gestion des pièces, rotations, détection de collision, suppression de lignes",
+        "Système de menu principal et écran de game over",
+        "Persistance du meilleur score dans un fichier texte",
+        "Animations et rendu graphique via Pygame"
+      ],
+      "obstacle": "Gestion des rotations de pièces et des collisions en bord de grille — résolu par une matrice de collision et tests exhaustifs.",
+      "resultat": "Jeu Tetris complet et fonctionnel, démontrant une capacité à concevoir et mener un projet de A à Z sans encadrement.",
+      "competences": ["C6 — Organiser son développement professionnel"],
+      "tags": ["Python", "Pygame", "POO"],
+      "github": "https://github.com/AoiShidaStr/tetris"
+    },
+    "parking": {
+      "titre": "Application Mobile Parking",
+      "type": "TD · Lycée Pierre Poivre · 2024–2025",
+      "contexte": "Projet réalisé en cours de développement mobile au Lycée Pierre Poivre. Objectif : créer une application Android de gestion de places de stationnement.",
+      "role": "Développement de l'application mobile (à compléter).",
+      "realise": [
+        "Interface de consultation des places disponibles",
+        "Système de réservation de places",
+        "Persistance des données"
+      ],
+      "obstacle": "À compléter.",
+      "resultat": "Application mobile fonctionnelle de gestion de stationnement.",
+      "competences": ["C5 — Mettre à disposition un service informatique"],
+      "tags": ["Android", "Java", "SQLite"],
+      "github": null
+    },
+    "cinema": {
+      "titre": "Application Cinéma",
+      "type": "TD · Lycée Pierre Poivre · 2024–2025",
+      "contexte": "Projet réalisé en cours de développement au Lycée Pierre Poivre. Objectif : développer une application de gestion d'une salle de cinéma.",
+      "role": "Développement de l'application (à compléter).",
+      "realise": [
+        "Catalogue de films et gestion des séances",
+        "Réservation et gestion des places",
+        "Modélisation et implémentation de la base de données"
+      ],
+      "obstacle": "À compléter.",
+      "resultat": "Application fonctionnelle de gestion de cinéma.",
+      "competences": ["C5 — Mettre à disposition un service informatique"],
+      "tags": ["Java", "JavaFX", "SQL"],
+      "github": null
+    }
+  }
+  </script>
 
   <script src="script.js"></script>
 </body>
