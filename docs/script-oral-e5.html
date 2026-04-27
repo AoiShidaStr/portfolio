@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Script oral E5 — TiBillet — Meven Hoarau Techer</title>
+  <style>
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:     #080c1a;
+      --bg2:    #0f1428;
+      --bg3:    #151c35;
+      --border: #2a3460;
+      --text:   #d8e0f0;
+      --muted:  #5a6a95;
+      --accent: #6366f1;
+      --a2:     #818cf8;
+      --a3:     #a5b4fc;
+      --cyan:   #22d3ee;
+      --green:  #10b981;
+      --g2:     #6ee7b7;
+      --c2:     #fbbf24;
+      --c3:     #60a5fa;
+      --c4:     #f472b6;
+      --c5:     #34d399;
+    }
+    @media print {
+      .no-print { display: none !important; }
+      .section { page-break-inside: avoid; }
+      .section-break { page-break-before: always; }
+      body { font-size: 10.5pt; background: #fff !important; color: #111 !important; }
+      .label, .timing { color: #555 !important; }
+      .body-text { color: #111 !important; }
+      .transition { color: #6366f1 !important; }
+      .section { border-color: #ccc !important; background: #fff !important; }
+      .section-head { border-color: #ccc !important; background: #f5f5f5 !important; }
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Georgia', 'Times New Roman', serif;
+      font-size: 11.5pt;
+      line-height: 1.85;
+      color: var(--text);
+      background: var(--bg);
+    }
+    .page {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 40px 32px 60px;
+    }
+
+    /* ── HEADER ── */
+    .doc-header {
+      text-align: center;
+      padding: 32px 24px 28px;
+      margin-bottom: 36px;
+      border-bottom: 1px solid var(--border);
+    }
+    .doc-header .tag {
+      font-family: 'Courier New', monospace;
+      font-size: 8pt; font-weight: bold;
+      letter-spacing: .16em; text-transform: uppercase;
+      padding: 3px 14px; border-radius: 20px;
+      background: rgba(99,102,241,.12);
+      border: 1px solid rgba(99,102,241,.3);
+      color: var(--a2); display: inline-block; margin-bottom: 16px;
+    }
+    .doc-header h1 {
+      font-family: 'Georgia', serif;
+      font-size: 22pt; color: #fff;
+      font-weight: 700; margin-bottom: 6px;
+    }
+    .doc-header h1 span {
+      background: linear-gradient(135deg, var(--a2), var(--cyan));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .doc-header p { font-size: 9.5pt; color: var(--muted); font-family: 'Courier New', monospace; }
+
+    /* ── TIMING OVERVIEW ── */
+    .overview {
+      display: flex; flex-wrap: wrap; gap: 0;
+      border: 1px solid var(--border);
+      border-radius: 8px; overflow: hidden;
+      margin-bottom: 40px;
+    }
+    .ov-item {
+      flex: 1; min-width: 80px;
+      padding: 10px 12px;
+      border-right: 1px solid var(--border);
+      text-align: center;
+    }
+    .ov-item:last-child { border-right: none; }
+    .ov-item .ov-num {
+      font-family: 'Courier New', monospace;
+      font-size: 7.5pt; font-weight: bold;
+      letter-spacing: .08em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 3px;
+    }
+    .ov-item .ov-comp { font-size: 9.5pt; color: #fff; font-weight: 600; }
+    .ov-item .ov-time {
+      font-family: 'Courier New', monospace;
+      font-size: 8.5pt; color: var(--muted);
+    }
+    .ov-c2  { border-top: 2px solid var(--c2); }
+    .ov-c3  { border-top: 2px solid var(--c3); }
+    .ov-c4  { border-top: 2px solid var(--c4); }
+    .ov-c5  { border-top: 2px solid var(--c5); }
+    .ov-neu { border-top: 2px solid var(--border); }
+
+    /* ── SECTION ── */
+    .section {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+    .section-head {
+      display: flex; align-items: center; gap: 12px;
+      padding: 11px 20px;
+      background: rgba(255,255,255,.02);
+      border-bottom: 1px solid var(--border);
+    }
+    .section-head .num {
+      font-family: 'Courier New', monospace;
+      font-size: 8pt; font-weight: bold;
+      background: rgba(99,102,241,.2);
+      color: var(--a2);
+      border: 1px solid rgba(99,102,241,.3);
+      padding: 2px 8px; border-radius: 4px;
+      flex-shrink: 0;
+    }
+    .section-head .label {
+      font-family: 'Courier New', monospace;
+      font-size: 9.5pt; font-weight: bold;
+      color: #fff; letter-spacing: .02em; flex: 1;
+    }
+    .section-head .badge {
+      font-family: 'Courier New', monospace;
+      font-size: 7.5pt; font-weight: bold;
+      padding: 2px 9px; border-radius: 10px;
+    }
+    .bc2 { background: rgba(251,191,36,.1);  color: var(--c2);  border: 1px solid rgba(251,191,36,.25); }
+    .bc3 { background: rgba(96,165,250,.1);  color: var(--c3);  border: 1px solid rgba(96,165,250,.25); }
+    .bc4 { background: rgba(244,114,182,.1); color: var(--c4);  border: 1px solid rgba(244,114,182,.25); }
+    .bc5 { background: rgba(52,211,153,.1);  color: var(--c5);  border: 1px solid rgba(52,211,153,.25); }
+    .bt  { background: rgba(34,211,238,.08); color: var(--cyan); border: 1px solid rgba(34,211,238,.2); }
+
+    /* ── BODY TEXT ── */
+    .body-text {
+      padding: 22px 26px;
+      font-size: 11.5pt;
+      line-height: 1.9;
+      color: var(--text);
+    }
+    .body-text p { margin-bottom: 14px; }
+    .body-text p:last-child { margin-bottom: 0; }
+
+    /* ── TRANSITION PHRASE ── */
+    .transition {
+      display: block;
+      margin: 16px 0 0;
+      font-style: italic;
+      color: var(--a3);
+      font-size: 10.5pt;
+      padding-left: 14px;
+      border-left: 2px solid rgba(99,102,241,.4);
+    }
+
+    /* ── EMPHASIS ── */
+    em {
+      font-style: normal;
+      color: #fff;
+      font-weight: 600;
+    }
+
+    /* ── PRINT BTN ── */
+    .print-btn {
+      position: fixed; bottom: 20px; right: 20px;
+      background: var(--accent); color: #fff;
+      border: none; padding: 10px 20px; border-radius: 8px;
+      font-size: 10pt; cursor: pointer; z-index: 999;
+      box-shadow: 0 4px 20px rgba(99,102,241,.5);
+      font-family: 'Segoe UI', sans-serif;
+    }
+    .print-btn:hover { background: #4338ca; }
+
+    .footer {
+      margin-top: 32px; padding-top: 12px;
+      border-top: 1px solid var(--border);
+      text-align: center; font-size: 8.5pt;
+      color: var(--muted); font-family: 'Courier New', monospace;
+    }
+  </style>
+</head>
+<body>
+
+<button class="print-btn no-print" onclick="window.print()">🖨 Imprimer</button>
+
+<div class="page">
+
+<!-- HEADER -->
+<div class="doc-header">
+  <div class="tag">BTS SIO SLAM — E5 — Session 2026</div>
+  <h1><span>Script oral complet</span></h1>
+  <p>Meven Hoarau Techer · TiBillet / Lespass · Stage Komidi · Saint-Joseph, La Réunion</p>
+</div>
+
+<!-- OVERVIEW TIMING -->
+<div class="overview">
+  <div class="ov-item ov-neu">
+    <div class="ov-num">Partie 1</div>
+    <div class="ov-comp">Contexte</div>
+    <div class="ov-time">2 min</div>
+  </div>
+  <div class="ov-item ov-c4">
+    <div class="ov-num">Partie 2</div>
+    <div class="ov-comp">C4</div>
+    <div class="ov-time">1 min</div>
+  </div>
+  <div class="ov-item ov-c5">
+    <div class="ov-num">Partie 3</div>
+    <div class="ov-comp">C5</div>
+    <div class="ov-time">3 min</div>
+  </div>
+  <div class="ov-item ov-c3">
+    <div class="ov-num">Partie 4</div>
+    <div class="ov-comp">C3</div>
+    <div class="ov-time">4 min</div>
+  </div>
+  <div class="ov-item ov-c2">
+    <div class="ov-num">Partie 5</div>
+    <div class="ov-comp">C2</div>
+    <div class="ov-time">3 min</div>
+  </div>
+  <div class="ov-item ov-neu">
+    <div class="ov-num">Partie 6</div>
+    <div class="ov-comp">Bilan</div>
+    <div class="ov-time">2 min</div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════
+     PARTIE 1 — CONTEXTE
+══════════════════════════════ -->
+<div class="section">
+  <div class="section-head">
+    <span class="num">01</span>
+    <span class="label">Contexte entreprise</span>
+    <span class="badge bt">2 min</span>
+  </div>
+  <div class="body-text">
+    <p>J'ai effectué mon stage de deuxième année chez <em>Komidi</em>, une association culturelle basée à Saint-Joseph, à La Réunion. Komidi organise des spectacles et utilise <em>TiBillet</em> pour gérer ses ventes de billets en ligne. TiBillet est une suite logicielle open source développée par la coopérative Code Commun, distribuée sous licence AGPL-3.0 et lauréate du programme France 2030 du Ministère de la Culture.</p>
+    <p>Ma mission s'articulait autour de trois axes : mettre en place l'environnement de développement, développer des fonctionnalités demandées par Komidi, et résoudre les incidents rencontrés.</p>
+    <span class="transition">Pour cadrer ce travail, nous avons commencé par formaliser les besoins dans des cahiers des charges.</span>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════
+     PARTIE 2 — C4
+══════════════════════════════ -->
+<div class="section">
+  <div class="section-head">
+    <span class="num">02</span>
+    <span class="label">Travail en mode projet</span>
+    <span class="badge bc4">C4</span>
+    <span class="badge bt">1 min</span>
+  </div>
+  <div class="body-text">
+    <p>Avant tout développement, j'ai rédigé deux cahiers des charges — un pour le back-end, un pour le front-end — qui recensaient les fonctionnalités existantes dans TiBillet et les comparaient aux besoins de Komidi. Chaque fonctionnalité y était classée par statut et par niveau de difficulté. Les développements ont ensuite été suivis sous forme d'<em>issues numérotées</em>, chacune documentée dans un fichier dédié.</p>
+    <span class="transition">Maintenant que le cadre projet est posé, je vais vous expliquer comment j'ai mis en place l'environnement technique.</span>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════
+     PARTIE 3 — C5
+══════════════════════════════ -->
+<div class="section section-break">
+  <div class="section-head">
+    <span class="num">03</span>
+    <span class="label">Installation et mise en service</span>
+    <span class="badge bc5">C5</span>
+    <span class="badge bt">3 min</span>
+  </div>
+  <div class="body-text">
+    <p>TiBillet est composé de <em>trois moteurs indépendants</em>. <em>Fedow</em> gère les transactions et la fédération entre structures. <em>Lespass</em> gère la billetterie et les adhésions — c'est le moteur central utilisé par Komidi côté public. <em>LaBoutik</em> est la caisse cashless, qui n'était pas utilisée dans ce stage.</p>
+    <p>Ces trois moteurs tournent chacun dans leur propre <em>conteneur Docker</em>, ce qui permet de les isoler et de reproduire l'environnement identiquement sur n'importe quelle machine. Pour qu'ils puissent communiquer entre eux de manière sécurisée, TiBillet utilise un système de <em>clés Fernet</em> — chaque service partage la même clé secrète dans son fichier de configuration. Si les clés ne correspondent pas d'un service à l'autre, ils ne peuvent pas se parler.</p>
+    <p>Une fois l'environnement monté et les clés en place, j'ai vérifié le bon fonctionnement via le shell Django. La méthode <em>fedow.can_fedow()</em> renvoie True — ce qui confirme que Lespass communique correctement avec Fedow. L'environnement est opérationnel.</p>
+    <span class="transition">Une fois l'environnement en place, j'ai pu commencer les développements demandés par Komidi.</span>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════
+     PARTIE 4 — C3
+══════════════════════════════ -->
+<div class="section">
+  <div class="section-head">
+    <span class="num">04</span>
+    <span class="label">Développement de fonctionnalités</span>
+    <span class="badge bc3">C3</span>
+    <span class="badge bt">4 min</span>
+  </div>
+  <div class="body-text">
+    <p>J'ai développé plusieurs fonctionnalités directement sur le code source Django de TiBillet. Je vais vous donner un exemple concret avec l'<em>issue #257</em>.</p>
+    <p>Le besoin était de permettre à l'administrateur de personnaliser l'affichage du bloc prix d'un événement — soit le masquer complètement, soit afficher un message à la place. J'ai commencé par le <em>modèle de données</em> : dans le fichier <em>models.py</em>, j'ai ajouté deux champs sur le modèle Event — un booléen <em>show_price_note</em> pour activer ou désactiver l'affichage, et un champ texte <em>price_note</em> pour le message libre que l'administrateur peut saisir.</p>
+    <p>Ensuite, j'ai créé une <em>balise de template personnalisée</em> appelée <em>event_dates</em> dans le fichier <em>tibitags.py</em>. Cette balise gère l'affichage des dates d'un événement selon trois cas : un événement sur un seul jour, un événement sur un même jour mais avec une heure de fin différente, ou un événement sur plusieurs jours. Une fois cette balise créée, je l'ai appelée dans les templates HTML concernés.</p>
+    <p>Sur ce même principe — modification du modèle, adaptation de la logique, mise à jour des templates — j'ai réalisé les cinq autres issues. L'issue <em>#277</em> permettait de conditionner l'affichage de l'heure d'un événement. Les issues <em>#191</em> et <em>#180</em> concernaient respectivement l'affichage de la date de fin et l'affichage d'une description courte dans l'agenda. J'ai également ajouté un <em>filtre par date</em> sur la page de recherche des événements, et une <em>recherche multicritères</em> dans l'interface d'administration des billets.</p>
+    <p>En parallèle des développements, j'ai rédigé les <em>mentions légales</em> du site — conformes à la loi LCEN et au RGPD — incluant les informations sur l'éditeur, l'hébergeur, et les droits des utilisateurs sur leurs données personnelles.</p>
+    <span class="transition">Au-delà des développements, j'ai également été confronté à deux incidents que j'ai dû résoudre.</span>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════
+     PARTIE 5 — C2
+══════════════════════════════ -->
+<div class="section section-break">
+  <div class="section-head">
+    <span class="num">05</span>
+    <span class="label">Incidents résolus</span>
+    <span class="badge bc2">C2</span>
+    <span class="badge bt">3 min</span>
+  </div>
+  <div class="body-text">
+    <p>Le premier incident s'est produit <em>en production</em>, sur le VPS de Komidi. Le site de billetterie ne chargeait plus du tout — Django retournait une erreur dès la page d'accueil. En analysant les logs, j'ai identifié que l'erreur provenait du résolveur de tenant. En inspectant directement la base de données via le shell Django, j'ai trouvé qu'un enregistrement Client avait une valeur incorrecte pour son champ <em>categorie</em>. J'ai corrigé cette valeur directement depuis le shell, et le site est redevenu opérationnel immédiatement.</p>
+    <p>Le deuxième incident concernait mon <em>environnement de développement</em>. Dès le début du stage, les conteneurs Docker redémarraient en boucle et tous les scripts d'initialisation s'interrompaient sans raison apparente. Pour diagnostiquer, j'ai croisé plusieurs sources d'information : les logs Docker, l'état des branches Git, et la version de Docker installée. J'ai fini par identifier la cause racine : le fichier docker-compose.yml incluait <em>LaBoutik</em>, un service inutilisé mais très gourmand en ressources, qui saturait la mémoire de la machine. En le retirant du fichier de configuration, et en resynchronisant le code source avec <em>git stash</em> puis <em>git pull</em>, l'environnement est devenu stable et tous les scripts ont fonctionné normalement.</p>
+    <span class="transition">Pour conclure, je vais faire un bilan de ce stage.</span>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════
+     PARTIE 6 — BILAN
+══════════════════════════════ -->
+<div class="section">
+  <div class="section-head">
+    <span class="num">06</span>
+    <span class="label">Bilan et livrable</span>
+    <span class="badge bt">2 min</span>
+  </div>
+  <div class="body-text">
+    <p>Ce stage m'a permis de couvrir <em>quatre compétences E5</em> sur un seul projet. J'ai produit deux livrables principaux : le site de billetterie de Komidi avec les fonctionnalités livrées, et un <em>guide d'installation complet</em> au format HTML, avec une table des matières, des commandes copiables, et une section troubleshooting qui documente les cinq problèmes Docker résolus.</p>
+    <p>C'est ma première expérience de contribution à un <em>projet open source professionnel</em> sous licence AGPL-3.0 — un logiciel lauréat du programme France 2030 du Ministère de la Culture.</p>
+  </div>
+</div>
+
+
+<div class="footer">
+  <p>Meven Hoarau Techer — BTS SIO SLAM — Session 2026 — script-oral-e5.html</p>
+</div>
+
+</div><!-- /page -->
+</body>
+</html>
