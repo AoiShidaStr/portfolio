@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carte mentale — Oral E5 TiBillet</title>
+  <style>
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:    #080c1a;
+      --bg2:   #0f1428;
+      --bord:  #1e2848;
+      --text:  #e2e8f0;
+      --muted: #5a6a95;
+      --c2:    #fbbf24;
+      --c3:    #60a5fa;
+      --c4:    #f472b6;
+      --c5:    #34d399;
+      --neu:   #818cf8;
+    }
+    @media print {
+      .no-print { display: none !important; }
+      body { background: #fff !important; color: #111 !important; font-size: 9pt; }
+      .flow-card { background: #f9f9f9 !important; border-color: #ccc !important; break-inside: avoid; }
+      .card-head { background: #eee !important; }
+      .warn-note { background: #fffbe6 !important; border-color: #f59e0b !important; }
+      .warn-note p { color: #7c5700 !important; }
+      .bullet li { color: #111 !important; }
+      .conn { border-color: #bbb !important; }
+    }
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 10.5pt;
+      line-height: 1.6;
+    }
+    .page { max-width: 660px; margin: 0 auto; padding: 32px 22px 48px; }
+
+    /* HEADER */
+    .doc-head { text-align: center; margin-bottom: 22px; }
+    .doc-head .label {
+      font-family: 'Courier New', monospace;
+      font-size: 7.5pt; font-weight: bold; letter-spacing: .15em;
+      text-transform: uppercase; color: var(--muted);
+      display: block; margin-bottom: 6px;
+    }
+    .doc-head h1 { font-size: 17pt; font-weight: 800; color: #fff; margin-bottom: 4px; }
+    .doc-head p { font-size: 8.5pt; color: var(--muted); }
+
+    /* COMPETENCES */
+    .comp-strip {
+      display: flex; justify-content: center; gap: 10px;
+      flex-wrap: wrap; margin-bottom: 28px;
+    }
+    .chip {
+      font-family: 'Courier New', monospace;
+      font-size: 9.5pt; font-weight: bold;
+      padding: 6px 16px; border-radius: 20px; border: 1.5px solid;
+      display: flex; align-items: center; gap: 7px;
+    }
+    .chip .dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+    .chip-c2 { color: var(--c2); border-color: rgba(251,191,36,.4);  background: rgba(251,191,36,.08); }
+    .chip-c3 { color: var(--c3); border-color: rgba(96,165,250,.4);  background: rgba(96,165,250,.08); }
+    .chip-c4 { color: var(--c4); border-color: rgba(244,114,182,.4); background: rgba(244,114,182,.08); }
+    .chip-c5 { color: var(--c5); border-color: rgba(52,211,153,.4);  background: rgba(52,211,153,.08); }
+    .chip-c2 .dot { background: var(--c2); }
+    .chip-c3 .dot { background: var(--c3); }
+    .chip-c4 .dot { background: var(--c4); }
+    .chip-c5 .dot { background: var(--c5); }
+
+    /* FLOW */
+    .flow { display: flex; flex-direction: column; align-items: stretch; }
+
+    .conn {
+      width: 2px; height: 20px;
+      border-left: 2px dashed var(--bord);
+      margin: 0 auto; position: relative;
+    }
+    .conn::after {
+      content: '▼'; position: absolute;
+      bottom: -7px; left: -7px;
+      font-size: 7.5pt; color: var(--bord);
+    }
+
+    /* CARD */
+    .flow-card {
+      background: var(--bg2);
+      border: 1px solid var(--bord);
+      border-radius: 10px; overflow: hidden;
+    }
+    .card-c4  { border-left: 3px solid rgba(244,114,182,.55); }
+    .card-c5  { border-left: 3px solid rgba(52,211,153,.55);  }
+    .card-c3  { border-left: 3px solid rgba(96,165,250,.55);  }
+    .card-c2  { border-left: 3px solid rgba(251,191,36,.55);  }
+    .card-neu { border-left: 3px solid rgba(129,140,248,.45); }
+
+    .card-head {
+      display: flex; align-items: center; gap: 10px;
+      padding: 9px 16px;
+      background: rgba(255,255,255,.025);
+      border-bottom: 1px solid var(--bord);
+    }
+    .card-head .step {
+      font-family: 'Courier New', monospace;
+      font-size: 8pt; font-weight: bold; color: var(--muted); flex-shrink: 0;
+    }
+    .card-head .title { font-weight: 700; font-size: 10.5pt; color: #fff; flex: 1; }
+    .cbadge {
+      font-family: 'Courier New', monospace;
+      font-size: 7.5pt; font-weight: bold;
+      padding: 2px 8px; border-radius: 8px; flex-shrink: 0;
+    }
+    .cb2 { background: rgba(251,191,36,.12); color: var(--c2); border: 1px solid rgba(251,191,36,.3); }
+    .cb3 { background: rgba(96,165,250,.12); color: var(--c3); border: 1px solid rgba(96,165,250,.3); }
+    .cb4 { background: rgba(244,114,182,.12);color: var(--c4); border: 1px solid rgba(244,114,182,.3);}
+    .cb5 { background: rgba(52,211,153,.12); color: var(--c5); border: 1px solid rgba(52,211,153,.3); }
+    .cbn { background: rgba(129,140,248,.12);color: var(--neu);border: 1px solid rgba(129,140,248,.3);}
+    .timing { font-family: 'Courier New', monospace; font-size: 8pt; color: var(--muted); flex-shrink: 0; }
+
+    .card-body { padding: 12px 16px 14px; }
+
+    .bullet { list-style: none; display: flex; flex-direction: column; gap: 5px; margin-bottom: 10px; }
+    .bullet li { display: flex; align-items: baseline; gap: 8px; font-size: 10pt; color: #c0cde8; }
+    .bullet li::before { content: '—'; color: var(--muted); font-size: 9pt; flex-shrink: 0; }
+    .bullet li strong { color: #fff; }
+    .bullet li code {
+      font-family: 'Courier New', monospace; font-size: 8.5pt;
+      background: rgba(99,102,241,.15); color: #93c5fd;
+      padding: 1px 5px; border-radius: 3px;
+    }
+
+    .warn-note {
+      display: flex; align-items: flex-start; gap: 8px;
+      background: rgba(245,158,11,.07);
+      border: 1px solid rgba(245,158,11,.25);
+      border-radius: 6px; padding: 7px 11px;
+    }
+    .warn-note .icon { font-size: 10pt; flex-shrink: 0; margin-top: 1px; }
+    .warn-note p { font-size: 9.5pt; color: #fcd34d; line-height: 1.5; }
+    .warn-note p strong { color: #fff; }
+
+    .print-btn {
+      position: fixed; bottom: 20px; right: 20px;
+      background: #6366f1; color: #fff;
+      border: none; padding: 9px 18px; border-radius: 8px;
+      font-size: 10pt; cursor: pointer; z-index: 999;
+      box-shadow: 0 4px 18px rgba(99,102,241,.45);
+    }
+    .print-btn:hover { background: #4338ca; }
+
+    .footer {
+      margin-top: 28px; padding-top: 10px;
+      border-top: 1px solid var(--bord);
+      text-align: center;
+      font-family: 'Courier New', monospace;
+      font-size: 8pt; color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+
+<button class="print-btn no-print" onclick="window.print()">🖨 Imprimer</button>
+
+<div class="page">
+
+<div class="doc-head">
+  <span class="label">BTS SIO SLAM — Épreuve E5 — Session 2026</span>
+  <h1>Carte mentale — Oral TiBillet</h1>
+  <p>Meven Hoarau Techer · Stage Komidi · Saint-Joseph, La Réunion</p>
+</div>
+
+<div class="comp-strip">
+  <div class="chip chip-c2"><span class="dot"></span>C2 — Incidents</div>
+  <div class="chip chip-c3"><span class="dot"></span>C3 — Présence en ligne</div>
+  <div class="chip chip-c4"><span class="dot"></span>C4 — Mode projet</div>
+  <div class="chip chip-c5"><span class="dot"></span>C5 — Mise à disposition</div>
+</div>
+
+<div class="flow">
+
+  <!-- 1 — CONTEXTE -->
+  <div class="flow-card card-neu">
+    <div class="card-head">
+      <span class="step">01</span>
+      <span class="title">Contexte entreprise</span>
+      <span class="cbadge cbn">—</span>
+      <span class="timing">2 min</span>
+    </div>
+    <div class="card-body">
+      <ul class="bullet">
+        <li><strong>Komidi</strong> — association culturelle · Saint-Joseph · La Réunion</li>
+        <li><strong>TiBillet</strong> — open source · coopérative Code Commun · AGPL-3.0 · France 2030</li>
+        <li>Mission en <strong>3 axes</strong> : installation · développement · incidents</li>
+      </ul>
+      <div class="warn-note">
+        <span class="icon">⚠️</span>
+        <p>3 phrases max sur Komidi — <strong>poser le CDC sur la table</strong> en évoquant la mission</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="conn"></div>
+
+  <!-- 2 — C4 -->
+  <div class="flow-card card-c4">
+    <div class="card-head">
+      <span class="step">02</span>
+      <span class="title">Travail en mode projet</span>
+      <span class="cbadge cb4">C4</span>
+      <span class="timing">1 min</span>
+    </div>
+    <div class="card-body">
+      <ul class="bullet">
+        <li><strong>2 CDC</strong> — back-end + front-end · fonctionnalités existantes vs besoins Komidi</li>
+        <li>Classement par <strong>statut</strong> et <strong>niveau de difficulté</strong></li>
+        <li>Issues <strong>#180 · #191 · #257 · #277</strong> — chacune documentée dans un fichier dédié</li>
+      </ul>
+      <div class="warn-note">
+        <span class="icon">⚠️</span>
+        <p><strong>Ouvrir le CDC</strong> et montrer le tableau — seulement 1 min, ne pas s'y attarder</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="conn"></div>
+
+  <!-- 3 — C5 -->
+  <div class="flow-card card-c5">
+    <div class="card-head">
+      <span class="step">03</span>
+      <span class="title">Installation et mise en service</span>
+      <span class="cbadge cb5">C5</span>
+      <span class="timing">3 min</span>
+    </div>
+    <div class="card-body">
+      <ul class="bullet">
+        <li><strong>3 moteurs</strong> — Fedow (transactions) · Lespass (billetterie) · LaBoutik (non utilisé)</li>
+        <li><strong>Docker</strong> — chaque moteur dans un conteneur isolé · reproductible</li>
+        <li><strong>Clés Fernet</strong> — partagées dans les <code>.env</code> des deux services · si différentes = pas de communication</li>
+        <li>Vérification finale : <code>fedow.can_fedow()</code> → <strong>True ✓</strong></li>
+      </ul>
+      <div class="warn-note">
+        <span class="icon">⚠️</span>
+        <p>Initialiser <strong>Fedow avant Lespass</strong> — ordre imposé par l'architecture</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="conn"></div>
+
+  <!-- 4 — C3 -->
+  <div class="flow-card card-c3">
+    <div class="card-head">
+      <span class="step">04</span>
+      <span class="title">Développement de fonctionnalités</span>
+      <span class="cbadge cb3">C3</span>
+      <span class="timing">4 min</span>
+    </div>
+    <div class="card-body">
+      <ul class="bullet">
+        <li><strong>Exemple — filtre par date</strong> : <code>views.py</code> paramètre GET → templates liens cliquables → <code>search2.html</code> CSS pur</li>
+        <li>Même logique : <strong>#277</strong> <code>show_time</code> · <strong>#191</strong> date fin · <strong>#180</strong> description courte · recherche billets <code>admin_tenant.py</code></li>
+        <li><strong>Mentions légales</strong> — LCEN + RGPD · intégrées au site</li>
+      </ul>
+      <div class="warn-note">
+        <span class="icon">⚠️</span>
+        <p><strong>1 exemple bien expliqué</strong>, puis "sur le même principe j'ai aussi…" — ne pas lister toutes les issues</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="conn"></div>
+
+  <!-- 5 — C2 -->
+  <div class="flow-card card-c2">
+    <div class="card-head">
+      <span class="step">05</span>
+      <span class="title">Incident résolu</span>
+      <span class="cbadge cb2">C2</span>
+      <span class="timing">3 min</span>
+    </div>
+    <div class="card-body">
+      <ul class="bullet">
+        <li><strong>Symptôme</strong> — conteneurs Docker redémarraient en boucle, scripts bloqués</li>
+        <li><strong>Diagnostic</strong> — logs Docker + état branches Git + version Docker</li>
+        <li><strong>Cause racine</strong> — LaBoutik dans <code>docker-compose.yml</code> saturait la mémoire</li>
+        <li><strong>Solution</strong> — supprimer LaBoutik + <code>git stash</code> + <code>git pull</code> → stable ✓</li>
+      </ul>
+      <div class="warn-note">
+        <span class="icon">⚠️</span>
+        <p>Dire <strong>"cause racine"</strong> et <strong>"démarche méthodique"</strong> — jamais "j'ai cherché sur Google"</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="conn"></div>
+
+  <!-- 6 — BILAN -->
+  <div class="flow-card card-neu">
+    <div class="card-head">
+      <span class="step">06</span>
+      <span class="title">Bilan et livrable</span>
+      <span class="cbadge cbn">—</span>
+      <span class="timing">2 min</span>
+    </div>
+    <div class="card-body">
+      <ul class="bullet">
+        <li><strong>Guide HTML</strong> — TDM · commandes copiables · 5 problèmes Docker documentés</li>
+        <li><strong>4 compétences E5</strong> couvertes sur un seul stage</li>
+        <li>Projet <strong>open source AGPL-3.0</strong> · lauréat <strong>France 2030</strong> du Ministère de la Culture</li>
+      </ul>
+      <div class="warn-note">
+        <span class="icon">⚠️</span>
+        <p>Terminer la phrase, regarder le jury, <strong>attendre en silence</strong> — ne pas dire "vous avez des questions ?"</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <p>Meven Hoarau Techer — BTS SIO SLAM — Session 2026 — carte-mentale-e5.html</p>
+</div>
+
+</div>
+</body>
+</html>
