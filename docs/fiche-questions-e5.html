@@ -230,13 +230,13 @@
 <div class="doc-header">
   <div class="tag">BTS SIO SLAM — E5 — Session 2026</div>
   <h1>❓ <span>Questions &amp; À savoir</span></h1>
-  <p>Meven Hoarau Techer · TiBillet / Lespass — Stage Komidi · Révisions entretien</p>
+  <p>Meven Hoarau Techer · TiBillet · GLPI · PharmaPays++ · Tetris · Révisions entretien</p>
 </div>
 
 <!-- ──────────────────────────────
      QUESTIONS DU JURY
 ────────────────────────────── -->
-<div class="sec"><span>01</span> — Questions probables du jury</div>
+<div class="sec"><span>01</span> — Questions TiBillet / Lespass</div>
 
 <div class="q-grid">
 
@@ -428,6 +428,134 @@ c.save()
     <div class="dtitle">Livrable autonome</div>
     <div class="ddesc">Guide HTML avec TDM, blocs copiables, section troubleshooting — utilisable par n'importe quel futur contributeur sans toi.</div>
   </div>
+</div>
+
+<!-- ──────────────────────────────
+     QUESTIONS GLPI
+────────────────────────────── -->
+<div class="page-break"></div>
+<div class="sec" style="border-color:rgba(251,191,36,.3);color:var(--c2);"><span style="color:var(--c2);">02</span> — GLPI — Gestion du parc &amp; tickets <span style="font-size:8pt;opacity:.6;">· C1 + C2 · ⚠️ Beaucoup de questions selon les jurys</span></div>
+
+<div class="q-grid">
+
+  <div class="qcard">
+    <p class="q">❓ "C'est quoi GLPI ?"</p>
+    <p class="a">Logiciel open source de gestion du parc informatique et des tickets d'incidents. Il suit les bonnes pratiques ITIL — inventaire des équipements, suivi des incidents, gestion des demandes de service.</p>
+  </div>
+
+  <div class="qcard">
+    <p class="q">❓ "C'est quoi un parc informatique ?"</p>
+    <p class="a">L'ensemble des équipements matériels et logiciels d'une organisation — ordinateurs, imprimantes, serveurs, licences. GLPI permet de les inventorier, les localiser et suivre leur état.</p>
+  </div>
+
+  <div class="qcard">
+    <p class="q">❓ "C'est quoi un ticket dans GLPI ?"</p>
+    <p class="a">Formulaire de déclaration d'un problème ou d'une demande. Il contient le type (incident ou demande), la priorité, l'utilisateur concerné, la description du problème et l'historique des actions de traitement.</p>
+  </div>
+
+  <div class="qcard">
+    <p class="q">❓ "Différence entre incident et demande de service ?"</p>
+    <p class="a">Un <strong>incident</strong> est une interruption non planifiée d'un service (ex : ordinateur qui ne démarre plus). Une <strong>demande</strong> est une sollicitation standard prévisible (ex : installation d'un logiciel, création d'un compte).</p>
+  </div>
+
+  <div class="qcard">
+    <p class="q">❓ "C'est quoi ITIL ?"</p>
+    <p class="a">Référentiel de bonnes pratiques pour la gestion des services informatiques. Il structure notamment la distinction incident/demande, le cycle de vie des tickets, et les niveaux de priorité. GLPI s'appuie sur ces pratiques.</p>
+  </div>
+
+  <div class="qcard">
+    <p class="q">❓ "Vous avez utilisé GLPI comment ?"</p>
+    <p class="a">En TD au lycée — simulation de la gestion d'un parc : création d'actifs (ordinateurs, imprimantes), ouverture de tickets d'incidents, traitement et affectation à des techniciens, suivi de l'état jusqu'à la résolution.</p>
+  </div>
+
+  <div class="qcard">
+    <p class="q">❓ "Comment on crée un actif dans GLPI ?"</p>
+    <p class="a">Dans le menu Parc → Ordinateurs (ou autre type d'équipement) → Ajouter. On renseigne le nom, le type, le lieu, le statut, l'utilisateur affecté et les caractéristiques matérielles.</p>
+  </div>
+
+  <div class="qcard">
+    <p class="q">❓ "Comment on traite un ticket dans GLPI ?"</p>
+    <p class="a">On ouvre le ticket, on l'affecte à un technicien, on ajoute des suivis (actions effectuées), on change le statut (nouveau → en cours → résolu → clôturé) et on documente la solution appliquée.</p>
+  </div>
+
+</div>
+
+<!-- ──────────────────────────────
+     QUESTIONS PHARMAPAYS
+────────────────────────────── -->
+<div class="sec" style="margin-top:22px;border-color:rgba(244,114,182,.3);color:var(--c4);"><span style="color:var(--c4);">03</span> — PharmaPays++ — Application Java desktop <span style="font-size:8pt;opacity:.6;">· C1 + C4 + C5 · Java · JavaFX · SQLite · Maven</span></div>
+
+<div class="q-grid">
+
+  <div class="qcard">
+    <p class="q">❓ "C'est quoi PharmaPays++ ?"</p>
+    <p class="a">Application desktop Java développée en équipe de 4 — permet de gérer et consulter un catalogue de médicaments pour une pharmacie fictive. Interface JavaFX, base de données SQLite déployée sur machine virtuelle.</p>
+  </div>
+
+  <div class="qcard">
+    <p class="q">❓ "C'est quoi un MCD / MLD ?"</p>
+    <p class="a"><strong>MCD</strong> (Modèle Conceptuel) = représentation abstraite des entités et de leurs relations. <strong>MLD</strong> (Modèle Logique) = traduction en tables pour la base relationnelle. J'ai conçu le schéma entité-relation du projet.</p>
+  </div>
+
+  <div class="qcard">
+    <p class="q">❓ "Pourquoi SQLite et pas MySQL ?"</p>
+    <p class="a">SQLite est une base embarquée, sans serveur dédié — adaptée pour une application desktop standalone. MySQL nécessiterait un serveur séparé, ce qui est inutile pour ce type de projet.</p>
+  </div>
+
+  <div class="qcard">
+    <p class="q">❓ "C'est quoi JavaFX ?"</p>
+    <p class="a">Bibliothèque Java pour créer des interfaces graphiques desktop. Elle remplace Swing pour les projets modernes — fenêtres, boutons, tableaux — avec une syntaxe plus propre et un meilleur rendu visuel.</p>
+  </div>
+
+  <div class="qcard">
+    <p class="q">❓ "C'est quoi Maven ?"</p>
+    <p class="a">Outil de gestion de projet Java — gère les dépendances (bibliothèques externes), la compilation et le packaging de l'application. C'est l'équivalent de npm pour Java.</p>
+  </div>
+
+  <div class="qcard">
+    <p class="q">❓ "Comment vous avez organisé le travail en équipe ?"</p>
+    <p class="a">Répartition claire des modules dès le départ, après validation commune du modèle BDD par toute l'équipe. Mon rôle : conception du schéma entité-relation, création et déploiement de la base SQLite sur la VM.</p>
+  </div>
+
+</div>
+
+<!-- ──────────────────────────────
+     QUESTIONS TETRIS
+────────────────────────────── -->
+<div class="sec" style="margin-top:22px;border-color:rgba(52,211,153,.3);color:var(--c5);"><span style="color:var(--c5);">04</span> — Tetris — Projet personnel Python <span style="font-size:8pt;opacity:.6;">· C6 · Python · Pygame · POO</span></div>
+
+<div class="q-grid">
+
+  <div class="qcard">
+    <p class="q">❓ "Pourquoi vous avez fait un Tetris ?"</p>
+    <p class="a">C'était mon premier projet personnel en dehors du cursus — Python était mon tout premier langage. Je voulais apprendre par la pratique sur un cas concret et motivant plutôt que par des exercices académiques.</p>
+  </div>
+
+  <div class="qcard">
+    <p class="q">❓ "C'est quoi Pygame ?"</p>
+    <p class="a">Bibliothèque Python pour le développement de jeux 2D — gère l'affichage graphique, les événements clavier, les animations et la boucle de jeu principale.</p>
+  </div>
+
+  <div class="qcard">
+    <p class="q">❓ "C'est quoi la POO ?"</p>
+    <p class="a">Programmation Orientée Objet — organiser le code en classes avec des attributs et des méthodes. Pour Tetris, j'ai séparé la logique du jeu (<code>Tetris.py</code>), l'affichage (<code>Graphics.py</code>) et le menu (<code>menu.py</code>).</p>
+  </div>
+
+  <div class="qcard">
+    <p class="q">❓ "Comment vous avez géré les collisions ?"</p>
+    <p class="a">Avec une matrice de collision — à chaque déplacement de pièce, je vérifie si les cases cibles sont libres et dans les limites de la grille avant d'autoriser le mouvement. Résolu après recherches personnelles.</p>
+  </div>
+
+  <div class="qcard">
+    <p class="q">❓ "Comment vous avez géré les rotations ?"</p>
+    <p class="a">Chaque pièce est représentée par une matrice. La rotation applique une transformation mathématique sur cette matrice — puis on vérifie les collisions avant de valider la nouvelle position.</p>
+  </div>
+
+  <div class="qcard">
+    <p class="q">❓ "Qu'est-ce que ça vous a apporté ?"</p>
+    <p class="a">Ce projet a déclenché mon intérêt pour le développement logiciel. Il m'a montré que je pouvais construire quelque chose de complet en autonomie, et m'a motivé à apprendre Java en 2ème année pour des projets plus structurés.</p>
+  </div>
+
 </div>
 
 <!-- ──────────────────────────────
