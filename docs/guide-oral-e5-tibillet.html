@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guide Oral E5 — TiBillet / Lespass — Meven Hoarau Techer</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Georgia', 'Times New Roman', serif;
+      font-size: 11pt;
+      line-height: 1.65;
+      color: #1a1a2e;
+      background: #fff;
+    }
+
+    @media print {
+      body { font-size: 10.5pt; }
+      .no-print { display: none !important; }
+      .page-break { page-break-before: always; }
+      section { page-break-inside: avoid; }
+      h2 { page-break-after: avoid; }
+      .cover { page-break-after: always; }
+      a { color: inherit; text-decoration: none; }
+    }
+
+    .page { max-width: 210mm; margin: 0 auto; padding: 18mm 22mm; }
+
+    /* Cover */
+    .cover {
+      min-height: 93vh;
+      display: flex; flex-direction: column;
+      justify-content: center; align-items: center;
+      text-align: center;
+      border: 3px solid #4f46e5;
+      border-radius: 4px;
+      padding: 50px 40px;
+      position: relative;
+      margin-bottom: 30px;
+    }
+    .cover::before {
+      content: '';
+      position: absolute; inset: 8px;
+      border: 1px solid #c7d2fe;
+      border-radius: 2px;
+    }
+    .cover-badge {
+      display: inline-block;
+      background: #4f46e5; color: #fff;
+      font-family: 'Courier New', monospace;
+      font-size: 9pt; font-weight: bold;
+      letter-spacing: .12em; text-transform: uppercase;
+      padding: 5px 14px; border-radius: 2px;
+      margin-bottom: 30px;
+    }
+    .cover h1 {
+      font-size: 26pt; font-weight: bold;
+      color: #1e1b4b; line-height: 1.2;
+      margin-bottom: 10px;
+    }
+    .cover h1 span { color: #4f46e5; }
+    .cover .subtitle {
+      font-size: 13pt; color: #6366f1;
+      font-style: italic; margin-bottom: 40px;
+    }
+    .cover-meta {
+      border-top: 1px solid #e0e7ff;
+      padding-top: 26px; width: 100%; max-width: 400px;
+    }
+    .cover-meta p { font-size: 10.5pt; color: #4338ca; margin-bottom: 6px; }
+    .cover-meta .name { font-size: 14pt; font-weight: bold; color: #1e1b4b; }
+    .cover-meta .school { font-size: 9.5pt; color: #6b7280; margin-top: 10px; }
+    .cover-badges { margin-top: 16px; display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+
+    /* TOC */
+    .toc {
+      background: #f5f3ff; border-left: 4px solid #4f46e5;
+      padding: 20px 24px; margin-bottom: 30px;
+      border-radius: 0 4px 4px 0;
+    }
+    .toc h2 {
+      font-size: 10pt; text-transform: uppercase;
+      letter-spacing: .08em; color: #4f46e5;
+      margin-bottom: 14px; font-family: 'Courier New', monospace;
+      border: none; padding: 0; margin-top: 0;
+    }
+    .toc ol { list-style: none; padding: 0; }
+    .toc li {
+      display: flex; justify-content: space-between;
+      align-items: baseline; padding: 3px 0;
+      font-size: 10.5pt;
+    }
+    .toc .dots {
+      flex: 1; border-bottom: 1px dotted #a5b4fc;
+      margin: 0 8px; height: 1px;
+      position: relative; top: -3px;
+    }
+    .toc .pg {
+      font-family: 'Courier New', monospace;
+      font-size: 9.5pt; color: #6366f1;
+      min-width: 20px; text-align: right;
+    }
+
+    /* Section headers */
+    h2 {
+      font-size: 14.5pt; color: #1e1b4b;
+      border-bottom: 2px solid #4f46e5;
+      padding-bottom: 6px; margin: 32px 0 14px;
+    }
+    h2 .num {
+      display: inline-block;
+      background: #4f46e5; color: #fff;
+      font-family: 'Courier New', monospace;
+      font-size: 9pt; font-weight: bold;
+      padding: 2px 8px; border-radius: 2px;
+      margin-right: 10px; vertical-align: middle;
+    }
+    h3 { font-size: 11.5pt; color: #3730a3; margin: 16px 0 7px; }
+    h4 { font-size: 10.5pt; color: #4338ca; margin: 11px 0 5px; font-family: 'Courier New', monospace; }
+    p { margin-bottom: 9px; }
+
+    /* Badges */
+    .badge {
+      display: inline-block;
+      font-family: 'Courier New', monospace;
+      font-size: 8.5pt; font-weight: bold;
+      padding: 2px 9px; border-radius: 3px;
+      margin-right: 4px; margin-bottom: 3px;
+      vertical-align: middle;
+    }
+    .c2 { background: #fef3c7; color: #92400e; border: 1px solid #fcd34d; }
+    .c3 { background: #dbeafe; color: #1e3a8a; border: 1px solid #93c5fd; }
+    .c4 { background: #fce7f3; color: #831843; border: 1px solid #f9a8d4; }
+    .c5 { background: #d1fae5; color: #065f46; border: 1px solid #6ee7b7; }
+    .bt { background: #f0f9ff; color: #0c4a6e; border: 1px solid #7dd3fc; }
+    .bk { background: #ede9fe; color: #4c1d95; border: 1px solid #c4b5fd; }
+
+    /* Callouts */
+    .box {
+      border-left: 4px solid; padding: 11px 15px;
+      margin: 12px 0; border-radius: 0 4px 4px 0;
+    }
+    .box-tip   { border-color: #10b981; background: #f0fdf4; }
+    .box-warn  { border-color: #f59e0b; background: #fffbeb; }
+    .box-info  { border-color: #3b82f6; background: #eff6ff; }
+    .box-star  { border-color: #8b5cf6; background: #f5f3ff; }
+    .box label {
+      font-family: 'Courier New', monospace;
+      font-size: 8pt; font-weight: bold;
+      text-transform: uppercase; letter-spacing: .08em;
+      display: block; margin-bottom: 4px;
+    }
+    .box-tip   label { color: #065f46; }
+    .box-warn  label { color: #92400e; }
+    .box-info  label { color: #1e40af; }
+    .box-star  label { color: #5b21b6; }
+    .box p, .box li { font-size: 10.5pt; margin-bottom: 4px; }
+
+    blockquote {
+      border-left: 3px solid #a5b4fc;
+      padding: 9px 15px; margin: 11px 0;
+      background: #f8f7ff; font-style: italic;
+      color: #4338ca; font-size: 10.5pt;
+    }
+
+    /* Tables */
+    table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 10pt; }
+    th {
+      background: #4f46e5; color: #fff;
+      padding: 7px 10px; text-align: left;
+      font-family: 'Courier New', monospace;
+      font-size: 8.5pt; font-weight: bold;
+      text-transform: uppercase; letter-spacing: .06em;
+    }
+    td { padding: 6px 10px; border-bottom: 1px solid #e0e7ff; vertical-align: top; }
+    tr:nth-child(even) td { background: #f8f7ff; }
+    tr:last-child td { border-bottom: none; }
+    td.n {
+      font-family: 'Courier New', monospace; font-weight: bold;
+      color: #4f46e5; text-align: center;
+      background: #ede9fe; width: 36px; white-space: nowrap;
+    }
+
+    /* Code */
+    code {
+      font-family: 'Courier New', monospace; font-size: 9.5pt;
+      background: #1e1b4b; color: #a5f3fc;
+      padding: 1px 5px; border-radius: 2px;
+    }
+    pre {
+      background: #1e1b4b; color: #c7d2fe;
+      padding: 13px 17px; border-radius: 4px;
+      margin: 11px 0; line-height: 1.7;
+    }
+    pre code { background: none; padding: 0; font-size: 9pt; color: inherit; }
+    .cm { color: #818cf8; }
+    .ck { color: #a5f3fc; }
+    .co { color: #6ee7b7; }
+    .cy { color: #fcd34d; }
+
+    /* Chain */
+    .chain {
+      background: #0f0c29; border-radius: 6px;
+      padding: 18px 22px; margin: 13px 0;
+      color: #e0e7ff; font-family: 'Courier New', monospace;
+      font-size: 9.5pt; line-height: 2;
+    }
+    .chain .root { color: #f87171; font-weight: bold; }
+    .chain .arr  { color: #818cf8; }
+    .chain .leaf { color: #93c5fd; }
+    .chain .fix  { color: #fcd34d; }
+    .chain .ok   { color: #a3e635; font-weight: bold; }
+
+    /* Feature card */
+    .feat {
+      border: 1px solid #e0e7ff; border-radius: 4px;
+      padding: 10px 14px; margin: 8px 0;
+      background: #fafafa;
+    }
+    .feat .tag {
+      font-family: 'Courier New', monospace;
+      font-size: 8.5pt; font-weight: bold;
+      color: #4f46e5; background: #ede9fe;
+      padding: 1px 7px; border-radius: 10px;
+      margin-right: 8px;
+    }
+    .feat .ftitle { font-weight: bold; font-size: 10.5pt; }
+    .feat .fdesc { font-size: 10pt; color: #374151; margin-top: 4px; }
+    .feat code { font-size: 8.5pt; }
+
+    ul, ol { margin: 7px 0 9px 20px; }
+    li { margin-bottom: 4px; }
+
+    hr { border: none; border-top: 1px solid #e0e7ff; margin: 25px 0; }
+
+    /* Diff */
+    .diff { background: #f0fdf4; border: 1px solid #86efac; border-radius: 4px; padding: 11px 15px; margin: 10px 0; font-size: 10.5pt; }
+    .diff strong { color: #166534; }
+
+    .print-btn {
+      position: fixed; bottom: 26px; right: 26px;
+      background: #4f46e5; color: #fff;
+      border: none; padding: 12px 22px; border-radius: 6px;
+      font-size: 11pt; cursor: pointer;
+      box-shadow: 0 4px 14px rgba(79,70,229,.4); z-index: 999;
+    }
+    .print-btn:hover { background: #4338ca; }
+
+    .footer {
+      margin-top: 38px; padding-top: 12px;
+      border-top: 2px solid #4f46e5;
+      text-align: center; font-size: 9pt;
+      color: #6b7280; font-family: 'Courier New', monospace;
+    }
+  </style>
+</head>
+<body>
+
+<button class="print-btn no-print" onclick="window.print()">🖨 Imprimer / PDF</button>
+
+<div class="page">
+
+<!-- ══ COVER ══ -->
+<div class="cover">
+  <div class="cover-badge">BTS SIO SLAM — Session 2026</div>
+  <h1>Guide de Présentation<br><span>Épreuve E5</span></h1>
+  <p class="subtitle">TiBillet / Lespass — Stage Komidi</p>
+  <div class="cover-meta">
+    <p>Préparé pour</p>
+    <p class="name">Meven Hoarau Techer</p>
+    <p class="school">Lycée Pierre Poivre · Saint-Joseph, La Réunion</p>
+    <div class="cover-badges" style="margin-top:14px;">
+      <span class="badge c2">C2 — Incidents</span>
+      <span class="badge c3">C3 — Présence en ligne</span>
+      <span class="badge c4">C4 — Mode projet</span>
+      <span class="badge c5">C5 — Service</span>
+    </div>
+    <p class="school" style="margin-top:14px;">Document confidentiel — Usage personnel uniquement</p>
+  </div>
+</div>
+
+<!-- ══ TOC ══ -->
+<div class="toc">
+  <h2>Sommaire</h2>
+  <ol>
+    <li><span>1. Vue d'ensemble — compétences et timing</span><span class="dots"></span><span class="pg">2</span></li>
+    <li><span>2. Partie 1 — Contexte entreprise</span><span class="dots"></span><span class="pg">2</span></li>
+    <li><span>3. Partie 2 — C4 : Travail en mode projet</span><span class="dots"></span><span class="pg">3</span></li>
+    <li><span>4. Partie 3 — C5 : Installation et mise en service</span><span class="dots"></span><span class="pg">3</span></li>
+    <li><span>5. Partie 4 — C3 : Développement de fonctionnalités</span><span class="dots"></span><span class="pg">4</span></li>
+    <li><span>6. Partie 5 — C2 : Incidents résolus</span><span class="dots"></span><span class="pg">5</span></li>
+    <li><span>7. Partie 6 — Bilan et livrable</span><span class="dots"></span><span class="pg">6</span></li>
+    <li><span>8. Questions probables du jury</span><span class="dots"></span><span class="pg">7</span></li>
+    <li><span>9. Commandes à mémoriser</span><span class="dots"></span><span class="pg">8</span></li>
+    <li><span>10. Ce qui te différencie des autres candidats</span><span class="dots"></span><span class="pg">9</span></li>
+  </ol>
+</div>
+
+
+<!-- ══ 1 ══ -->
+<h2><span class="num">1</span> Vue d'ensemble — compétences et timing</h2>
+
+<p>L'épreuve E5 dure <strong>30 minutes</strong> (exposé ~15 min + entretien ~15 min). Le stage TiBillet couvre <strong>4 compétences</strong> — c'est l'un des dossiers les plus complets qu'un candidat BTS SIO peut présenter.</p>
+
+<table>
+  <thead>
+    <tr><th>#</th><th>Partie</th><th>Compétence</th><th>Durée</th></tr>
+  </thead>
+  <tbody>
+    <tr><td class="n">1</td><td>Contexte entreprise + mission formalisée</td><td>—</td><td><span class="badge bt">2 min</span></td></tr>
+    <tr><td class="n">2</td><td>Cahiers des charges — travail en mode projet</td><td><span class="badge c4">C4</span></td><td><span class="badge bt">1 min</span></td></tr>
+    <tr><td class="n">3</td><td>Installation et mise en service (Docker, Debian)</td><td><span class="badge c5">C5</span></td><td><span class="badge bt">3 min</span></td></tr>
+    <tr><td class="n">4</td><td>Développement de 6 fonctionnalités (issues #180–#277)</td><td><span class="badge c3">C3</span></td><td><span class="badge bt">4 min</span></td></tr>
+    <tr><td class="n">5</td><td>Incidents résolus : Bug VPS + 5 problèmes Docker</td><td><span class="badge c2">C2</span></td><td><span class="badge bt">3 min</span></td></tr>
+    <tr><td class="n">6</td><td>Bilan — livrable guide HTML</td><td>—</td><td><span class="badge bt">2 min</span></td></tr>
+  </tbody>
+</table>
+
+<div class="box box-star">
+  <label>Ton avantage</label>
+  <p>La majorité des candidats BTS SIO présentent 2 compétences max par réalisation. Toi tu en couvres 4 sur ce seul stage, avec des preuves concrètes (issues numérotées, code modifié, bug VPS corrigé, guide livré).</p>
+</div>
+
+
+<!-- ══ 2 ══ -->
+<h2><span class="num">2</span> Partie 1 — Contexte entreprise <span class="badge bt">2 min</span></h2>
+
+<div class="box box-info">
+  <label>Conseil</label>
+  <p>Commence par l'entreprise, <strong>pas par la technique</strong>. Le jury doit comprendre le besoin avant d'entendre la solution.</p>
+</div>
+
+<h3>Accroche recommandée</h3>
+<blockquote>
+"J'ai effectué mon stage de 2ème année chez Komidi, une association culturelle à Saint-Joseph, La Réunion. Ils gèrent leur billetterie avec TiBillet, une suite open source sous licence AGPL-3.0 développée par la coopérative Code Commun. Ma mission couvrait à la fois la mise en place technique de l'environnement, le développement de fonctionnalités demandées, et la résolution des incidents."
+</blockquote>
+
+<h3>Architecture TiBillet à présenter</h3>
+<table>
+  <thead><tr><th>Moteur</th><th>Rôle</th><th>Utilisé dans ce stage</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Fedow</strong></td><td>Fédération — gère les transactions et monnaies locales</td><td>Oui (base de l'architecture)</td></tr>
+    <tr><td><strong>Lespass</strong></td><td>Billetterie et gestion d'adhésions</td><td>Oui — développements réalisés ici</td></tr>
+    <tr><td><strong>LaBoutik</strong></td><td>Caisse enregistreuse / cashless</td><td>Non (source de problèmes — voir C2)</td></tr>
+  </tbody>
+</table>
+
+<div class="box box-star">
+  <label>Document support ici</label>
+  <p>Présente le <strong>Cahier Des Charges</strong> — il montre que la mission était formalisée avant toute action technique.</p>
+</div>
+
+
+<!-- ══ 3 ══ -->
+<div class="page-break"></div>
+<h2><span class="num">3</span> Partie 2 — <span class="badge c4">C4</span> Travail en mode projet <span class="badge bt">1 min</span></h2>
+
+<blockquote>
+"Le travail était organisé en mode projet avec des issues numérotées, des cahiers des charges (frontend + back-end), et un suivi de l'avancement par statut : À faire / À modifier / Fait."
+</blockquote>
+
+<h3>Les deux cahiers des charges</h3>
+<table>
+  <thead><tr><th>Document</th><th>Portée</th><th>Résultat clé</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><strong>CDC Back-end</strong></td>
+      <td>Admin Django, gestion des représentations, export CSV, recherche multicritère de billets</td>
+      <td>Analyse comparative TiBillet vs besoins Komidi — évaluation de chaque fonctionnalité (faisable / difficile / impossible)</td>
+    </tr>
+    <tr>
+      <td><strong>CDC Frontend</strong></td>
+      <td>Agenda, filtres, mentions légales, panier, paiement Stripe</td>
+      <td>Priorisation des développements — 6 issues livrées, 2 en cours, 1 identifiée impossible</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Les issues numérotées (#180, #191, #257, #277) correspondent à un suivi type GitHub Issues — chaque fonctionnalité est traçable, documentée et livrable de manière indépendante.</p>
+
+
+<!-- ══ 4 ══ -->
+<h2><span class="num">4</span> Partie 3 — <span class="badge c5">C5</span> Installation et mise en service <span class="badge bt">3 min</span></h2>
+
+<blockquote>
+"Avant tout développement, j'ai dû mettre en place l'environnement de développement complet sur une machine vierge sous Debian, en partant de zéro."
+</blockquote>
+
+<h3>Les 6 étapes de mise en service</h3>
+<table>
+  <thead><tr><th>#</th><th>Action</th><th>Technologie</th></tr></thead>
+  <tbody>
+    <tr><td class="n">1</td><td>Installer le système d'exploitation</td><td><code>Debian 13</code>, LVM, sudo</td></tr>
+    <tr><td class="n">2</td><td>Isoler les services dans des conteneurs</td><td><code>Docker</code>, <code>docker-compose</code></td></tr>
+    <tr><td class="n">3</td><td>Versionner le code source</td><td><code>Git</code>, SSH, GitHub</td></tr>
+    <tr><td class="n">4</td><td>Sécuriser les communications inter-services</td><td>Clés <code>Fernet</code> + <code>Django Secret Key</code></td></tr>
+    <tr><td class="n">5</td><td>Démarrer les conteneurs + initialiser les BDD</td><td><code>docker compose up -d</code>, <code>flush.sh</code></td></tr>
+    <tr><td class="n">6</td><td>Vérifier le fonctionnement via le shell Django</td><td><code>fedow.can_fedow() → True</code></td></tr>
+  </tbody>
+</table>
+
+<div class="box box-warn">
+  <label>Point critique à mentionner</label>
+  <p>L'ordre d'initialisation est imposé : <code>fedow_django</code> d'abord, puis <code>lespass_django</code>. Lespass a besoin de Fedow pour s'initialiser. Inverser l'ordre provoque des erreurs.</p>
+</div>
+
+<h3>Vérification finale — preuve que le service est opérationnel</h3>
+<pre><code><span class="cm"># Dans le shell Django de Lespass (sp = shell_plus)</span>
+<span class="ck">config = Configuration.get_solo()</span>
+<span class="co"># → &lt;Configuration: Settings for Lespass&gt;  ✓</span>
+
+<span class="ck">fedow = FedowConfig.get_solo()
+fedow.can_fedow()</span>
+<span class="co"># → True  ✓  communication Lespass ↔ Fedow opérationnelle</span></code></pre>
+
+
+<!-- ══ 5 ══ -->
+<div class="page-break"></div>
+<h2><span class="num">5</span> Partie 4 — <span class="badge c3">C3</span> Développement de fonctionnalités <span class="badge bt">4 min</span></h2>
+
+<blockquote>
+"En parallèle de la mise en service, j'ai développé plusieurs fonctionnalités demandées dans le cahier des charges, directement sur le code source Django de TiBillet."
+</blockquote>
+
+<h3>Les 6 réalisations de développement</h3>
+
+<div class="feat">
+  <span class="tag">#277</span>
+  <span class="ftitle">Affichage conditionnel de l'heure d'un événement</span>
+  <div class="fdesc">
+    Ajout du champ <code>show_time = BooleanField</code> dans <code>BaseBillet/models.py</code> → propagé dans l'admin Django (<code>list_display</code> + <code>fields</code> dans <code>EventAdmin</code>) → conditionnel dans 2 templates : <code>partial/list.html</code> (agenda) et <code>retrieve.html</code> (page détail). Nécessité de faire <code>makemigrations</code> + <code>flush.sh</code> pour appliquer la migration.
+  </div>
+</div>
+
+<div class="feat">
+  <span class="tag">#257</span>
+  <span class="ftitle">Affichages configurables de la billetterie</span>
+  <div class="fdesc">
+    Ajout de <code>show_price_note</code> (BooleanField) et <code>price_note</code> (CharField) dans <code>models.py</code> pour masquer ou personnaliser le bloc prix. Création de la balise template <code>event_dates</code> dans <code>tibitags.py</code> — calcule automatiquement l'affichage humain des dates (1 jour, même jour avec fin, multi-jours). Mis à jour dans 4 templates : <code>cardEvent.html</code>, <code>cardCreateEvent.html</code>, <code>retrieve.html</code>, <code>booking.html</code>.
+  </div>
+</div>
+
+<div class="feat">
+  <span class="tag">#191</span>
+  <span class="ftitle">Affichage de la date et heure de fin d'événement</span>
+  <div class="fdesc">
+    Modification de <code>BaseBillet/templates/reunion/views/event/retrieve.html</code> — ajout d'un bloc conditionnel <code>{% if event.end_datetime %}</code> avec gestion de deux cas : même jour (affiche seulement l'heure de fin) ou jours différents (affiche la date complète de fin).
+  </div>
+</div>
+
+<div class="feat">
+  <span class="tag">#180</span>
+  <span class="ftitle">Description courte dans l'agenda</span>
+  <div class="fdesc">
+    Modification de <code>partial/list.html</code> — ajout d'un bloc <code>{% if event.short_description %}</code> affichant la description sous le titre de l'événement dans la liste de l'agenda.
+  </div>
+</div>
+
+<div class="feat">
+  <span class="tag">Frontend</span>
+  <span class="ftitle">Filtre multi-critères des événements par date</span>
+  <div class="fdesc">
+    Modification de <code>BaseBillet/views.py</code> : ajout du paramètre <code>date</code> dans <code>federated_events_filter()</code> et <code>partial_list()</code>. Modification de <code>partial/list.html</code> : les titres de dates deviennent des liens cliquables <code>?date=YYYY-MM-DD</code>. Création de <code>search2.html</code> pour un panneau "Options avancées" (toggle CSS checkbox). Section <code>advanced-search</code> avec animation <code>max-height</code>.
+  </div>
+</div>
+
+<div class="feat">
+  <span class="tag">Back-end</span>
+  <span class="ftitle">Recherche multi-critères des billets dans l'admin</span>
+  <div class="fdesc">
+    Modification de <code>Administration/admin_tenant.py</code> — ajout de <code>'first_name'</code>, <code>'last_name'</code>, <code>'reservation__user_commande__email'</code> dans <code>list_filter</code> de la classe <code>TicketAdmin</code>, en complément des filtres existants.
+  </div>
+</div>
+
+<div class="feat">
+  <span class="tag">Contenu</span>
+  <span class="ftitle">Mentions légales du site de billetterie</span>
+  <div class="fdesc">
+    Rédaction complète des mentions légales conformes LCEN (loi 2004-575) et RGPD : éditeur (Association Komidi, RNA W9R2002592), hébergeur (OVHcloud), solution technique (TiBillet AGPL-3.0, lauréat France 2030), propriété intellectuelle, traitement des données, paiement sécurisé, cookies.
+  </div>
+</div>
+
+<div class="box box-tip">
+  <label>Ce que le jury entend</label>
+  <p>Tu as travaillé sur <strong>models.py, views.py, admin.py et des templates Django</strong> — toute la pile MVC. Ce n'est pas de la configuration, c'est du développement back-end et front-end sur une vraie codebase open source.</p>
+</div>
+
+
+<!-- ══ 6 ══ -->
+<div class="page-break"></div>
+<h2><span class="num">6</span> Partie 5 — <span class="badge c2">C2</span> Incidents résolus <span class="badge bt">3 min</span></h2>
+
+<h3>Incident 1 — Bug VPS (production)</h3>
+
+<blockquote>
+"Sur le VPS de production de Komidi, le site ne se chargeait plus. Django plantait dès la page d'accueil."
+</blockquote>
+
+<p><strong>Diagnostic :</strong> un <code>Client</code> en base de données avait une mauvaise valeur de <code>categorie</code> pour son <code>schema_name</code> — Django ne pouvait plus résoudre le tenant et levait une exception non catchée.</p>
+
+<p><strong>Solution :</strong></p>
+<pre><code><span class="ck">docker exec -it lespass_django sh -lc "
+python manage.py shell -c \"
+from Customers.models import Client
+c = Client.objects.get(schema_name='ce13207cf99c412986c8d6fec1943d3d')
+c.categorie = 'S'
+c.save()
+\""</span></code></pre>
+
+<p><strong>Résultat :</strong> site opérationnel immédiatement après l'exécution de la commande.</p>
+
+<hr>
+
+<h3>Incident 2 — Environnement de dev instable (Docker)</h3>
+
+<p>Chaîne causale complète :</p>
+
+<div class="chain">
+  <span class="root">CAUSE RACINE (identifiée a posteriori) :</span><br>
+  &nbsp;&nbsp;LaBoutik était dans docker-compose.yml sans être nécessaire<br>
+  <span class="arr">    ↓</span><br>
+  <span class="leaf">Effet 1 : surcharge mémoire/CPU</span><br>
+  <span class="arr">    ↓</span><br>
+  <span class="leaf">Effet 2 : conteneurs qui redémarrent en boucle (restart loop)</span><br>
+  <span class="arr">    ↓</span><br>
+  <span class="leaf">Effet 3 : ./flush.sh et rsp s'interrompent sans raison apparente</span><br>
+  <span class="arr">    ↓</span><br>
+  <span class="leaf">Effet 4 : diagnostic difficile — vérifications manuelles (git branch, docker version, logs)</span><br>
+  <span class="arr">    ↓</span><br>
+  <span class="fix">SOLUTION : suppression LaBoutik dans docker-compose.yml</span><br>
+  <span class="arr">    +</span><br>
+  <span class="fix">Synchronisation : git stash → git pull</span><br>
+  <span class="arr">    ↓</span><br>
+  <span class="ok">RÉSULTAT : environnement stable, tous les scripts fonctionnels ✓</span>
+</div>
+
+<h3>Formule à utiliser devant le jury</h3>
+<blockquote>
+"Le problème difficile n'était pas la correction — supprimer LaBoutik du docker-compose.yml était simple une fois la cause identifiée. La vraie difficulté était le diagnostic : j'ai dû croiser les logs Docker, la version Docker, et l'état des branches Git avant de comprendre que c'était la présence d'un service inutilisé qui saturait les ressources et déstabilisait l'ensemble."
+</blockquote>
+
+<table>
+  <thead><tr><th>#</th><th>Problème observé</th><th>Solution appliquée</th></tr></thead>
+  <tbody>
+    <tr><td class="n">1</td><td>Conteneurs redémarrent en boucle sans raison</td><td>Surveillance <code>docker compose logs -f</code></td></tr>
+    <tr><td class="n">2</td><td>Surcharge CPU/RAM causée par LaBoutik inutilisé</td><td>Suppression de LaBoutik dans <code>docker-compose.yml</code></td></tr>
+    <tr><td class="n">3</td><td><code>./flush.sh</code> et <code>rsp</code> s'interrompent dans lespass_django</td><td>Résolu après suppression de LaBoutik (cause racine)</td></tr>
+    <tr><td class="n">4</td><td>Difficulté à trouver l'origine</td><td>Croisement <code>git branch</code>, <code>docker --version</code>, logs</td></tr>
+    <tr><td class="n">5</td><td><code>git pull</code> bloqué par des modifs locales</td><td><code>git stash</code> puis <code>git pull</code></td></tr>
+  </tbody>
+</table>
+
+
+<!-- ══ 7 ══ -->
+<h2><span class="num">7</span> Partie 6 — Bilan et livrable <span class="badge bt">2 min</span></h2>
+
+<div class="box box-star">
+  <label>Document support ici</label>
+  <p>C'est le moment de montrer le <strong>guide_installation_tibillet.html</strong>.</p>
+</div>
+
+<blockquote>
+"À l'issue de ce stage, j'ai produit un guide d'installation complet en HTML : table des matières, blocs de code copiables, alertes contextuelles et une section entière dédiée aux 5 problèmes rencontrés. L'objectif : qu'un développeur rejoignant le projet puisse tout reproduire en autonomie sans me solliciter."
+</blockquote>
+
+<h3>Compétences à nommer explicitement</h3>
+<ul>
+  <li><span class="badge c2">C2</span> Résolution du Bug VPS en production + résolution des 5 incidents Docker avec diagnostic méthodique documenté</li>
+  <li><span class="badge c3">C3</span> Développement de 6 fonctionnalités sur la plateforme de billetterie Lespass (models, views, admin, templates Django)</li>
+  <li><span class="badge c4">C4</span> Participation aux cahiers des charges frontend et back-end — issues numérotées — organisation par statut</li>
+  <li><span class="badge c5">C5</span> Environnement de développement complet mis en service sur Debian — Fedow + Lespass accessibles et vérifiés via le shell Django</li>
+</ul>
+
+
+<!-- ══ 8 ══ -->
+<div class="page-break"></div>
+<h2><span class="num">8</span> Questions probables du jury</h2>
+
+<table>
+  <thead><tr><th>Question</th><th>Réponse préparée</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><em>"C'est quoi Docker ?"</em></td>
+      <td>Outil de conteneurisation : Fedow, Lespass et PostgreSQL tournent chacun dans un conteneur isolé. Avantage : reproductible sur n'importe quelle machine sans conflit de dépendances.</td>
+    </tr>
+    <tr>
+      <td><em>"Qu'est-ce que Django ?"</em></td>
+      <td>Framework web Python qui suit le pattern MVC (Model-View-Template). TiBillet l'utilise pour gérer la base de données (models), la logique métier (views) et l'affichage (templates HTML).</td>
+    </tr>
+    <tr>
+      <td><em>"Pourquoi Fernet ?"</em></td>
+      <td>Algorithme de chiffrement symétrique. TiBillet l'utilise pour sécuriser les communications entre Fedow et Lespass — chaque message est chiffré avec la même clé partagée dans les deux <code>.env</code>.</td>
+    </tr>
+    <tr>
+      <td><em>"C'est quoi un BooleanField Django ?"</em></td>
+      <td>Un champ de modèle qui stocke True ou False en base de données. Pour <code>show_time</code> et <code>show_price_note</code>, il permet à l'admin Komidi d'activer/désactiver l'affichage sans modifier le code.</td>
+    </tr>
+    <tr>
+      <td><em>"Qu'est-ce qu'une migration Django ?"</em></td>
+      <td>Quand on ajoute un champ au modèle, Django doit mettre à jour la structure de la base de données. <code>makemigrations</code> génère le fichier de migration, et <code>flush.sh</code> l'applique ici.</td>
+    </tr>
+    <tr>
+      <td><em>"C'est quoi un tenant Django ?"</em></td>
+      <td>Isolation multi-tenant : <code>public</code> (utilisateurs partagés), <code>lespass</code> (données billetterie), <code>meta</code> (futur agrégateur). Permet à une instance TiBillet de gérer plusieurs organisations.</td>
+    </tr>
+    <tr>
+      <td><em>"Qu'est-ce que AGPL-3.0 ?"</em></td>
+      <td>Licence copyleft — le code source doit rester libre et toute modification doit être redistribuée sous la même licence, même pour un service en ligne (ce qui renforce la philosophie coopérative de TiBillet).</td>
+    </tr>
+    <tr>
+      <td><em>"Vous avez contribué au code officiel de TiBillet ?"</em></td>
+      <td>Non — j'ai travaillé sur le fork de Komidi. Ma mission était d'adapter TiBillet aux besoins spécifiques de l'association, pas de contribuer au projet upstream.</td>
+    </tr>
+    <tr>
+      <td><em>"C'est quoi le test-driven development dans le nom du repo ?"</em></td>
+      <td>C'est le nom du repo de configuration Docker fourni par TiBillet pour l'environnement de développement local. Le nom reflète leur démarche de développement — pas un framework de test.</td>
+    </tr>
+    <tr>
+      <td><em>"Pourquoi VSCodium ?"</em></td>
+      <td>Version open source de VS Code sans télémétrie Microsoft — cohérent avec la philosophie open source et coopérative de TiBillet et de Komidi.</td>
+    </tr>
+    <tr>
+      <td><em>"Comment avez-vous diagnostiqué le Bug VPS ?"</em></td>
+      <td>Les logs Django montraient une exception au chargement de la page d'accueil liée au résolveur de tenant. En inspectant le modèle <code>Client</code>, j'ai trouvé que la <code>categorie</code> du schema_name était incorrecte — corrigée directement via <code>manage.py shell</code>.</td>
+    </tr>
+    <tr>
+      <td><em>"Les mentions légales, c'est du développement ?"</em></td>
+      <td>C'est de la production de contenu avec une contrainte légale forte (LCEN + RGPD). Ça fait partie de la mise en ligne d'un service — compétence C3.</td>
+    </tr>
+  </tbody>
+</table>
+
+
+<!-- ══ 9 ══ -->
+<div class="page-break"></div>
+<h2><span class="num">9</span> Commandes essentielles à mémoriser</h2>
+
+<pre><code><span class="cm"># ── Gestion des conteneurs ─────────────────────────────</span>
+<span class="ck">docker compose up -d</span>         <span class="cm"># démarre en arrière-plan (detached)</span>
+<span class="ck">docker compose down</span>          <span class="cm"># arrête et supprime les conteneurs</span>
+<span class="ck">docker compose logs -f</span>       <span class="cm"># suit les logs en temps réel (Ctrl+C pour quitter)</span>
+<span class="ck">docker ps</span>                    <span class="cm"># liste les conteneurs actifs (statut "up")</span>
+<span class="ck">docker network create frontend</span>  <span class="cm"># crée le réseau partagé entre services</span>
+
+<span class="cm"># ── Accès aux conteneurs ───────────────────────────────</span>
+<span class="ck">docker exec -it lespass_django bash</span>   <span class="cm"># entre dans lespass</span>
+<span class="ck">docker exec -it fedow_django bash</span>     <span class="cm"># entre dans fedow</span>
+<span class="ck">./flush.sh</span>                             <span class="cm"># initialise la base (fedow d'abord, lespass ensuite)</span>
+<span class="ck">sp</span>                                     <span class="cm"># shell_plus Django (autocomplétion)</span>
+
+<span class="cm"># ── Vérification finale ────────────────────────────────</span>
+<span class="ck">config = Configuration.get_solo()</span>
+<span class="co"># → &lt;Configuration: Settings for Lespass&gt;  ✓</span>
+<span class="ck">fedow.can_fedow()</span>
+<span class="co"># → True  ✓</span>
+
+<span class="cm"># ── Django migrations ──────────────────────────────────</span>
+<span class="ck">poetry run python manage.py makemigrations</span>  <span class="cm"># génère le fichier de migration</span>
+<span class="ck">./flush.sh</span>                                  <span class="cm"># applique les migrations + réinitialise</span>
+
+<span class="cm"># ── Git (résolution incidents) ─────────────────────────</span>
+<span class="ck">git stash</span>     <span class="cm"># met de côté les modifs locales</span>
+<span class="ck">git pull</span>      <span class="cm"># récupère les mises à jour distantes</span>
+<span class="ck">git branch</span>    <span class="cm"># vérifie la branche active dans chaque repo</span>
+
+<span class="cm"># ── Bug VPS ────────────────────────────────────────────</span>
+<span class="ck">docker exec -it lespass_django sh -lc "python manage.py shell -c \"
+from Customers.models import Client
+c = Client.objects.get(schema_name='&lt;hash&gt;')
+c.categorie = 'S'
+c.save()
+\""</span></code></pre>
+
+<h3>Fichiers Django modifiés — à connaître par cœur</h3>
+<table>
+  <thead><tr><th>Fichier</th><th>Rôle</th><th>Modifié pour</th></tr></thead>
+  <tbody>
+    <tr><td><code>BaseBillet/models.py</code></td><td>Modèle Event (BDD)</td><td>#277 show_time, #257 show_price_note + price_note</td></tr>
+    <tr><td><code>BaseBillet/views.py</code></td><td>Logique métier</td><td>Filtre événements par date</td></tr>
+    <tr><td><code>Administration/admin_tenant.py</code></td><td>Interface admin Django</td><td>#277 list_display/fields, recherche billets</td></tr>
+    <tr><td><code>BaseBillet/tibitags.py</code></td><td>Balises template custom</td><td>#257 balise event_dates</td></tr>
+    <tr><td><code>…/event/partial/list.html</code></td><td>Carte événement dans l'agenda</td><td>#180 description, #277 heure, filtre date</td></tr>
+    <tr><td><code>…/event/retrieve.html</code></td><td>Page détail événement</td><td>#191 heure de fin, #277 show_time, #257 event_dates</td></tr>
+    <tr><td><code>…/forms/event/search2.html</code></td><td>Formulaire recherche avancée</td><td>Nouveau fichier — filtres avancés</td></tr>
+  </tbody>
+</table>
+
+
+<!-- ══ 10 ══ -->
+<h2><span class="num">10</span> Ce qui te différencie des autres candidats</h2>
+
+<div class="diff">
+  <strong>1. Quatre compétences E5 sur un seul stage</strong><br>
+  C2 + C3 + C4 + C5 — avec des preuves concrètes et documentées pour chacune. La plupart des candidats en couvrent 2 maximum par réalisation.
+</div>
+
+<div class="diff">
+  <strong>2. Vrai code open source — toute la pile Django</strong><br>
+  models.py, views.py, admin.py, templates, balises custom — tu as travaillé sur toutes les couches de la stack MVC d'un projet réel sous licence AGPL-3.0, lauréat France 2030.
+</div>
+
+<div class="diff">
+  <strong>3. Deux incidents documentés (dev + production)</strong><br>
+  Bug VPS corrigé en production via Django shell + 5 problèmes Docker résolus en développement. Chaîne causale reconstruite a posteriori — c'est du diagnostic méthodique, pas du tâtonnement.
+</div>
+
+<div class="diff">
+  <strong>4. Issues numérotées traçables</strong><br>
+  #180, #191, #257, #277 — chaque fonctionnalité est documentée dans un fichier .docx séparé avec le contexte, les fichiers modifiés, et les lignes approximatives. Niveau de documentation professionnel.
+</div>
+
+<div class="diff">
+  <strong>5. Livrable autonome de qualité professionnelle</strong><br>
+  Le guide HTML peut servir à n'importe quel contributeur sans toi. Section troubleshooting, blocs de code copiables, alertes contextuelles — c'est un document de production.
+</div>
+
+<hr>
+
+<div class="box box-warn">
+  <label>Rappel timing</label>
+  <p>Entraîne-toi à chronomètrer. <strong>15 minutes maximum pour l'exposé</strong> — le jury coupe à la sonnerie. Mieux vaut finir à 13 min et laisser 17 min aux questions qu'être interrompu.</p>
+</div>
+
+<div class="footer">
+  <p>Meven Hoarau Techer — BTS SIO SLAM — Session 2026 — Lycée Pierre Poivre</p>
+  <p style="margin-top:4px;">guide-oral-e5-tibillet.html — v2 (enrichi avec les 11 réalisations) — Document confidentiel</p>
+</div>
+
+</div><!-- /page -->
+</body>
+</html>

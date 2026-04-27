@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TiBillet / Lespass — Stage Komidi — Meven Hoarau Techer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    /* ═══════════════════════════════════════════
+       TOKENS — cohérents avec le portfolio
+    ═══════════════════════════════════════════ */
+    :root {
+      --bg:        #0d0f1a;
+      --bg2:       #131628;
+      --bg3:       #191e35;
+      --bg4:       #1e2540;
+      --border:    #2a3460;
+      --border2:   #1e2848;
+      --text:      #e2e8f4;
+      --muted:     #6b7db5;
+      --accent:    #6366f1;
+      --accent2:   #818cf8;
+      --accent3:   #a5b4fc;
+      --green:     #10b981;
+      --green2:    #6ee7b7;
+      --yellow:    #f59e0b;
+      --yellow2:   #fcd34d;
+      --red:       #ef4444;
+      --red2:      #fca5a5;
+      --cyan:      #22d3ee;
+      --pink:      #f472b6;
+      --font-head: 'Playfair Display', serif;
+      --font-body: 'Inter', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      font-size: 15px;
+      overflow-x: hidden;
+    }
+
+    /* ═══ NAV ═══ */
+    .nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(13,15,26,.85);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border2);
+      padding: 0 40px;
+      display: flex; align-items: center;
+      justify-content: space-between;
+      height: 58px;
+      transition: background .3s;
+    }
+    .nav-logo {
+      font-family: var(--font-mono);
+      font-size: 13px; font-weight: 700;
+      color: var(--text); text-decoration: none;
+      letter-spacing: .05em;
+    }
+    .nav-logo span { color: var(--accent2); }
+    .nav-links { display: flex; gap: 28px; list-style: none; }
+    .nav-links a {
+      font-size: 13px; color: var(--muted);
+      text-decoration: none; letter-spacing: .03em;
+      transition: color .2s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--accent3); }
+    .nav-back {
+      font-family: var(--font-mono); font-size: 12px;
+      color: var(--muted); text-decoration: none;
+      display: flex; align-items: center; gap: 6px;
+      transition: color .2s;
+    }
+    .nav-back:hover { color: var(--accent3); }
+    .nav-back::before { content: '←'; }
+
+    /* ═══ PROGRESS BAR ═══ */
+    .progress-bar {
+      position: fixed; top: 0; left: 0;
+      height: 2px; width: 0%;
+      background: linear-gradient(90deg, var(--accent), var(--cyan));
+      z-index: 200; transition: width .1s;
+    }
+
+    /* ═══ HERO ═══ */
+    .hero {
+      padding: 80px 40px 60px;
+      max-width: 1100px; margin: 0 auto;
+      position: relative;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; top: 0; right: -10%;
+      width: 55%; height: 100%;
+      background: radial-gradient(ellipse 60% 70% at 70% 40%, rgba(99,102,241,.1) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-eyebrow {
+      font-family: var(--font-mono); font-size: 11px;
+      color: var(--accent2); letter-spacing: .15em;
+      text-transform: uppercase; margin-bottom: 16px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .hero-eyebrow::before {
+      content: ''; width: 30px; height: 1px;
+      background: var(--accent2);
+    }
+    .hero h1 {
+      font-family: var(--font-head);
+      font-size: clamp(2.2rem, 4vw, 3.2rem);
+      font-weight: 900; line-height: 1.15;
+      margin-bottom: 10px; color: #fff;
+    }
+    .hero h1 em {
+      font-style: normal;
+      background: linear-gradient(135deg, var(--accent2) 0%, var(--cyan) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-sub {
+      font-size: 16px; color: var(--muted);
+      margin-bottom: 28px; max-width: 600px;
+    }
+    .hero-meta {
+      display: flex; flex-wrap: wrap; gap: 10px;
+      margin-bottom: 32px;
+    }
+    .chip {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: var(--font-mono); font-size: 11px; font-weight: 700;
+      padding: 5px 12px; border-radius: 20px;
+      letter-spacing: .04em;
+    }
+    .chip-c2 { background: rgba(251,191,36,.1); color: #fbbf24; border: 1px solid rgba(251,191,36,.25); }
+    .chip-c3 { background: rgba(96,165,250,.1); color: #60a5fa; border: 1px solid rgba(96,165,250,.25); }
+    .chip-c4 { background: rgba(244,114,182,.1); color: #f472b6; border: 1px solid rgba(244,114,182,.25); }
+    .chip-c5 { background: rgba(52,211,153,.1); color: #34d399; border: 1px solid rgba(52,211,153,.25); }
+    .chip-tag { background: rgba(99,102,241,.1); color: var(--accent3); border: 1px solid rgba(99,102,241,.2); }
+    .chip-info { background: rgba(34,211,238,.08); color: var(--cyan); border: 1px solid rgba(34,211,238,.2); }
+
+    /* ═══ MAIN LAYOUT ═══ */
+    .container {
+      max-width: 1100px; margin: 0 auto;
+      padding: 0 40px 80px;
+    }
+
+    /* ═══ SECTIONS ═══ */
+    .section { margin-bottom: 64px; }
+    .section-header {
+      display: flex; align-items: center; gap: 14px;
+      margin-bottom: 28px;
+    }
+    .section-num {
+      font-family: var(--font-mono); font-size: 11px;
+      font-weight: 700; color: var(--accent);
+      background: rgba(99,102,241,.12);
+      border: 1px solid rgba(99,102,241,.25);
+      padding: 4px 10px; border-radius: 4px;
+    }
+    .section-title {
+      font-family: var(--font-head);
+      font-size: 1.6rem; font-weight: 700;
+      color: #fff;
+    }
+    .section-divider {
+      flex: 1; height: 1px;
+      background: linear-gradient(90deg, var(--border), transparent);
+    }
+
+    /* ═══ ARCHITECTURE CARDS ═══ */
+    .arch-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 16px; margin-bottom: 24px;
+    }
+    .arch-card {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 10px; padding: 20px;
+      position: relative; overflow: hidden;
+      transition: border-color .2s, transform .2s;
+    }
+    .arch-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .arch-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 2px;
+    }
+    .arch-card.fedow::before { background: linear-gradient(90deg, var(--accent), var(--cyan)); }
+    .arch-card.lespass::before { background: linear-gradient(90deg, var(--green), var(--cyan)); }
+    .arch-card.laboutik::before { background: linear-gradient(90deg, var(--yellow), var(--red)); }
+    .arch-icon { font-size: 22px; margin-bottom: 10px; }
+    .arch-name {
+      font-family: var(--font-mono); font-weight: 700;
+      font-size: 13px; color: #fff; margin-bottom: 6px;
+    }
+    .arch-desc { font-size: 13px; color: var(--muted); line-height: 1.5; }
+    .arch-used {
+      display: inline-block; margin-top: 10px;
+      font-family: var(--font-mono); font-size: 10px;
+      padding: 2px 8px; border-radius: 10px;
+    }
+    .arch-used.yes { background: rgba(16,185,129,.1); color: var(--green2); border: 1px solid rgba(16,185,129,.2); }
+    .arch-used.no  { background: rgba(239,68,68,.08); color: var(--red2); border: 1px solid rgba(239,68,68,.2); }
+
+    /* ═══ CDC TABLES ═══ */
+    .cdc-tabs {
+      display: flex; gap: 4px; margin-bottom: 20px;
+    }
+    .cdc-tab {
+      font-family: var(--font-mono); font-size: 12px;
+      font-weight: 700; padding: 8px 20px;
+      border-radius: 6px 6px 0 0;
+      border: 1px solid var(--border); border-bottom: none;
+      background: var(--bg3); color: var(--muted);
+      cursor: pointer; transition: all .2s;
+    }
+    .cdc-tab.active {
+      background: var(--bg4); color: var(--accent3);
+      border-color: var(--accent);
+    }
+    .cdc-panel {
+      display: none;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 0 8px 8px 8px;
+      overflow: hidden;
+    }
+    .cdc-panel.active { display: block; }
+
+    .cdc-group {
+      border-bottom: 1px solid var(--border2);
+    }
+    .cdc-group:last-child { border-bottom: none; }
+    .cdc-group-header {
+      display: flex; align-items: center; gap: 12px;
+      padding: 12px 20px;
+      font-family: var(--font-mono); font-size: 11px;
+      font-weight: 700; letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+    .cdc-group-header.done  { background: rgba(16,185,129,.06); color: var(--green2); border-left: 3px solid var(--green); }
+    .cdc-group-header.todo  { background: rgba(99,102,241,.06); color: var(--accent2); border-left: 3px solid var(--accent); }
+    .cdc-group-header.modif { background: rgba(245,158,11,.06); color: var(--yellow2); border-left: 3px solid var(--yellow); }
+    .cdc-group-header .count {
+      margin-left: auto;
+      font-size: 10px; color: inherit; opacity: .7;
+    }
+
+    .cdc-row {
+      display: grid;
+      grid-template-columns: 1fr 130px auto;
+      gap: 0;
+      padding: 12px 20px;
+      border-bottom: 1px solid var(--border2);
+      align-items: start;
+      transition: background .15s;
+    }
+    .cdc-row:hover { background: rgba(255,255,255,.02); }
+    .cdc-row:last-child { border-bottom: none; }
+    .cdc-task { font-size: 13.5px; color: var(--text); }
+    .cdc-task .sub {
+      display: block; margin-top: 3px;
+      font-size: 12px; color: var(--muted);
+      font-family: var(--font-mono);
+    }
+    .cdc-diff {
+      font-family: var(--font-mono); font-size: 10px;
+      font-weight: 700; padding: 3px 9px;
+      border-radius: 10px; text-align: center;
+      white-space: nowrap;
+    }
+    .diff-easy   { background: rgba(16,185,129,.1);  color: var(--green2);  border: 1px solid rgba(16,185,129,.2); }
+    .diff-medium { background: rgba(245,158,11,.1);  color: var(--yellow2); border: 1px solid rgba(245,158,11,.2); }
+    .diff-hard   { background: rgba(239,68,68,.1);   color: var(--red2);    border: 1px solid rgba(239,68,68,.2); }
+    .diff-na     { background: rgba(107,125,181,.1); color: var(--muted);   border: 1px solid rgba(107,125,181,.2); }
+
+    .cdc-status {
+      display: flex; align-items: center; justify-content: flex-end;
+    }
+    .status-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .status-done  { background: var(--green); box-shadow: 0 0 6px var(--green); }
+    .status-todo  { background: var(--accent2); }
+    .status-modif { background: var(--yellow); }
+    .status-check { background: rgba(107,125,181,.4); border: 1px solid var(--muted); }
+
+    /* ═══ ISSUES GRID ═══ */
+    .issues-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+    .issue-card {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 10px; padding: 18px 20px;
+      position: relative; overflow: hidden;
+      transition: border-color .2s, transform .2s;
+    }
+    .issue-card:hover { border-color: var(--accent2); transform: translateY(-2px); }
+    .issue-card::after {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, var(--accent), transparent);
+    }
+    .issue-num {
+      font-family: var(--font-mono); font-size: 10px;
+      font-weight: 700; color: var(--accent);
+      background: rgba(99,102,241,.12);
+      border: 1px solid rgba(99,102,241,.25);
+      padding: 2px 8px; border-radius: 10px;
+      display: inline-block; margin-bottom: 10px;
+    }
+    .issue-title {
+      font-size: 14px; font-weight: 600;
+      color: #fff; margin-bottom: 8px; line-height: 1.4;
+    }
+    .issue-files {
+      display: flex; flex-wrap: wrap; gap: 5px;
+      margin-bottom: 8px;
+    }
+    .file-tag {
+      font-family: var(--font-mono); font-size: 10px;
+      color: var(--cyan); background: rgba(34,211,238,.08);
+      border: 1px solid rgba(34,211,238,.15);
+      padding: 1px 7px; border-radius: 4px;
+    }
+    .issue-desc { font-size: 13px; color: var(--muted); line-height: 1.55; }
+
+    /* ═══ INCIDENTS ═══ */
+    .incident-grid { display: grid; gap: 16px; }
+    .incident-card {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-left: 3px solid;
+      border-radius: 0 10px 10px 0;
+      padding: 18px 22px;
+    }
+    .incident-card.prod  { border-left-color: var(--red); }
+    .incident-card.dev   { border-left-color: var(--yellow); }
+    .incident-label {
+      font-family: var(--font-mono); font-size: 10px;
+      font-weight: 700; text-transform: uppercase;
+      letter-spacing: .1em; margin-bottom: 8px;
+    }
+    .incident-card.prod .incident-label { color: var(--red2); }
+    .incident-card.dev  .incident-label { color: var(--yellow2); }
+    .incident-title { font-size: 14px; font-weight: 600; color: #fff; margin-bottom: 10px; }
+    .incident-body  { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+    .chain {
+      background: #05070f;
+      border: 1px solid var(--border2);
+      border-radius: 8px;
+      padding: 16px 20px; margin-top: 14px;
+      font-family: var(--font-mono);
+      font-size: 12px; line-height: 2.1;
+      color: #8897cc;
+    }
+    .chain .root { color: var(--red2); font-weight: 700; }
+    .chain .arr  { color: #2a3460; }
+    .chain .node { color: #60a5fa; }
+    .chain .fix  { color: var(--yellow2); }
+    .chain .ok   { color: var(--green2); font-weight: 700; }
+
+    /* ═══ CODE BLOCK ═══ */
+    pre {
+      background: #05070f;
+      border: 1px solid var(--border2);
+      border-radius: 8px; padding: 16px 20px;
+      margin: 12px 0; line-height: 1.9;
+      overflow-x: auto;
+      font-family: var(--font-mono); font-size: 12px;
+    }
+    .cm { color: #3a4470; }
+    .ck { color: var(--cyan); }
+    .co { color: var(--green2); }
+
+    /* ═══ LIVRABLE ═══ */
+    .livrable-card {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 12px; padding: 28px 32px;
+      display: flex; align-items: flex-start; gap: 24px;
+    }
+    .livrable-icon {
+      font-size: 40px; flex-shrink: 0;
+      width: 70px; height: 70px;
+      background: rgba(99,102,241,.1);
+      border: 1px solid rgba(99,102,241,.2);
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .livrable-content h3 {
+      font-size: 16px; font-weight: 600;
+      color: #fff; margin-bottom: 8px;
+    }
+    .livrable-content p { font-size: 13.5px; color: var(--muted); margin-bottom: 12px; }
+    .livrable-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: var(--font-mono); font-size: 12px;
+      color: var(--accent3); text-decoration: none;
+      border: 1px solid rgba(99,102,241,.3);
+      padding: 6px 14px; border-radius: 6px;
+      background: rgba(99,102,241,.08);
+      transition: all .2s;
+    }
+    .livrable-link:hover { background: rgba(99,102,241,.15); border-color: var(--accent); }
+
+    /* ═══ BILAN ═══ */
+    .bilan-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+    .bilan-card {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 10px; padding: 18px;
+      text-align: center;
+    }
+    .bilan-badge {
+      font-family: var(--font-mono); font-size: 10px;
+      font-weight: 700; padding: 3px 10px;
+      border-radius: 12px; display: inline-block;
+      margin-bottom: 10px;
+    }
+    .bilan-count {
+      font-family: var(--font-head);
+      font-size: 2.2rem; font-weight: 900;
+      color: #fff; line-height: 1;
+      margin-bottom: 6px;
+    }
+    .bilan-label { font-size: 12px; color: var(--muted); }
+
+    /* ═══ FOOTER ═══ */
+    .page-footer {
+      border-top: 1px solid var(--border2);
+      padding: 28px 40px;
+      display: flex; align-items: center;
+      justify-content: space-between;
+      max-width: 1100px; margin: 0 auto;
+    }
+    .page-footer p { font-size: 12px; color: var(--muted); font-family: var(--font-mono); }
+    .footer-back {
+      font-family: var(--font-mono); font-size: 12px;
+      color: var(--accent3); text-decoration: none;
+      display: flex; align-items: center; gap: 6px;
+      transition: gap .2s;
+    }
+    .footer-back:hover { gap: 10px; }
+
+    /* ═══ SCROLL TOP ═══ */
+    .scroll-top {
+      position: fixed; bottom: 28px; right: 28px;
+      width: 40px; height: 40px;
+      background: var(--bg4); border: 1px solid var(--border);
+      border-radius: 8px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--muted); font-size: 16px;
+      opacity: 0; transition: opacity .3s, background .2s;
+      z-index: 50;
+    }
+    .scroll-top.visible { opacity: 1; }
+    .scroll-top:hover { background: var(--bg3); color: var(--accent3); }
+
+    /* ═══ RESPONSIVE ═══ */
+    @media (max-width: 768px) {
+      .nav { padding: 0 20px; }
+      .hero, .container { padding-left: 20px; padding-right: 20px; }
+      .arch-grid { grid-template-columns: 1fr; }
+      .issues-grid { grid-template-columns: 1fr; }
+      .bilan-grid { grid-template-columns: repeat(2, 1fr); }
+      .cdc-row { grid-template-columns: 1fr; gap: 8px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="progress-bar" id="pb"></div>
+
+<!-- ══ NAV ══ -->
+<nav class="nav">
+  <a class="nav-logo" href="index.html">M<span>.</span>HT</a>
+  <ul class="nav-links">
+    <li><a href="#architecture">Architecture</a></li>
+    <li><a href="#cdc">Cahier des charges</a></li>
+    <li><a href="#issues">Issues livrées</a></li>
+    <li><a href="#incidents">Incidents</a></li>
+    <li><a href="#livrable">Livrable</a></li>
+  </ul>
+  <a class="nav-back" href="index.html#projets">Retour au portfolio</a>
+</nav>
+
+<!-- ══ HERO ══ -->
+<header class="hero" id="top">
+  <p class="hero-eyebrow">Stage 2ème année · Komidi · Saint-Joseph, La Réunion</p>
+  <h1>TiBillet / <em>Lespass</em></h1>
+  <p class="hero-sub">Suite open source de billetterie et gestion d'adhésions — Django · Docker · Python · AGPL-3.0</p>
+  <div class="hero-meta">
+    <span class="chip chip-c2">C2 — Incidents</span>
+    <span class="chip chip-c3">C3 — Présence en ligne</span>
+    <span class="chip chip-c4">C4 — Mode projet</span>
+    <span class="chip chip-c5">C5 — Service</span>
+    <span class="chip chip-info">Jan. – Fév. 2026</span>
+    <span class="chip chip-info">6 semaines</span>
+  </div>
+  <div class="hero-meta">
+    <span class="chip chip-tag">Python</span>
+    <span class="chip chip-tag">Django</span>
+    <span class="chip chip-tag">Docker</span>
+    <span class="chip chip-tag">Linux / Debian</span>
+    <span class="chip chip-tag">Git</span>
+    <span class="chip chip-tag">PostgreSQL</span>
+    <span class="chip chip-tag">Bootstrap</span>
+    <span class="chip chip-tag">Open Source</span>
+  </div>
+</header>
+
+<main class="container">
+
+  <!-- ══════════════════════════════
+       BILAN CHIFFRÉ
+  ══════════════════════════════ -->
+  <div class="bilan-grid" style="margin-bottom:64px;">
+    <div class="bilan-card">
+      <span class="bilan-badge chip-c3" style="background:rgba(96,165,250,.1);color:#60a5fa;border:1px solid rgba(96,165,250,.25);">Issues livrées</span>
+      <div class="bilan-count">6</div>
+      <div class="bilan-label">#180 · #191 · #257 · #277 + filtres + admin</div>
+    </div>
+    <div class="bilan-card">
+      <span class="bilan-badge chip-c2" style="background:rgba(251,191,36,.1);color:#fbbf24;border:1px solid rgba(251,191,36,.25);">Incidents résolus</span>
+      <div class="bilan-count">2</div>
+      <div class="bilan-label">Bug VPS production + env. Docker instable</div>
+    </div>
+    <div class="bilan-card">
+      <span class="bilan-badge chip-c4" style="background:rgba(244,114,182,.1);color:#f472b6;border:1px solid rgba(244,114,182,.25);">Fichiers modifiés</span>
+      <div class="bilan-count">7</div>
+      <div class="bilan-label">models · views · admin · tibitags · templates</div>
+    </div>
+    <div class="bilan-card">
+      <span class="bilan-badge chip-c5" style="background:rgba(52,211,153,.1);color:#34d399;border:1px solid rgba(52,211,153,.25);">Compétences E5</span>
+      <div class="bilan-count">4</div>
+      <div class="bilan-label">C2 + C3 + C4 + C5</div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════
+       ARCHITECTURE
+  ══════════════════════════════ -->
+  <section class="section" id="architecture">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2 class="section-title">Architecture TiBillet</h2>
+      <div class="section-divider"></div>
+    </div>
+
+    <div class="arch-grid">
+      <div class="arch-card fedow">
+        <div class="arch-icon">🔗</div>
+        <div class="arch-name">Fedow</div>
+        <div class="arch-desc">Moteur de fédération — gère les transactions multi-actifs, les monnaies locales et la communication entre instances TiBillet.</div>
+        <span class="arch-used yes">Utilisé ✓</span>
+      </div>
+      <div class="arch-card lespass">
+        <div class="arch-icon">🎫</div>
+        <div class="arch-name">Lespass</div>
+        <div class="arch-desc">Billetterie et gestion d'adhésions — interface publique de réservation, espace admin Django, génération de billets PDF.</div>
+        <span class="arch-used yes">Développements réalisés ici ✓</span>
+      </div>
+      <div class="arch-card laboutik">
+        <div class="arch-icon">🏪</div>
+        <div class="arch-name">LaBoutik</div>
+        <div class="arch-desc">Caisse enregistreuse et système cashless — non nécessaire pour Komidi, mais initialement inclus dans le docker-compose.</div>
+        <span class="arch-used no">Source de problèmes ✗</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════
+       CAHIER DES CHARGES
+  ══════════════════════════════ -->
+  <section class="section" id="cdc">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2 class="section-title">Cahier des charges</h2>
+      <div class="section-divider"></div>
+    </div>
+
+    <div class="cdc-tabs">
+      <div class="cdc-tab active" onclick="showCdc('backend')">Back-end</div>
+      <div class="cdc-tab" onclick="showCdc('frontend')">Front-end</div>
+    </div>
+
+    <!-- ── BACK-END ── -->
+    <div class="cdc-panel active" id="cdc-backend">
+
+      <div class="cdc-group">
+        <div class="cdc-group-header done">
+          <span>✓ Fait</span>
+          <span class="count">12 fonctionnalités vérifiées dans TiBillet</span>
+        </div>
+        <div class="cdc-row">
+          <div class="cdc-task">Paramétrage graphique du front-end</div>
+          <div class="cdc-diff diff-na">—</div>
+          <div class="cdc-status"><div class="status-dot status-done"></div></div>
+        </div>
+        <div class="cdc-row">
+          <div class="cdc-task">Paramétrage des messages en page d'accueil client</div>
+          <div class="cdc-diff diff-na">—</div>
+          <div class="cdc-status"><div class="status-dot status-done"></div></div>
+        </div>
+        <div class="cdc-row">
+          <div class="cdc-task">Paramétrage des représentations (lieu, date, heure, prix, places) avec import/export CSV</div>
+          <div class="cdc-diff diff-na">—</div>
+          <div class="cdc-status"><div class="status-dot status-done"></div></div>
+        </div>
+        <div class="cdc-row">
+          <div class="cdc-task">Gestion de l'ouverture et fermeture des ventes — programmable ou manuelle, par représentation et globalement</div>
+          <div class="cdc-diff diff-na">—</div>
+          <div class="cdc-status"><div class="status-dot status-done"></div></div>
+        </div>
+        <div class="cdc-row">
+          <div class="cdc-task">Paramétrage des spectacles (image, description) avec import/export CSV</div>
+          <div class="cdc-diff diff-na">—</div>
+          <div class="cdc-status"><div class="status-dot status-done"></div></div>
+        </div>
+        <div class="cdc-row">
+          <div class="cdc-task">Gestion des comptes clients (CRUD)</div>
+          <div class="cdc-diff diff-na">—</div>
+          <div class="cdc-status"><div class="status-dot status-done"></div></div>
+        </div>
+        <div class="cdc-row">
+          <div class="cdc-task">Gestion des consommations — tableau récapitulatif par représentation et type de réservation, places restantes, export CSV</div>
+          <div class="cdc-diff diff-na">—</div>
+          <div class="cdc-status"><div class="status-dot status-done"></div></div>
+        </div>
+        <div class="cdc-row">
+          <div class="cdc-task">Gestion des types de réservation paramétrables
+            <span class="sub">KZE SCO · KZE ASSO · DALON · BENEVOLE · INVITATION · WEB1 · WEB2</span>
+          </div>
+          <div class="cdc-diff diff-na">—</div>
+          <div class="cdc-status"><div class="status-dot status-done"></div></div>
+        </div>
+        <div class="cdc-row">
+          <div class="cdc-task">Gestion des billets réservés en attente de paiement — régularisation, validation, annulation</div>
+          <div class="cdc-diff diff-na">—</div>
+          <div class="cdc-status"><div class="status-dot status-done"></div></div>
+        </div>
+        <div class="cdc-row">
+          <div class="cdc-task">Paramétrage des lieux avec import/export CSV</div>
+          <div class="cdc-diff diff-na">—</div>
+          <div class="cdc-status"><div class="status-dot status-done"></div></div>
+        </div>
+        <div class="cdc-row">
+          <div class="cdc-task">Gestion des billets scannés et non consommés — récapitulatif export CSV, état détaillé par représentation</div>
+          <div class="cdc-diff diff-na">—</div>
+          <div class="cdc-status"><div class="status-dot status-done"></div></div>
+        </div>
+        <div class="cdc-row">
+          <div class="cdc-task">Import en masse de billets via fichier CSV
+            <span class="sub">À vérifier selon types de billets</span>
+          </div>
+          <div class="cdc-diff diff-na">À vérifier</div>
+          <div class="cdc-status"><div class="status-dot status-check"></div></div>
+        </div>
+        <div class="cdc-row">
+          <div class="cdc-task">Impression de billets à l'unité ou par lot — téléchargement PDF ou envoi par email
+            <span class="sub">À vérifier selon configuration</span>
+          </div>
+          <div class="cdc-diff diff-na">À vérifier</div>
+          <div class="cdc-status"><div class="status-dot status-check"></div></div>
+        </div>
+      </div>
+
+      <div class="cdc-group">
+        <div class="cdc-group-header modif">
+          <span>⚡ À modifier</span>
+          <span class="count">2 fonctionnalités à améliorer</span>
+        </div>
+        <div class="cdc-row">
+          <div class="cdc-task">Recherche multicritère de billets (type, nom, prénom, mail, compte client)
+            <span class="sub">TiBillet proposait uniquement tri par événement, validité et date → ajout de first_name, last_name, email dans TicketAdmin</span>
+          </div>
+          <div class="cdc-diff diff-medium">Moyen</div>
+          <div class="cdc-status"><div class="status-dot status-modif"></div></div>
+        </div>
+        <div class="cdc-row">
+          <div class="cdc-task">Archivage et réinitialisation de la base entre deux festivals
+            <span class="sub">Archivage possible mais uniquement manuellement</span>
+          </div>
+          <div class="cdc-diff diff-easy">Facile</div>
+          <div class="cdc-status"><div class="status-dot status-modif"></div></div>
+        </div>
+      </div>
+
+      <div class="cdc-group">
+        <div class="cdc-group-header todo">
+          <span>◌ À faire / Bloqué</span>
+          <span class="count">4 fonctionnalités en attente</span>
+        </div>
+        <div class="cdc-row">
+          <div class="cdc-task">Paramétrage de la durée de vie du panier client
+            <span class="sub">Nécessite gestion d'expiration et restauration — complexe à implémenter dans TiBillet</span>
+          </div>
+          <div class="cdc-diff diff-hard">Difficile</div>
+          <div class="cdc-status"><div class="status-dot status-todo"></div></div>
+        </div>
+        <div class="cdc-row">
+          <div class="cdc-task">Paramétrage de la maquette du billet
+            <span class="sub">Impossible à réaliser dans TiBillet — template ticket.html fixé par l'architecture</span>
+          </div>
+          <div class="cdc-diff diff-medium">Moyen</div>
+          <div class="cdc-status"><div class="status-dot status-todo"></div></div>
+        </div>
+        <div class="cdc-row">
+          <div class="cdc-task">Gestion des clients pour une représentation déterminée — export CSV
+            <span class="sub">Export en deux clics disponible mais l'adaptation précise aux besoins Komidi est plus complexe que prévu</span>
+          </div>
+          <div class="cdc-diff diff-hard">Plus difficile que prévu</div>
+          <div class="cdc-status"><div class="status-dot status-todo"></div></div>
+        </div>
+        <div class="cdc-row">
+          <div class="cdc-task">Gestion de l'état de chaque représentation (ouverte / fermée / scan remonté)
+            <span class="sub">À vérifier — partiellement possible via l'admin</span>
+          </div>
+          <div class="cdc-diff diff-easy">Facile</div>
+          <div class="cdc-status"><div class="status-dot status-todo"></div></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ── FRONT-END ── -->
+    <div class="cdc-panel" id="cdc-frontend">
+
+      <div class="cdc-group">
+        <div class="cdc-group-header done">
+          <span>✓ Fait</span>
+          <span class="count">5 fonctionnalités opérationnelles</span>
+        </div>
+        <div class="cdc-row">
+          <div class="cdc-task">Module de gestion des demandes via formulaire de contact</div>
+          <div class="cdc-diff diff-na">—</div>
+          <div class="cdc-status"><div class="status-dot status-done"></div></div>
+        </div>
+        <div class="cdc-row">
+          <div class="cdc-task">Affichage du nombre de places restantes si ventes ouvertes</div>
+          <div class="cdc-diff diff-na">—</div>
+          <div class="cdc-status"><div class="status-dot status-done"></div></div>
+        </div>
+        <div class="cdc-row">
+          <div class="cdc-task">Page d'accueil avec messages programmables</div>
+          <div class="cdc-diff diff-na">—</div>
+          <div class="cdc-status"><div class="status-dot status-done"></div></div>
+        </div>
+        <div class="cdc-row">
+          <div class="cdc-task">Authentification et gestion des utilisateurs</div>
+          <div class="cdc-diff diff-na">—</div>
+          <div class="cdc-status"><div class="status-dot status-done"></div></div>
+        </div>
+        <div class="cdc-row">
+          <div class="cdc-task">Livraison des billets au format PDF — par mail et depuis interface</div>
+          <div class="cdc-diff diff-na">—</div>
+          <div class="cdc-status"><div class="status-dot status-done"></div></div>
+        </div>
+      </div>
+
+      <div class="cdc-group">
+        <div class="cdc-group-header modif">
+          <span>⚡ À modifier</span>
+          <span class="count">2 fonctionnalités à améliorer</span>
+        </div>
+        <div class="cdc-row">
+          <div class="cdc-task">Consultation de la programmation multi-critères (spectacle / date / lieu)
+            <span class="sub">TiBillet proposait tri par catégorie uniquement → ajout filtre par date dans views.py + search2.html</span>
+          </div>
+          <div class="cdc-diff diff-easy">Facile</div>
+          <div class="cdc-status"><div class="status-dot status-modif"></div></div>
+        </div>
+        <div class="cdc-row">
+          <div class="cdc-task">Paiement en ligne — Stripe (actuel) et Verifone / Paybox (demandé par Komidi)
+            <span class="sub">Paiement Stripe fonctionnel — intégration Verifone nécessite des informations de la part de Komidi</span>
+          </div>
+          <div class="cdc-diff diff-hard">Difficile</div>
+          <div class="cdc-status"><div class="status-dot status-modif"></div></div>
+        </div>
+      </div>
+
+      <div class="cdc-group">
+        <div class="cdc-group-header todo">
+          <span>◌ À faire</span>
+          <span class="count">4 fonctionnalités restantes</span>
+        </div>
+        <div class="cdc-row">
+          <div class="cdc-task">Gestion du panier client avec durée de vie paramétrable
+            <span class="sub">Pas de panier disponible actuellement — à chaque réservation un lien de paiement direct est envoyé</span>
+          </div>
+          <div class="cdc-diff diff-hard">Difficile</div>
+          <div class="cdc-status"><div class="status-dot status-todo"></div></div>
+        </div>
+        <div class="cdc-row">
+          <div class="cdc-task">Mentions légales (LCEN + RGPD)
+            <span class="sub">Rédigées et intégrées au site pendant le stage</span>
+          </div>
+          <div class="cdc-diff diff-easy">Facile</div>
+          <div class="cdc-status"><div class="status-dot status-done"></div></div>
+        </div>
+        <div class="cdc-row">
+          <div class="cdc-task">Formulaire de contact / Mail</div>
+          <div class="cdc-diff diff-easy">Facile</div>
+          <div class="cdc-status"><div class="status-dot status-todo"></div></div>
+        </div>
+        <div class="cdc-row">
+          <div class="cdc-task">Création de compte utilisateur simplifié</div>
+          <div class="cdc-diff diff-na">—</div>
+          <div class="cdc-status"><div class="status-dot status-todo"></div></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════
+       ISSUES LIVRÉES
+  ══════════════════════════════ -->
+  <section class="section" id="issues">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2 class="section-title">Issues livrées</h2>
+      <div class="section-divider"></div>
+    </div>
+
+    <div class="issues-grid">
+
+      <div class="issue-card">
+        <div class="issue-num">#277 — Django</div>
+        <div class="issue-title">Affichage conditionnel de l'heure d'un événement</div>
+        <div class="issue-files">
+          <span class="file-tag">models.py</span>
+          <span class="file-tag">admin_tenant.py</span>
+          <span class="file-tag">partial/list.html</span>
+          <span class="file-tag">retrieve.html</span>
+        </div>
+        <div class="issue-desc">Ajout du champ <code style="font-size:11px;background:rgba(34,211,238,.1);color:#22d3ee;padding:1px 5px;border-radius:3px;">show_time = BooleanField(default=True)</code> dans le modèle Event. Propagé dans l'admin Django (<code style="font-size:11px;background:rgba(34,211,238,.1);color:#22d3ee;padding:1px 5px;border-radius:3px;">list_display</code> + <code style="font-size:11px;background:rgba(34,211,238,.1);color:#22d3ee;padding:1px 5px;border-radius:3px;">fields</code>) et deux templates. Migration via <code style="font-size:11px;background:rgba(34,211,238,.1);color:#22d3ee;padding:1px 5px;border-radius:3px;">makemigrations</code> + <code style="font-size:11px;background:rgba(34,211,238,.1);color:#22d3ee;padding:1px 5px;border-radius:3px;">flush.sh</code>.</div>
+      </div>
+
+      <div class="issue-card">
+        <div class="issue-num">#257 — Django</div>
+        <div class="issue-title">Affichages configurables de la billetterie</div>
+        <div class="issue-files">
+          <span class="file-tag">models.py</span>
+          <span class="file-tag">tibitags.py</span>
+          <span class="file-tag">cardEvent.html</span>
+          <span class="file-tag">booking.html</span>
+          <span class="file-tag">retrieve.html</span>
+        </div>
+        <div class="issue-desc">Champs <code style="font-size:11px;background:rgba(34,211,238,.1);color:#22d3ee;padding:1px 5px;border-radius:3px;">show_price_note</code> + <code style="font-size:11px;background:rgba(34,211,238,.1);color:#22d3ee;padding:1px 5px;border-radius:3px;">price_note</code> pour masquer/personnaliser le bloc prix. Balise template <code style="font-size:11px;background:rgba(34,211,238,.1);color:#22d3ee;padding:1px 5px;border-radius:3px;">{% event_dates event %}</code> créée dans tibitags.py — gestion automatique 1 jour / même jour fin / multi-jours. Mis à jour dans 4 templates.</div>
+      </div>
+
+      <div class="issue-card">
+        <div class="issue-num">#191 — Template</div>
+        <div class="issue-title">Affichage de la date et heure de fin d'événement</div>
+        <div class="issue-files">
+          <span class="file-tag">retrieve.html (l.111)</span>
+        </div>
+        <div class="issue-desc">Bloc conditionnel <code style="font-size:11px;background:rgba(34,211,238,.1);color:#22d3ee;padding:1px 5px;border-radius:3px;">{% if event.end_datetime %}</code> dans la page détail. Deux cas gérés : même jour (heure de fin seulement) ou jours différents (date complète de fin).</div>
+      </div>
+
+      <div class="issue-card">
+        <div class="issue-num">#180 — Template</div>
+        <div class="issue-title">Description courte dans l'agenda</div>
+        <div class="issue-files">
+          <span class="file-tag">event/partial/list.html (l.40)</span>
+        </div>
+        <div class="issue-desc">Bloc <code style="font-size:11px;background:rgba(34,211,238,.1);color:#22d3ee;padding:1px 5px;border-radius:3px;">{% if event.short_description %}</code> ajouté après le titre dans la liste de l'agenda. Affiche la description si elle existe, rien sinon.</div>
+      </div>
+
+      <div class="issue-card">
+        <div class="issue-num">Frontend — views.py + templates</div>
+        <div class="issue-title">Filtre multi-critères des événements par date</div>
+        <div class="issue-files">
+          <span class="file-tag">views.py</span>
+          <span class="file-tag">partial/list.html</span>
+          <span class="file-tag">search.html</span>
+          <span class="file-tag">search2.html (nouveau)</span>
+        </div>
+        <div class="issue-desc">Paramètre <code style="font-size:11px;background:rgba(34,211,238,.1);color:#22d3ee;padding:1px 5px;border-radius:3px;">date</code> ajouté dans <code style="font-size:11px;background:rgba(34,211,238,.1);color:#22d3ee;padding:1px 5px;border-radius:3px;">federated_events_filter()</code> et <code style="font-size:11px;background:rgba(34,211,238,.1);color:#22d3ee;padding:1px 5px;border-radius:3px;">partial_list()</code>. Dates deviennent des liens cliquables <code style="font-size:11px;background:rgba(34,211,238,.1);color:#22d3ee;padding:1px 5px;border-radius:3px;">?date=YYYY-MM-DD</code>. Panel "Options avancées" avec toggle CSS checkbox sans JavaScript.</div>
+      </div>
+
+      <div class="issue-card">
+        <div class="issue-num">Back-end — admin Django</div>
+        <div class="issue-title">Recherche multi-critères des billets</div>
+        <div class="issue-files">
+          <span class="file-tag">admin_tenant.py — TicketAdmin</span>
+        </div>
+        <div class="issue-desc">Ajout de <code style="font-size:11px;background:rgba(34,211,238,.1);color:#22d3ee;padding:1px 5px;border-radius:3px;">first_name</code>, <code style="font-size:11px;background:rgba(34,211,238,.1);color:#22d3ee;padding:1px 5px;border-radius:3px;">last_name</code>, <code style="font-size:11px;background:rgba(34,211,238,.1);color:#22d3ee;padding:1px 5px;border-radius:3px;">reservation__user_commande__email</code> dans <code style="font-size:11px;background:rgba(34,211,238,.1);color:#22d3ee;padding:1px 5px;border-radius:3px;">list_filter</code> de TicketAdmin — en complément des filtres existants (événement passé/futur, validité, date, archivage).</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════
+       INCIDENTS
+  ══════════════════════════════ -->
+  <section class="section" id="incidents">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2 class="section-title">Incidents résolus</h2>
+      <div class="section-divider"></div>
+    </div>
+
+    <div class="incident-grid">
+
+      <div class="incident-card prod">
+        <div class="incident-label">🔴 Incident Production — VPS Komidi</div>
+        <div class="incident-title">Django plante au chargement de la page d'accueil</div>
+        <div class="incident-body">
+          <strong style="color:#fff;">Symptôme :</strong> le site de billetterie Komidi ne chargeait plus — exception Django à chaque chargement.<br><br>
+          <strong style="color:#fff;">Cause :</strong> un <code style="font-size:11px;background:rgba(239,68,68,.12);color:#fca5a5;padding:1px 5px;border-radius:3px;">Client</code> en base de données avait une mauvaise valeur de <code style="font-size:11px;background:rgba(239,68,68,.12);color:#fca5a5;padding:1px 5px;border-radius:3px;">categorie</code> pour son <code style="font-size:11px;background:rgba(239,68,68,.12);color:#fca5a5;padding:1px 5px;border-radius:3px;">schema_name</code> — Django ne pouvait pas résoudre le tenant.<br><br>
+          <strong style="color:#fff;">Correction :</strong>
+        </div>
+<pre><code><span class="ck">docker exec -it lespass_django sh -lc "
+python manage.py shell -c \"
+from Customers.models import Client
+c = Client.objects.get(schema_name='ce13207cf99c412986c8d6fec1943d3d')
+c.categorie = 'S'
+c.save()
+\""</span>
+<span class="co"># Site opérationnel immédiatement ✓</span></code></pre>
+      </div>
+
+      <div class="incident-card dev">
+        <div class="incident-label">🟡 Incident Développement — Environnement Docker</div>
+        <div class="incident-title">Conteneurs instables — 5 problèmes en cascade</div>
+        <div class="incident-body">Chaîne causale identifiée a posteriori :</div>
+        <div class="chain">
+          <span class="root">CAUSE RACINE :</span> LaBoutik inclus dans docker-compose.yml sans être utilisé<br>
+          <span class="arr">  ↓</span><br>
+          <span class="node">Surcharge mémoire/CPU → redémarrages en boucle (restart loop)</span><br>
+          <span class="arr">  ↓</span><br>
+          <span class="node">./flush.sh et rsp s'interrompent dans lespass_django</span><br>
+          <span class="arr">  ↓</span><br>
+          <span class="node">Diagnostic difficile → logs · git branch · docker --version</span><br>
+          <span class="arr">  ↓</span><br>
+          <span class="fix">Solution : suppression LaBoutik + git stash → git pull</span><br>
+          <span class="arr">  ↓</span><br>
+          <span class="ok">Environnement stable — tous les scripts fonctionnels ✓</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════
+       LIVRABLE
+  ══════════════════════════════ -->
+  <section class="section" id="livrable">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2 class="section-title">Livrable</h2>
+      <div class="section-divider"></div>
+    </div>
+
+    <div class="livrable-card">
+      <div class="livrable-icon">📄</div>
+      <div class="livrable-content">
+        <h3>Guide d'installation TiBillet</h3>
+        <p>Documentation complète de l'installation de l'environnement de développement TiBillet sur Debian. Inclut : prérequis, installation Debian, Docker, Git/SSH, génération des clés Fernet + Django, configuration .env, démarrage des conteneurs, vérification via Django shell, et une section dédiée aux 5 problèmes rencontrés avec leurs solutions. Rédigé pour qu'un futur contributeur puisse reproduire l'installation en autonomie complète.</p>
+        <a class="livrable-link" href="docs/guide-oral-e5-tibillet-night.html" target="_blank">
+          Guide oral E5 →
+        </a>
+        &nbsp;
+        <a class="livrable-link" href="index.html#projets" style="margin-left:0;">
+          ← Retour portfolio
+        </a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ══ FOOTER ══ -->
+<footer class="page-footer">
+  <p>Meven Hoarau Techer — BTS SIO SLAM — Session 2026 — Lycée Pierre Poivre</p>
+  <a class="footer-back" href="index.html#projets">Retour au portfolio →</a>
+</footer>
+
+<button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+  /* Progress bar */
+  const pb = document.getElementById('pb');
+  window.addEventListener('scroll', () => {
+    const total = document.documentElement.scrollHeight - window.innerHeight;
+    pb.style.width = (window.scrollY / total * 100) + '%';
+    document.getElementById('scrollTop').classList.toggle('visible', window.scrollY > 300);
+  }, { passive: true });
+
+  /* CDC tabs */
+  function showCdc(tab) {
+    document.querySelectorAll('.cdc-tab').forEach((t, i) => {
+      t.classList.toggle('active', ['backend','frontend'][i] === tab);
+    });
+    document.querySelectorAll('.cdc-panel').forEach(p => p.classList.remove('active'));
+    document.getElementById('cdc-' + tab).classList.add('active');
+  }
+
+  /* Active nav link on scroll */
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', () => {
+    let cur = '';
+    sections.forEach(s => { if (window.scrollY >= s.offsetTop - 100) cur = s.id; });
+    navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + cur));
+  }, { passive: true });
+</script>
+</body>
+</html>
