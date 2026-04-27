@@ -266,11 +266,11 @@
   </div>
   <div class="card-body">
     <div class="script">
-      <p>"Pour mettre le service à disposition, j'ai installé l'environnement complet sur une machine vierge sous Debian — en 6 étapes. L'étape clé était la génération des clés de chiffrement : TiBillet utilise Fernet, un algorithme symétrique, pour sécuriser les échanges entre Fedow et Lespass. Ces clés doivent être identiques dans les deux fichiers .env — sinon les deux moteurs ne peuvent pas communiquer. À la fin, je vérifiais le bon fonctionnement via le shell Django : si fedow.can_fedow() retourne True, tout est opérationnel."</p>
+      <p>"TiBillet est composé de trois moteurs indépendants qui tournent chacun dans leur propre conteneur Docker. Fedow s'occupe des transactions et de la fédération entre structures. Lespass gère la billetterie et les adhésions — c'est lui que Komidi utilise côté public. LaBoutik, lui, est la caisse cashless — il n'était pas utilisé dans ce stage. Ces trois moteurs ont besoin de se parler, et pour sécuriser ces échanges, TiBillet utilise des clés Fernet. C'est simple : les deux services partagent la même clé secrète dans leur fichier de configuration — si elles ne correspondent pas, les moteurs ne peuvent tout simplement pas communiquer. Une fois l'environnement monté, je vérifiais que tout fonctionnait via le shell Django."</p>
     </div>
-    <div class="tip"><strong>Mettre en valeur :</strong> la compréhension de l'architecture (3 moteurs indépendants) et la rigueur de la vérification finale. Pas juste "j'ai lancé docker compose up".</div>
-    <div class="tip"><strong>Si le jury demande pourquoi Docker :</strong> "Chaque service tourne dans un conteneur isolé avec ses propres dépendances — reproductible sur n'importe quelle machine, sans risque de conflit de versions."</div>
-    <div class="warn">Évite la liste de commandes une par une. Parle de l'<strong>intention</strong>, pas de la syntaxe. La syntaxe, c'est pour l'entretien.</div>
+    <div class="tip"><strong>L'image à garder en tête :</strong> trois boîtes Docker qui parlent entre elles — Fernet c'est le "mot de passe commun" qui autorise cette conversation.</div>
+    <div class="tip"><strong>Si le jury demande pourquoi Docker :</strong> "Chaque service tourne isolé avec ses propres dépendances — reproductible sur n'importe quelle machine, sans risque de conflit de versions."</div>
+    <div class="warn">Pas besoin de citer les commandes ici. L'objectif de cette partie c'est de montrer que tu <strong>comprends l'architecture</strong>, pas que tu récites une procédure.</div>
   </div>
 </div>
 
@@ -284,12 +284,12 @@
   </div>
   <div class="card-body">
     <div class="script">
-      <p>"J'ai développé six fonctionnalités directement sur le code source Django de TiBillet — sur les quatre couches de la stack : les modèles, les vues, l'admin, et les templates. Par exemple, pour l'issue #277, j'ai ajouté un champ BooleanField show_time dans le modèle Event en Python, propagé ce champ dans l'interface d'administration Django, appliqué la migration via un flush, puis modifié deux templates HTML pour conditionner l'affichage."</p>
+      <p>"J'ai développé plusieurs fonctionnalités directement sur le code source Django. Je vais vous donner un exemple concret avec l'issue #257. Le besoin était de permettre à l'administrateur de personnaliser l'affichage du bloc prix d'un événement — soit le masquer, soit afficher une note à la place. J'ai ajouté deux champs dans le modèle Event : un booléen <em>show_price_note</em> pour activer ou non l'affichage, et un champ texte <em>price_note</em> pour le message libre. Ensuite, j'ai créé une balise de template personnalisée <em>event_dates</em> dans le fichier tibitags.py — pour gérer proprement l'affichage des dates selon les cas : un seul jour, même jour avec heure de fin différente, ou plusieurs jours. Cette balise est ensuite appelée dans les templates HTML. Sur le même principe, j'ai réalisé les cinq autres issues."</p>
     </div>
-    <div class="tip"><strong>Structure en 3 temps pour chaque issue :</strong> (1) le besoin, (2) le fichier modifié, (3) le résultat visible. Choisis #277 et #257 comme exemples concrets, cite les autres en passant.</div>
-    <div class="tip"><strong>Formule de transition entre les issues :</strong> "Sur le même principe, j'ai aussi…" — montre que tu maîtrises la logique, pas juste l'exécution.</div>
+    <div class="tip"><strong>Rythme en 3 temps :</strong> (1) le besoin de Komidi, (2) le fichier Python touché, (3) le résultat visible dans l'interface. Ça montre que tu suis le fil modèle → logique → affichage.</div>
+    <div class="tip"><strong>Transition naturelle :</strong> "Sur le même principe, j'ai aussi…" puis enchaîne vite sur les autres issues sans t'y attarder.</div>
     <div class="tip"><strong>Pour les mentions légales :</strong> "La mise en ligne d'un service implique des obligations légales — j'ai rédigé les mentions légales conformes LCEN et RGPD."</div>
-    <div class="warn">Ne liste pas les 7 fonctionnalités une à une. Prends 2–3 exemples concrets et dis "avec d'autres modifications similaires".</div>
+    <div class="warn">Ne récite pas les 6 issues dans l'ordre. Un exemple bien expliqué vaut mieux que six noms de variables lâchés sans contexte.</div>
   </div>
 </div>
 
