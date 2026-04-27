@@ -236,64 +236,29 @@
     }
     .cdc-panel.active { display: block; }
 
-    .cdc-group {
-      border-bottom: 1px solid var(--border2);
-    }
-    .cdc-group:last-child { border-bottom: none; }
-    .cdc-group-header {
-      display: flex; align-items: center; gap: 12px;
-      padding: 12px 20px;
-      font-family: var(--font-mono); font-size: 11px;
-      font-weight: 700; letter-spacing: .1em;
-      text-transform: uppercase;
-    }
-    .cdc-group-header.done  { background: rgba(16,185,129,.06); color: var(--green2); border-left: 3px solid var(--green); }
-    .cdc-group-header.todo  { background: rgba(99,102,241,.06); color: var(--accent2); border-left: 3px solid var(--accent); }
-    .cdc-group-header.modif { background: rgba(245,158,11,.06); color: var(--yellow2); border-left: 3px solid var(--yellow); }
-    .cdc-group-header .count {
-      margin-left: auto;
-      font-size: 10px; color: inherit; opacity: .7;
-    }
-
     .cdc-row {
-      display: grid;
-      grid-template-columns: 1fr 130px auto;
-      gap: 0;
+      display: flex; align-items: flex-start;
+      justify-content: space-between; gap: 16px;
       padding: 12px 20px;
       border-bottom: 1px solid var(--border2);
-      align-items: start;
       transition: background .15s;
     }
     .cdc-row:hover { background: rgba(255,255,255,.02); }
     .cdc-row:last-child { border-bottom: none; }
-    .cdc-task { font-size: 13.5px; color: var(--text); }
+    .cdc-task { flex: 1; font-size: 13.5px; color: var(--text); }
     .cdc-task .sub {
       display: block; margin-top: 3px;
       font-size: 12px; color: var(--muted);
       font-family: var(--font-mono);
     }
-    .cdc-diff {
+    .badge-skip {
+      flex-shrink: 0; align-self: flex-start;
       font-family: var(--font-mono); font-size: 10px;
       font-weight: 700; padding: 3px 9px;
-      border-radius: 10px; text-align: center;
-      white-space: nowrap;
+      border-radius: 10px; white-space: nowrap;
+      background: rgba(239,68,68,.1); color: var(--red2);
+      border: 1px solid rgba(239,68,68,.2);
     }
-    .diff-easy   { background: rgba(16,185,129,.1);  color: var(--green2);  border: 1px solid rgba(16,185,129,.2); }
-    .diff-medium { background: rgba(245,158,11,.1);  color: var(--yellow2); border: 1px solid rgba(245,158,11,.2); }
-    .diff-hard   { background: rgba(239,68,68,.1);   color: var(--red2);    border: 1px solid rgba(239,68,68,.2); }
-    .diff-na     { background: rgba(107,125,181,.1); color: var(--muted);   border: 1px solid rgba(107,125,181,.2); }
-
-    .cdc-status {
-      display: flex; align-items: center; justify-content: flex-end;
-    }
-    .status-dot {
-      width: 8px; height: 8px; border-radius: 50%;
-      flex-shrink: 0;
-    }
-    .status-done  { background: var(--green); box-shadow: 0 0 6px var(--green); }
-    .status-todo  { background: var(--accent2); }
-    .status-modif { background: var(--yellow); }
-    .status-check { background: rgba(107,125,181,.4); border: 1px solid var(--muted); }
 
     /* ═══ ISSUES GRID ═══ */
     .issues-grid {
@@ -605,230 +570,114 @@
 
     <!-- ── BACK-END ── -->
     <div class="cdc-panel active" id="cdc-backend">
-
-      <div class="cdc-group">
-        <div class="cdc-group-header done">
-          <span>✓ Fait</span>
-          <span class="count">12 fonctionnalités vérifiées dans TiBillet</span>
-        </div>
-        <div class="cdc-row">
-          <div class="cdc-task">Paramétrage graphique du front-end</div>
-          <div class="cdc-diff diff-na">—</div>
-          <div class="cdc-status"><div class="status-dot status-done"></div></div>
-        </div>
-        <div class="cdc-row">
-          <div class="cdc-task">Paramétrage des messages en page d'accueil client</div>
-          <div class="cdc-diff diff-na">—</div>
-          <div class="cdc-status"><div class="status-dot status-done"></div></div>
-        </div>
-        <div class="cdc-row">
-          <div class="cdc-task">Paramétrage des représentations (lieu, date, heure, prix, places) avec import/export CSV</div>
-          <div class="cdc-diff diff-na">—</div>
-          <div class="cdc-status"><div class="status-dot status-done"></div></div>
-        </div>
-        <div class="cdc-row">
-          <div class="cdc-task">Gestion de l'ouverture et fermeture des ventes — programmable ou manuelle, par représentation et globalement</div>
-          <div class="cdc-diff diff-na">—</div>
-          <div class="cdc-status"><div class="status-dot status-done"></div></div>
-        </div>
-        <div class="cdc-row">
-          <div class="cdc-task">Paramétrage des spectacles (image, description) avec import/export CSV</div>
-          <div class="cdc-diff diff-na">—</div>
-          <div class="cdc-status"><div class="status-dot status-done"></div></div>
-        </div>
-        <div class="cdc-row">
-          <div class="cdc-task">Gestion des comptes clients (CRUD)</div>
-          <div class="cdc-diff diff-na">—</div>
-          <div class="cdc-status"><div class="status-dot status-done"></div></div>
-        </div>
-        <div class="cdc-row">
-          <div class="cdc-task">Gestion des consommations — tableau récapitulatif par représentation et type de réservation, places restantes, export CSV</div>
-          <div class="cdc-diff diff-na">—</div>
-          <div class="cdc-status"><div class="status-dot status-done"></div></div>
-        </div>
-        <div class="cdc-row">
-          <div class="cdc-task">Gestion des types de réservation paramétrables
-            <span class="sub">KZE SCO · KZE ASSO · DALON · BENEVOLE · INVITATION · WEB1 · WEB2</span>
-          </div>
-          <div class="cdc-diff diff-na">—</div>
-          <div class="cdc-status"><div class="status-dot status-done"></div></div>
-        </div>
-        <div class="cdc-row">
-          <div class="cdc-task">Gestion des billets réservés en attente de paiement — régularisation, validation, annulation</div>
-          <div class="cdc-diff diff-na">—</div>
-          <div class="cdc-status"><div class="status-dot status-done"></div></div>
-        </div>
-        <div class="cdc-row">
-          <div class="cdc-task">Paramétrage des lieux avec import/export CSV</div>
-          <div class="cdc-diff diff-na">—</div>
-          <div class="cdc-status"><div class="status-dot status-done"></div></div>
-        </div>
-        <div class="cdc-row">
-          <div class="cdc-task">Gestion des billets scannés et non consommés — récapitulatif export CSV, état détaillé par représentation</div>
-          <div class="cdc-diff diff-na">—</div>
-          <div class="cdc-status"><div class="status-dot status-done"></div></div>
-        </div>
-        <div class="cdc-row">
-          <div class="cdc-task">Import en masse de billets via fichier CSV
-            <span class="sub">À vérifier selon types de billets</span>
-          </div>
-          <div class="cdc-diff diff-na">À vérifier</div>
-          <div class="cdc-status"><div class="status-dot status-check"></div></div>
-        </div>
-        <div class="cdc-row">
-          <div class="cdc-task">Impression de billets à l'unité ou par lot — téléchargement PDF ou envoi par email
-            <span class="sub">À vérifier selon configuration</span>
-          </div>
-          <div class="cdc-diff diff-na">À vérifier</div>
-          <div class="cdc-status"><div class="status-dot status-check"></div></div>
+      <div class="cdc-row">
+        <div class="cdc-task">Paramétrage graphique du front-end</div>
+      </div>
+      <div class="cdc-row">
+        <div class="cdc-task">Paramétrage des messages en page d'accueil client</div>
+      </div>
+      <div class="cdc-row">
+        <div class="cdc-task">Paramétrage des représentations (lieu, date, heure, prix, places) avec import/export CSV</div>
+      </div>
+      <div class="cdc-row">
+        <div class="cdc-task">Gestion de l'ouverture et fermeture des ventes — programmable ou manuelle, par représentation et globalement</div>
+      </div>
+      <div class="cdc-row">
+        <div class="cdc-task">Paramétrage des spectacles (image, description) avec import/export CSV</div>
+      </div>
+      <div class="cdc-row">
+        <div class="cdc-task">Gestion des comptes clients (CRUD)</div>
+      </div>
+      <div class="cdc-row">
+        <div class="cdc-task">Gestion des consommations — tableau récapitulatif par représentation et type de réservation, places restantes, export CSV</div>
+      </div>
+      <div class="cdc-row">
+        <div class="cdc-task">Gestion des types de réservation paramétrables
+          <span class="sub">KZE SCO · KZE ASSO · DALON · BENEVOLE · INVITATION · WEB1 · WEB2</span>
         </div>
       </div>
-
-      <div class="cdc-group">
-        <div class="cdc-group-header modif">
-          <span>⚡ À modifier</span>
-          <span class="count">2 fonctionnalités à améliorer</span>
-        </div>
-        <div class="cdc-row">
-          <div class="cdc-task">Recherche multicritère de billets (type, nom, prénom, mail, compte client)
-            <span class="sub">TiBillet proposait uniquement tri par événement, validité et date → ajout de first_name, last_name, email dans TicketAdmin</span>
-          </div>
-          <div class="cdc-diff diff-medium">Moyen</div>
-          <div class="cdc-status"><div class="status-dot status-modif"></div></div>
-        </div>
-        <div class="cdc-row">
-          <div class="cdc-task">Archivage et réinitialisation de la base entre deux festivals
-            <span class="sub">Archivage possible mais uniquement manuellement</span>
-          </div>
-          <div class="cdc-diff diff-easy">Facile</div>
-          <div class="cdc-status"><div class="status-dot status-modif"></div></div>
+      <div class="cdc-row">
+        <div class="cdc-task">Gestion des billets réservés en attente de paiement — régularisation, validation, annulation</div>
+      </div>
+      <div class="cdc-row">
+        <div class="cdc-task">Paramétrage des lieux avec import/export CSV</div>
+      </div>
+      <div class="cdc-row">
+        <div class="cdc-task">Gestion des billets scannés et non consommés — récapitulatif export CSV, état détaillé par représentation</div>
+      </div>
+      <div class="cdc-row">
+        <div class="cdc-task">Import en masse de billets via fichier CSV</div>
+      </div>
+      <div class="cdc-row">
+        <div class="cdc-task">Impression de billets à l'unité ou par lot — téléchargement PDF ou envoi par email</div>
+      </div>
+      <div class="cdc-row">
+        <div class="cdc-task">Recherche multicritère de billets (type, nom, prénom, mail, compte client)
+          <span class="sub">Ajout de first_name, last_name, email dans TicketAdmin (issue #257)</span>
         </div>
       </div>
-
-      <div class="cdc-group">
-        <div class="cdc-group-header todo">
-          <span>◌ À faire / Bloqué</span>
-          <span class="count">4 fonctionnalités en attente</span>
-        </div>
-        <div class="cdc-row">
-          <div class="cdc-task">Paramétrage de la durée de vie du panier client
-            <span class="sub">Nécessite gestion d'expiration et restauration — complexe à implémenter dans TiBillet</span>
-          </div>
-          <div class="cdc-diff diff-hard">Difficile</div>
-          <div class="cdc-status"><div class="status-dot status-todo"></div></div>
-        </div>
-        <div class="cdc-row">
-          <div class="cdc-task">Paramétrage de la maquette du billet
-            <span class="sub">Impossible à réaliser dans TiBillet — template ticket.html fixé par l'architecture</span>
-          </div>
-          <div class="cdc-diff diff-medium">Moyen</div>
-          <div class="cdc-status"><div class="status-dot status-todo"></div></div>
-        </div>
-        <div class="cdc-row">
-          <div class="cdc-task">Gestion des clients pour une représentation déterminée — export CSV
-            <span class="sub">Export en deux clics disponible mais l'adaptation précise aux besoins Komidi est plus complexe que prévu</span>
-          </div>
-          <div class="cdc-diff diff-hard">Plus difficile que prévu</div>
-          <div class="cdc-status"><div class="status-dot status-todo"></div></div>
-        </div>
-        <div class="cdc-row">
-          <div class="cdc-task">Gestion de l'état de chaque représentation (ouverte / fermée / scan remonté)
-            <span class="sub">À vérifier — partiellement possible via l'admin</span>
-          </div>
-          <div class="cdc-diff diff-easy">Facile</div>
-          <div class="cdc-status"><div class="status-dot status-todo"></div></div>
-        </div>
+      <div class="cdc-row">
+        <div class="cdc-task">Archivage et réinitialisation de la base entre deux festivals</div>
       </div>
-
+      <div class="cdc-row">
+        <div class="cdc-task">Paramétrage de la maquette du billet</div>
+      </div>
+      <div class="cdc-row">
+        <div class="cdc-task">Gestion des clients pour une représentation déterminée — export CSV</div>
+      </div>
+      <div class="cdc-row">
+        <div class="cdc-task">Gestion de l'état de chaque représentation (ouverte / fermée / scan remonté)</div>
+      </div>
+      <div class="cdc-row">
+        <div class="cdc-task">Paramétrage de la durée de vie du panier client
+          <span class="sub">Pas de panier disponible dans TiBillet — nécessite une implémentation côté architecture</span>
+        </div>
+        <div class="badge-skip">Non réalisé</div>
+      </div>
     </div>
 
     <!-- ── FRONT-END ── -->
     <div class="cdc-panel" id="cdc-frontend">
-
-      <div class="cdc-group">
-        <div class="cdc-group-header done">
-          <span>✓ Fait</span>
-          <span class="count">5 fonctionnalités opérationnelles</span>
-        </div>
-        <div class="cdc-row">
-          <div class="cdc-task">Module de gestion des demandes via formulaire de contact</div>
-          <div class="cdc-diff diff-na">—</div>
-          <div class="cdc-status"><div class="status-dot status-done"></div></div>
-        </div>
-        <div class="cdc-row">
-          <div class="cdc-task">Affichage du nombre de places restantes si ventes ouvertes</div>
-          <div class="cdc-diff diff-na">—</div>
-          <div class="cdc-status"><div class="status-dot status-done"></div></div>
-        </div>
-        <div class="cdc-row">
-          <div class="cdc-task">Page d'accueil avec messages programmables</div>
-          <div class="cdc-diff diff-na">—</div>
-          <div class="cdc-status"><div class="status-dot status-done"></div></div>
-        </div>
-        <div class="cdc-row">
-          <div class="cdc-task">Authentification et gestion des utilisateurs</div>
-          <div class="cdc-diff diff-na">—</div>
-          <div class="cdc-status"><div class="status-dot status-done"></div></div>
-        </div>
-        <div class="cdc-row">
-          <div class="cdc-task">Livraison des billets au format PDF — par mail et depuis interface</div>
-          <div class="cdc-diff diff-na">—</div>
-          <div class="cdc-status"><div class="status-dot status-done"></div></div>
+      <div class="cdc-row">
+        <div class="cdc-task">Module de gestion des demandes via formulaire de contact</div>
+      </div>
+      <div class="cdc-row">
+        <div class="cdc-task">Affichage du nombre de places restantes si ventes ouvertes</div>
+      </div>
+      <div class="cdc-row">
+        <div class="cdc-task">Page d'accueil avec messages programmables</div>
+      </div>
+      <div class="cdc-row">
+        <div class="cdc-task">Authentification et gestion des utilisateurs</div>
+      </div>
+      <div class="cdc-row">
+        <div class="cdc-task">Livraison des billets au format PDF — par mail et depuis interface</div>
+      </div>
+      <div class="cdc-row">
+        <div class="cdc-task">Consultation de la programmation multi-critères (spectacle / date / lieu)
+          <span class="sub">Ajout filtre par date dans views.py + search2.html (issue #191)</span>
         </div>
       </div>
-
-      <div class="cdc-group">
-        <div class="cdc-group-header modif">
-          <span>⚡ À modifier</span>
-          <span class="count">2 fonctionnalités à améliorer</span>
-        </div>
-        <div class="cdc-row">
-          <div class="cdc-task">Consultation de la programmation multi-critères (spectacle / date / lieu)
-            <span class="sub">TiBillet proposait tri par catégorie uniquement → ajout filtre par date dans views.py + search2.html</span>
-          </div>
-          <div class="cdc-diff diff-easy">Facile</div>
-          <div class="cdc-status"><div class="status-dot status-modif"></div></div>
-        </div>
-        <div class="cdc-row">
-          <div class="cdc-task">Paiement en ligne — Stripe (actuel) et Verifone / Paybox (demandé par Komidi)
-            <span class="sub">Paiement Stripe fonctionnel — intégration Verifone nécessite des informations de la part de Komidi</span>
-          </div>
-          <div class="cdc-diff diff-hard">Difficile</div>
-          <div class="cdc-status"><div class="status-dot status-modif"></div></div>
+      <div class="cdc-row">
+        <div class="cdc-task">Paiement en ligne — Stripe fonctionnel</div>
+      </div>
+      <div class="cdc-row">
+        <div class="cdc-task">Mentions légales (LCEN + RGPD)
+          <span class="sub">Rédigées et intégrées au site pendant le stage</span>
         </div>
       </div>
-
-      <div class="cdc-group">
-        <div class="cdc-group-header todo">
-          <span>◌ À faire</span>
-          <span class="count">4 fonctionnalités restantes</span>
-        </div>
-        <div class="cdc-row">
-          <div class="cdc-task">Gestion du panier client avec durée de vie paramétrable
-            <span class="sub">Pas de panier disponible actuellement — à chaque réservation un lien de paiement direct est envoyé</span>
-          </div>
-          <div class="cdc-diff diff-hard">Difficile</div>
-          <div class="cdc-status"><div class="status-dot status-todo"></div></div>
-        </div>
-        <div class="cdc-row">
-          <div class="cdc-task">Mentions légales (LCEN + RGPD)
-            <span class="sub">Rédigées et intégrées au site pendant le stage</span>
-          </div>
-          <div class="cdc-diff diff-easy">Facile</div>
-          <div class="cdc-status"><div class="status-dot status-done"></div></div>
-        </div>
-        <div class="cdc-row">
-          <div class="cdc-task">Formulaire de contact / Mail</div>
-          <div class="cdc-diff diff-easy">Facile</div>
-          <div class="cdc-status"><div class="status-dot status-todo"></div></div>
-        </div>
-        <div class="cdc-row">
-          <div class="cdc-task">Création de compte utilisateur simplifié</div>
-          <div class="cdc-diff diff-na">—</div>
-          <div class="cdc-status"><div class="status-dot status-todo"></div></div>
-        </div>
+      <div class="cdc-row">
+        <div class="cdc-task">Formulaire de contact</div>
       </div>
-
+      <div class="cdc-row">
+        <div class="cdc-task">Création de compte utilisateur simplifié</div>
+      </div>
+      <div class="cdc-row">
+        <div class="cdc-task">Gestion du panier client avec durée de vie paramétrable
+          <span class="sub">Pas de panier disponible actuellement — à chaque réservation un lien de paiement direct est envoyé</span>
+        </div>
+        <div class="badge-skip">Non réalisé</div>
+      </div>
     </div>
   </section>
 
