@@ -306,10 +306,10 @@
     <span class="badge bt">4 min</span>
   </div>
   <div class="body-text">
-    <p>J'ai développé plusieurs fonctionnalités directement sur le code source Django de TiBillet. Je vais vous donner un exemple concret avec le <em>filtre multi-critères des événements par date</em>.</p>
-    <p>Le besoin était de permettre aux utilisateurs de filtrer les spectacles par date sur la page publique — TiBillet ne proposait à l'origine qu'un tri par catégorie. J'ai d'abord modifié la fonction <em>federated_events_filter</em> dans le fichier <em>views.py</em> pour qu'elle accepte un paramètre <em>date</em> transmis en GET. Dans les templates existants, les dates des événements sont devenues des <em>liens cliquables</em> qui transmettent automatiquement ce paramètre à la vue. J'ai ensuite créé un nouveau fichier <em>search2.html</em> avec un panneau de filtres avancés dont l'affichage se gère entièrement en CSS, sans JavaScript.</p>
-    <p>Sur ce même principe — modification de la logique dans views.py, mise à jour des templates — j'ai réalisé les autres fonctionnalités. L'issue <em>#277</em> permettait de conditionner l'affichage de l'heure d'un événement via un champ dans le modèle. Les issues <em>#191</em> et <em>#180</em> concernaient l'affichage de la date de fin et d'une description courte dans l'agenda. J'ai également ajouté une <em>recherche multicritères</em> dans l'interface d'administration des billets.</p>
-    <p>En parallèle des développements, j'ai rédigé les <em>mentions légales</em> du site — conformes à la loi LCEN et au RGPD — incluant les informations sur l'éditeur, l'hébergeur, et les droits des utilisateurs sur leurs données personnelles.</p>
+    <p>J'ai développé plusieurs fonctionnalités directement dans le code de TiBillet. Je vais vous donner un exemple concret : le <em>filtre des événements par date</em>.</p>
+    <p>Le besoin était simple — les utilisateurs ne pouvaient filtrer les spectacles que par catégorie, pas par date. J'ai modifié une fonction dans le fichier <em>views.py</em> pour prendre en compte la date choisie par l'utilisateur. Les dates affichées sur la page sont devenues des <em>liens cliquables</em>. Et j'ai créé un nouveau fichier de template avec un panneau de filtres avancés géré entièrement en <em>CSS, sans JavaScript</em>.</p>
+    <p>Sur ce même principe — modifier la logique côté serveur, mettre à jour les templates — j'ai réalisé les autres fonctionnalités : affichage conditionnel de l'heure, date de fin, description courte dans l'agenda, et une <em>recherche multicritères</em> dans l'interface d'administration.</p>
+    <p>En parallèle, j'ai rédigé les <em>mentions légales</em> du site, conformes à la loi LCEN et au RGPD.</p>
     <span class="transition">Au-delà des développements, j'ai également été confronté à deux incidents que j'ai dû résoudre.</span>
   </div>
 </div>
