@@ -831,20 +831,27 @@
       "github": "https://github.com/AoiShidaStr/pharmapays2"
     },
     "lespass": {
-      "titre": "Lespass / TiBillet — Stage Komidi",
+      "titre": "TiBillet / Lespass — Stage Komidi",
       "type": "Stage entreprise · 2ème année BTS · 6 semaines · Komidi, Saint-Joseph, La Réunion",
-      "contexte": "Stage de 2ème année BTS SIO chez Komidi, association culturelle de Saint-Joseph (La Réunion). Mission : étudier et adapter la solution open source TiBillet (billetterie coopérative) aux besoins spécifiques de l'organisation.",
-      "role": "Analyse de l'architecture de TiBillet, déploiement de l'environnement de développement local via Docker, exploration du code source Django/Python.",
+      "contexte": "Stage de 2ème année BTS SIO chez Komidi, association culturelle à Saint-Joseph (La Réunion). Komidi utilise TiBillet, une suite open source de billetterie et gestion d'adhésions (Django/Python, Docker Compose), pour gérer ses ventes de billets. Mission : déployer l'environnement de développement, résoudre les incidents bloquants, développer des fonctionnalités, et documenter l'ensemble du travail.",
+      "role": "Développeur stagiaire — prise en main complète de la stack TiBillet (Fedow + Lespass + Docker), correction d'incidents en production et en développement, développement de fonctionnalités sur le code source Django (models, views, templates, admin), rédaction des livrables (guide d'installation, cahiers des charges, mentions légales).",
       "realise": [
-        "Étude approfondie de l'architecture microservices de TiBillet (~2 semaines)",
-        "Déploiement local de l'application via Docker Compose",
-        "Cartographie des modules et de la structure Django",
-        "Identification des points d'adaptation aux besoins de Komidi"
+        "Installation complète de l'environnement de dev : Debian 13, Docker, Git/SSH, VSCodium, génération des clés Fernet et Django, docker compose up + flush.sh",
+        "Correction du Bug VPS (incident production) : Django plantait en page d'accueil à cause d'un Client mal configuré en base — corrigé via django shell en modifiant la catégorie du schema_name",
+        "Issue #277 : ajout du champ show_time dans models.py pour masquer l'heure d'un événement — propagé dans l'admin Django (list_display + fields) et deux templates (agenda + page détail)",
+        "Issue #257 : ajout des champs show_price_note et price_note sur le modèle Event + création de la balise template event_dates dans tibitags.py — mis à jour dans 4 templates (cardEvent, cardCreateEvent, retrieve, booking)",
+        "Issue #191 : affichage conditionnel de la date/heure de fin d'événement dans retrieve.html (gestion multi-jours et même jour)",
+        "Issue #180 : affichage de la courte description (short_description) dans la liste des événements de l'agenda (partial/list.html)",
+        "Développement du filtre multi-critères des événements par date : modifications dans views.py (federated_events_filter), templates (partial/list.html, search.html) et création de search2.html",
+        "Développement de la recherche multi-critères des billets dans l'admin Django : ajout des filtres first_name, last_name, email dans TicketAdmin (admin_tenant.py)",
+        "Rédaction des mentions légales complètes (LCEN + RGPD) pour le site de billetterie Komidi",
+        "Rédaction du guide d'installation TiBillet en HTML (documentation de la procédure complète + 5 problèmes Docker résolus)",
+        "Participation aux cahiers des charges frontend et back-end : analyse des fonctionnalités existantes vs besoins Komidi, évaluation des niveaux de difficulté"
       ],
-      "obstacle": "Compréhension d'une codebase de grande envergure sans documentation interne suffisante — résolution par lecture systématique du code et tests.",
-      "resultat": "Environnement de développement opérationnel, rapport d'analyse de l'architecture, propositions d'adaptation documentées.",
-      "competences": ["C2 — Répondre aux incidents et demandes", "C5 — Mettre à disposition un service informatique"],
-      "tags": ["Python", "Django", "Docker", "GitHub", "Linux"],
+      "obstacle": "Dès le début du stage, l'environnement Docker était instable : les conteneurs LaBoutik (caisse cashless), inclus dans le docker-compose mais non utilisés, surchargeaient la machine et provoquaient des redémarrages en boucle qui bloquaient toute initialisation. Le diagnostic a nécessité de croiser les logs Docker, les versions installées et l'état des branches Git avant d'identifier la cause racine et de la corriger (suppression de LaBoutik + git stash/pull). En parallèle, sur le VPS de production, un Client mal configuré en base de données causait un crash Django à chaque chargement de la page d'accueil.",
+      "resultat": "Environnement de développement stable et entièrement documenté. Six fonctionnalités livrées sur l'instance de billetterie Komidi (filtres, champs configurables, mentions légales). Guide d'installation réutilisable par tout futur contributeur. Première expérience concrète de contribution à un projet open source réel sous licence AGPL-3.0.",
+      "competences": ["C2 — Répondre aux incidents et demandes", "C3 — Développer la présence en ligne", "C4 — Travailler en mode projet", "C5 — Mettre à disposition un service informatique"],
+      "tags": ["Python", "Django", "Docker", "Linux/Debian", "Git", "PostgreSQL", "HTML/CSS", "Bootstrap", "Open Source", "TiBillet", "AGPL-3.0"],
       "github": "https://github.com/AoiShidaStr/Lespass"
     },
     "tetris": {
