@@ -235,3 +235,84 @@ document.querySelectorAll('.btn-fiche').forEach(btn => {
 modalClose.addEventListener('click', closeModal);
 modalOverlay.addEventListener('click', e => { if (e.target === modalOverlay) closeModal(); });
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+/* ── Logo gemme — attraction magnétique + éclat au clic (idée D) ─ */
+(function initNavGem() {
+  const svg   = document.getElementById('nav-gem-svg');
+  const gem   = document.getElementById('nav-gem');
+  const burst = document.getElementById('nav-gem-burst');
+  if (!svg || !gem || !burst) return;                       // autres pages : on ignore
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return; // accessibilité
+
+  const NS = 'http://www.w3.org/2000/svg';
+  let gx = 100, gy = 100, vx = 0, vy = 0;                   // position/vitesse de la gemme
+  let px = -999, py = -999;                                 // position curseur (repère SVG)
+
+  function toViewBox(clientX, clientY) {
+    const rect = svg.getBoundingClientRect();
+    const vb   = svg.viewBox.baseVal;
+    return {
+      x: (clientX - rect.left) / rect.width  * vb.width,
+      y: (clientY - rect.top)  / rect.height * vb.height,
+    };
+  }
+
+  svg.addEventListener('mousemove', e => { const p = toViewBox(e.clientX, e.clientY); px = p.x; py = p.y; });
+  svg.addEventListener('mouseleave', () => { px = -999; py = -999; });
+
+  svg.addEventListener('click', e => {
+    const p = toViewBox(e.clientX, e.clientY);
+    spawnBurst(p.x, p.y);
+    const dx = gx - p.x, dy = gy - p.y;
+    const d  = Math.hypot(dx, dy) || 1;
+    vx += (dx / d) * 16;                                    // la gemme est repoussée par le clic
+    vy += (dy / d) * 16;
+  });
+
+  function spawnBurst(x, y) {
+    burst.innerHTML = '';
+    burst.setAttribute('opacity', '1');
+    for (let i = 0; i < 10; i++) {
+      const angle = (i / 10) * Math.PI * 2;
+      const line  = document.createElementNS(NS, 'line');
+      line.setAttribute('x1', x); line.setAttribute('y1', y);
+      line.setAttribute('x2', x); line.setAttribute('y2', y);
+      line.setAttribute('stroke', '#a5b4fc');
+      line.setAttribute('stroke-width', '2');
+      line.setAttribute('stroke-linecap', 'round');
+      burst.appendChild(line);
+      let t = 0;
+      (function(l, a) {
+        function step() {
+          t += 0.06;
+          const len = t * 30;
+          l.setAttribute('x2', x + Math.cos(a) * len);
+          l.setAttribute('y2', y + Math.sin(a) * len);
+          l.setAttribute('stroke-opacity', Math.max(0, 1 - t));
+          if (t < 1) requestAnimationFrame(step);
+          else l.remove();
+        }
+        requestAnimationFrame(step);
+      })(line, angle);
+    }
+  }
+
+  (function tick() {
+    vx += (100 - gx) * 0.04;                                // ressort vers le centre (100,100)
+    vy += (100 - gy) * 0.04;
+    if (px > 0) {                                           // attraction magnétique vers le curseur
+      const dx = px - gx, dy = py - gy;
+      const d  = Math.hypot(dx, dy);
+      if (d < 80 && d > 0) {
+        const f = (1 - d / 80) * 2.4;
+        vx += (dx / d) * f;
+        vy += (dy / d) * f;
+      }
+    }
+    vx *= 0.82; vy *= 0.82;                                 // friction
+    gx += vx;   gy += vy;
+    const floatY = Math.sin(Date.now() / 900) * 4;          // léger flottement permanent
+    gem.style.transform = `translate(${gx - 100}px, ${gy - 100 + floatY}px)`;
+    requestAnimationFrame(tick);
+  })();
+})();

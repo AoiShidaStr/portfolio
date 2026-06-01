@@ -47,7 +47,33 @@
 
   <!-- ── Navigation principale ── -->
   <header class="nav" id="nav">
-    <a class="nav-logo" href="#hero">M<span>.</span>HT</a>
+    <a class="nav-logo" href="#hero" aria-label="Accueil — Meven Hoarau Techer">
+      <span class="nav-logo-gem">
+        <svg id="nav-gem-svg" viewBox="0 0 200 200" aria-hidden="true">
+          <defs>
+            <linearGradient id="ngT" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#a5b4fc"/><stop offset="100%" stop-color="#6366f1"/></linearGradient>
+            <linearGradient id="ngL" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#312e81"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
+            <linearGradient id="ngR" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#4f46e5"/><stop offset="100%" stop-color="#818cf8"/></linearGradient>
+            <linearGradient id="ngB" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1e1b4b"/><stop offset="100%" stop-color="#0a0a0f"/></linearGradient>
+            <filter id="ngGlow"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          </defs>
+          <!-- particules d'éclat au clic -->
+          <g id="nav-gem-burst" opacity="0"></g>
+          <!-- gemme (Crystal Gem — option D) -->
+          <g id="nav-gem" filter="url(#ngGlow)" style="transform-origin:100px 100px">
+            <polygon points="100,28 142,78 100,90"   fill="url(#ngT)" opacity="0.95"/>
+            <polygon points="100,28  58,78 100,90"   fill="url(#ngL)" opacity="0.9"/>
+            <polygon points="142,78 158,100 100,90"  fill="url(#ngR)" opacity="0.85"/>
+            <polygon points=" 58,78  42,100 100,90"  fill="url(#ngL)" opacity="0.8"/>
+            <polygon points="100,90 158,100 130,148" fill="#3730a3" opacity="0.9"/>
+            <polygon points="100,90  42,100  70,148" fill="#1e1b4b" opacity="0.9"/>
+            <polygon points="100,90 130,148  70,148" fill="url(#ngB)"/>
+            <polygon points="100,38 130,72 100,80"   fill="rgba(255,255,255,.12)"/>
+          </g>
+        </svg>
+      </span>
+      <span class="nav-logo-text">M<span>.</span>HT</span>
+    </a>
     <ul class="nav-links">
       <li><a href="#presentation">profil</a></li>
       <li><a href="#stages">stages</a></li>

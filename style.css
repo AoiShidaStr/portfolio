@@ -26,6 +26,44 @@
   --ease-in:   cubic-bezier(.64, 0, .78, 0);
 
   --nav-h: 64px;
+
+  /* ── Tokens étendus (issus du Design System Claude) ───────────── */
+  /* Nuances indigo complémentaires */
+  --indigo-400: #818cf8;   /* particules, accent médian */
+  --indigo-900: #312e81;   /* face sombre des cubes iso */
+
+  /* Ombres — toujours teintées indigo (sauf modal) */
+  --shadow-card-hover: 0 16px 48px rgba(79, 70, 229, 0.20);
+  --shadow-card-lg:    0 20px 48px rgba(79, 70, 229, 0.22);
+  --shadow-btn:        0 8px 24px rgba(79, 70, 229, 0.40);
+  --shadow-modal:      0 8px 32px rgba(0, 0, 0, 0.40);
+
+  /* Échelle typographique */
+  --text-hero:    clamp(2.8rem, 6vw, 5rem);
+  --text-h1:      clamp(2rem, 5vw, 3.2rem);
+  --text-body:    clamp(15px, 1.6vw, 17px);
+  --text-mono-sm: 0.8rem;
+  --text-mono-xs: 0.75rem;
+
+  /* Graisses */
+  --fw-light: 300;  --fw-regular: 400;  --fw-medium: 500;
+  --fw-semibold: 600;  --fw-bold: 700;  --fw-black: 900;
+
+  /* Interlignage & interlettrage */
+  --leading-tight: 1.05;  --leading-snug: 1.2;  --leading-normal: 1.7;
+  --tracking-wide: 0.05em;  --tracking-wider: 0.1em;  --tracking-widest: 0.2em;
+
+  /* Rayons de bordure */
+  --radius-sm:  3px;   --radius-md:  4px;   --radius-lg:  6px;
+  --radius-xl:  12px;  --radius-2xl: 14px;  --radius-3xl: 16px;  --radius-4xl: 18px;
+  --radius-full: 9999px;
+
+  /* Couleurs d'accent par projet (faces de cubes iso) */
+  --color-project-indigo-a: #6366f1;  --color-project-indigo-b: #4f46e5;
+  --color-project-violet-a: #a78bfa;  --color-project-violet-b: #7c3aed;
+  --color-project-cyan-a:   #67e8f9;  --color-project-cyan-b:   #0891b2;
+  --color-project-pink-a:   #f9a8d4;  --color-project-pink-b:   #db2777;
+  --color-project-green-a:  #34d399;  --color-project-green-b:  #059669;
 }
 
 /* ================================================================
@@ -136,13 +174,33 @@ body:hover .cursor { opacity: 1; }
 }
 
 .nav-logo {
+  display: flex;
+  align-items: center;
+  gap: .55rem;
+  color: var(--text);
+}
+.nav-logo:hover { opacity: 1; }
+
+.nav-logo-gem {
+  width: 30px;
+  height: 30px;
+  flex: 0 0 auto;
+  display: block;
+}
+.nav-logo-gem svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;       /* la gemme peut flotter/sortir du cadre */
+  cursor: none;
+}
+
+.nav-logo-text {
   font-family: var(--font-mono);
   font-size: 1.1rem;
-  font-weight: 700;
-  color: var(--text);
+  font-weight: var(--fw-bold);
   letter-spacing: 1px;
 }
-.nav-logo span { color: var(--indigo); }
+.nav-logo-text span { color: var(--indigo); }
 
 .nav-links {
   display: flex;
