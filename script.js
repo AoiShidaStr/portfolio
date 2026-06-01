@@ -192,9 +192,11 @@ function openModal(projectKey) {
   const d = fichesData[projectKey];
   if (!d) return;
 
-  const liItems = d.realise.map(r => `<li>${escHtml(r)}</li>`).join('');
-  const tagHtml = d.tags.map(t => `<span class="modal-tag">${escHtml(t)}</span>`).join('');
-  const compHtml = d.competences.map(c => `<li>${escHtml(c)}</li>`).join('');
+  const liItems = (d.realise || []).map(r => `<li>${escHtml(r)}</li>`).join('');
+  const tagHtml = (d.tags || []).map(t => `<span class="modal-tag">${escHtml(t)}</span>`).join('');
+  const compSection = (d.competences && d.competences.length)
+    ? `<h3>Compétences E5</h3><ul>${d.competences.map(c => `<li>${escHtml(c)}</li>`).join('')}</ul>`
+    : '';
   const githubHtml = d.github
     ? `<a class="modal-github" href="${escHtml(d.github)}" target="_blank" rel="noopener">[ GitHub ] →</a>`
     : '';
@@ -212,8 +214,7 @@ function openModal(projectKey) {
     <p>${escHtml(d.obstacle)}</p>
     <h3>Résultat</h3>
     <p>${escHtml(d.resultat)}</p>
-    <h3>Compétences E5</h3>
-    <ul>${compHtml}</ul>
+    ${compSection}
     <h3>Technologies</h3>
     <div class="modal-tags">${tagHtml}</div>
     ${githubHtml}
