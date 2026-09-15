@@ -113,7 +113,7 @@ const SECTION_COLORS = [
   'rgba(55,48,163,.10)',
   'rgba(79,70,229,.08)',
 ];
-const sectionIds = ['hero','presentation','stages','projets','competences','veille','perspectives','documents','contact'];
+const sectionIds = ['hero','presentation','stages','projets','veille','perspectives','documents','contact'];
 
 function updateAmbient() {
   const scrollY = window.scrollY + window.innerHeight * 0.4;
@@ -194,9 +194,6 @@ function openModal(projectKey) {
 
   const liItems = (d.realise || []).map(r => `<li>${escHtml(r)}</li>`).join('');
   const tagHtml = (d.tags || []).map(t => `<span class="modal-tag">${escHtml(t)}</span>`).join('');
-  const compSection = (d.competences && d.competences.length)
-    ? `<h3>Compétences E5</h3><ul>${d.competences.map(c => `<li>${escHtml(c)}</li>`).join('')}</ul>`
-    : '';
   const githubHtml = d.github
     ? `<a class="modal-github" href="${escHtml(d.github)}" target="_blank" rel="noopener">[ GitHub ] →</a>`
     : '';
@@ -214,7 +211,6 @@ function openModal(projectKey) {
     <p>${escHtml(d.obstacle)}</p>
     <h3>Résultat</h3>
     <p>${escHtml(d.resultat)}</p>
-    ${compSection}
     <h3>Technologies</h3>
     <div class="modal-tags">${tagHtml}</div>
     ${githubHtml}
@@ -233,9 +229,12 @@ document.querySelectorAll('.btn-fiche').forEach(btn => {
   btn.addEventListener('click', () => openModal(btn.dataset.project));
 });
 
-modalClose.addEventListener('click', closeModal);
-modalOverlay.addEventListener('click', e => { if (e.target === modalOverlay) closeModal(); });
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+/* veille.html et tibillet.html chargent ce script sans markup de modale. */
+if (modalOverlay && modalClose) {
+  modalClose.addEventListener('click', closeModal);
+  modalOverlay.addEventListener('click', e => { if (e.target === modalOverlay) closeModal(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+}
 
 /* ── Logo gemme — attraction magnétique + éclat au clic (idée D) ─ */
 (function initNavGem() {

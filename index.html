@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Meven Hoarau Techer — Portfolio BTS SIO SLAM</title>
-  <meta name="description" content="Portfolio BTS SIO SLAM de Meven Hoarau Techer — Lycée Pierre Poivre, La Réunion. Développeur passionné, projets Java, Python, Docker.">
+  <title>Meven Hoarau Techer — Développeur web · Recherche alternance</title>
+  <meta name="description" content="Portfolio de Meven Hoarau Techer, développeur web à Lyon. Bachelor 3 Développement Web à Nexa, en recherche d'alternance. Projets Python, Django, Java, Docker, open source.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -29,7 +29,7 @@
   <nav class="dot-nav" id="dot-nav" aria-label="Navigation par section">
     <a href="#hero"         class="dot-nav-item" data-label="Accueil"><span class="dot"></span></a>
     <a href="#presentation" class="dot-nav-item" data-label="Présentation"><span class="dot"></span></a>
-    <a href="#stages"       class="dot-nav-item" data-label="Stages"><span class="dot"></span></a>
+    <a href="#stages"       class="dot-nav-item" data-label="Expériences"><span class="dot"></span></a>
     <a href="#projets"      class="dot-nav-item" data-label="Projets"><span class="dot"></span></a>
     <a href="#veille"       class="dot-nav-item" data-label="Veille"><span class="dot"></span></a>
     <a href="#perspectives" class="dot-nav-item" data-label="Perspectives"><span class="dot"></span></a>
@@ -76,10 +76,11 @@
     </a>
     <ul class="nav-links">
       <li><a href="#presentation">profil</a></li>
-      <li><a href="#stages">stages</a></li>
-      <li><a href="#projets">projets</a></li>
+      <li><a href="#stages">expériences</a></li>
+      <li class="nav-keep-sm"><a href="#projets">projets</a></li>
       <li><a href="#contact">contact</a></li>
-      <li><a href="veille.html">veille</a></li>
+      <li class="nav-keep-sm"><a class="nav-cta" href="#contact">alternance</a></li>
+      <li class="nav-keep-sm"><a href="veille.html">veille</a></li>
     </ul>
   </header>
 
@@ -194,15 +195,22 @@
       </div>
 
       <div class="hero-content">
-        <div class="hero-badge">BTS SIO · OPTION SLAM</div>
+        <div class="hero-badge">DÉVELOPPEUR WEB · LYON</div>
         <h1 class="hero-name">Meven<br><span>Hoarau Techer</span></h1>
-        <p class="hero-sub">Lycée Pierre Poivre — La Réunion · 2024–2026</p>
+        <p class="hero-sub">Bachelor 3 Développement Web — Nexa, Lyon</p>
         <p class="hero-desc">
-          Développeur passionné par les applications métier, l'open source et les technologies émergentes.
+          Développeur web orienté back-end et applications métier. Deux stages en entreprise,
+          six fonctionnalités livrées sur un projet open source réellement en production,
+          et une pratique quotidienne de Python, Django, Java et Docker.
+        </p>
+        <p class="hero-availability">
+          <span class="avail-dot" aria-hidden="true"></span>
+          <span><strong>Je recherche une alternance</strong> en développement web — Lyon et région lyonnaise,
+          rythme Nexa, démarrage dès que possible.</span>
         </p>
         <div class="hero-actions">
           <a class="btn-primary" href="#projets">voir mes projets →</a>
-          <a class="btn-secondary" href="#documents">documents →</a>
+          <a class="btn-secondary" href="docs/cv.pdf" download>télécharger mon CV →</a>
         </div>
         <div class="hero-scroll-hint" aria-hidden="true">
           <span class="scroll-line"></span>
@@ -222,10 +230,15 @@
 
         <div class="bio-block fade-in">
           <p class="bio-text">
-            Étudiant en <strong>BTS SIO option SLAM</strong> au Lycée Pierre Poivre (Saint-Paul, La Réunion),
-            je développe depuis deux ans des compétences en développement logiciel, bases de données et déploiement.
-            Passionné par les projets concrets, j'aime apprendre par la pratique — qu'il s'agisse d'analyser
-            une codebase open source complexe ou de créer un jeu de zéro en dehors des cours.
+            Je suis développeur web, actuellement en <strong>Bachelor 3 Développement Web à Nexa (Lyon)</strong>,
+            et je cherche une alternance pour l'année à venir.
+          </p>
+          <p class="bio-text">
+            J'ai construit mes bases sur des projets réels plutôt que sur des exercices : une refonte de site
+            livrée et mise en ligne pour une entreprise, puis six fonctionnalités déployées sur
+            <strong>TiBillet</strong>, une solution de billetterie open source utilisée au quotidien par une
+            association. Je suis à l'aise pour reprendre une codebase que je ne connais pas, comprendre son
+            architecture et livrer dessus — c'est exactement ce que j'ai fait pendant six semaines chez Komidi.
           </p>
           <div class="lang-badges">
             <div class="lang-badge">
@@ -260,9 +273,9 @@
             <li class="timeline-item">
               <div class="tl-marker"></div>
               <div class="tl-content">
-                <span class="tl-date">Sept. 2024</span>
-                <h4>BTS SIO SLAM</h4>
-                <p>Lycée Pierre Poivre, Saint-Paul — La Réunion</p>
+                <span class="tl-date">2024 — 2026</span>
+                <h4>BTS SIO — option SLAM</h4>
+                <p>Diplôme obtenu · Développement d'applications · La Réunion</p>
               </div>
             </li>
             <li class="timeline-item">
@@ -281,12 +294,20 @@
                 <p>6 semaines · Saint-Joseph · Déploiement TiBillet</p>
               </div>
             </li>
+            <li class="timeline-item">
+              <div class="tl-marker"></div>
+              <div class="tl-content">
+                <span class="tl-date">Sept. 2026 →</span>
+                <h4>Bachelor 3 Développement Web</h4>
+                <p>Nexa — Lyon · En recherche d'alternance</p>
+              </div>
+            </li>
             <li class="timeline-item timeline-item--future">
               <div class="tl-marker"></div>
               <div class="tl-content">
-                <span class="tl-date">2026 →</span>
-                <h4>Obtention du BTS SIO</h4>
-                <p>Poursuite d'études — Licence Pro / Polytech / INSA</p>
+                <span class="tl-date">2027 →</span>
+                <h4>Master ou gestion de projet web</h4>
+                <p>Poursuite à Lyon — vers un rôle de chef de projet web</p>
               </div>
             </li>
           </ol>
@@ -299,7 +320,7 @@
          CHAPITRE III — STAGES
     ============================================================ -->
     <section class="section fade-in" id="stages">
-      <div class="chapter-eyebrow">Chapitre II · Stages</div>
+      <div class="chapter-eyebrow">Chapitre II · Expériences</div>
       <h2 class="section-title">Expériences en entreprise</h2>
 
       <div class="stages-grid">
@@ -378,7 +399,7 @@
           </div>
           <div class="card-body">
             <div class="card-meta">
-              <span class="card-type">TD · Groupe · 2ème année · 2025–2026</span>
+              <span class="card-type">Projet d'équipe · 4 développeurs · 2025–2026</span>
             </div>
             <h3 class="project-name">PharmaPays++</h3>
             <p class="project-desc">Application desktop de gestion et consultation de médicaments. Interface JavaFX, persistance SQLite, architecture MVC.</p>
@@ -401,7 +422,7 @@
           </div>
           <div class="card-body">
             <div class="card-meta">
-              <span class="card-type">Stage 2ème année · Komidi · 6 sem.</span>
+              <span class="card-type">Stage en entreprise · Komidi · 6 semaines</span>
             </div>
             <h3 class="project-name">Lespass / TiBillet</h3>
             <p class="project-desc">Déploiement, développement de fonctionnalités et correction d'incidents sur la solution open source TiBillet. 6 issues livrées, Bug VPS corrigé.</p>
@@ -425,7 +446,7 @@
           </div>
           <div class="card-body">
             <div class="card-meta">
-              <span class="card-type">Projet perso · 1ère année · 2024–2025</span>
+              <span class="card-type">Projet personnel · 2024–2025</span>
             </div>
             <h3 class="project-name">Tetris</h3>
             <p class="project-desc">Jeu Tetris complet développé en autonomie. Architecture POO, moteur de jeu, menu, gestion du meilleur score.</p>
@@ -448,7 +469,7 @@
           </div>
           <div class="card-body">
             <div class="card-meta">
-              <span class="card-type">TD · Lycée · 2ème année · 2025–2026</span>
+              <span class="card-type">Projet encadré · 2025–2026</span>
             </div>
             <h3 class="project-name">App Mobile Parking</h3>
             <p class="project-desc">Application Android de gestion de places de stationnement. Consultation, réservation et suivi en temps réel.</p>
@@ -470,7 +491,7 @@
           </div>
           <div class="card-body">
             <div class="card-meta">
-              <span class="card-type">TD · Lycée · 2ème année · 2025–2026</span>
+              <span class="card-type">Projet encadré · 2025–2026</span>
             </div>
             <h3 class="project-name">Application Cinéma</h3>
             <p class="project-desc">Application de gestion d'une salle de cinéma. Catalogue de films, séances, réservation de places.</p>
@@ -492,7 +513,7 @@
           </div>
           <div class="card-body">
             <div class="card-meta">
-              <span class="card-type">Projet perso · 2025–2026</span>
+              <span class="card-type">Projet personnel · 2025–2026</span>
             </div>
             <h3 class="project-name">Ce portfolio</h3>
             <p class="project-desc">Site vitrine isométrique déployé sur GitHub Pages. HTML/CSS/JS pur, animations canvas, design low-poly.</p>
@@ -567,36 +588,37 @@
       <h2 class="section-title">Et après ?</h2>
 
       <div class="perspectives-layout">
-        <div class="persp-block fade-in">
+        <div class="persp-block fade-in persp-block--primary">
           <div class="persp-icon">→</div>
           <div class="persp-content">
-            <h3>Licence Pro ou Bachelor</h3>
+            <h3>Une alternance en développement web</h3>
             <p>
-              Après l'obtention du BTS SIO, je souhaite poursuivre en
-              <strong>Licence Professionnelle</strong> dans le domaine du développement ou de l'intelligence artificielle,
-              idéalement à Lyon ou dans une ville universitaire offrant un parcours solide en informatique.
+              C'est ma priorité immédiate. Je cherche une entreprise à <strong>Lyon ou en région lyonnaise</strong>
+              où contribuer à un vrai produit : développement back-end, intégration, reprise et maintenance
+              d'une application existante. Le rythme d'alternance suit le calendrier Nexa et je suis
+              disponible dès maintenant.
             </p>
           </div>
         </div>
         <div class="persp-block fade-in">
           <div class="persp-icon">◈</div>
           <div class="persp-content">
-            <h3>Polytech / INSA</h3>
+            <h3>Poursuite en Master, à Lyon</h3>
             <p>
-              Je cible également les formations d'ingénieur à <strong>Polytech Lyon</strong> ou à l'<strong>INSA Lyon</strong>
-              en filière informatique ou systèmes intelligents, pour approfondir mes bases théoriques
-              et accéder à des projets industriels ambitieux.
+              Après le Bachelor, j'envisage un <strong>Master</strong> à Lyon pour consolider mes bases
+              techniques et élargir vers la conception et le pilotage de projets web, toujours en alternance
+              si l'entreprise souhaite prolonger la collaboration.
             </p>
           </div>
         </div>
         <div class="persp-block fade-in">
           <div class="persp-icon">▲</div>
           <div class="persp-content">
-            <h3>Domaine visé : IA & Développement</h3>
+            <h3>Objectif : chef de projet web</h3>
             <p>
-              Mon intérêt pour l'Intelligence Artificielle, renforcé par deux ans de veille active,
-              m'oriente vers des spécialités mêlant <strong>développement logiciel</strong> et
-              <strong>IA appliquée</strong> — que ce soit dans le conseil, la R&D ou l'édition logicielle.
+              À moyen terme, je veux évoluer vers un rôle de <strong>chef de projet web</strong> — en gardant
+              un pied dans la technique. Mon stage chez Komidi m'a montré que j'aime autant écrire le code que
+              cadrer le besoin, rédiger un cahier des charges et documenter pour l'équipe qui suivra.
             </p>
           </div>
         </div>
@@ -617,7 +639,7 @@
           <div class="doc-icon">↓</div>
           <div class="doc-info">
             <h4>Curriculum Vitae</h4>
-            <p>CV Meven Hoarau Techer — BTS SIO SLAM</p>
+            <p>CV Meven Hoarau Techer — Développeur web</p>
           </div>
           <span class="doc-format">PDF</span>
         </a>
@@ -724,7 +746,7 @@
   </main>
 
   <footer class="footer">
-    <span>Meven Hoarau Techer &nbsp;·&nbsp; BTS SIO SLAM &nbsp;·&nbsp; 2026</span>
+    <span>Meven Hoarau Techer &nbsp;·&nbsp; Développeur web &nbsp;·&nbsp; Lyon &nbsp;·&nbsp; 2026</span>
     <a href="https://aoishidastr.github.io/portfolio" style="color:inherit;opacity:.4">aoishidastr.github.io/portfolio</a>
   </footer>
 
@@ -739,8 +761,8 @@
   {
     "pharmapays": {
       "titre": "PharmaPays++",
-      "type": "TD · Groupe (4 personnes) · 2ème année BTS · Oct. 2025 — Jan. 2026",
-      "contexte": "Projet réalisé en 2ème année de BTS SIO SLAM au Lycée Pierre Poivre dans le cadre du module de développement. L'objectif était de créer une application desktop de gestion et consultation de médicaments pour une pharmacie fictive.",
+      "type": "Projet d'équipe (4 personnes) · Oct. 2025 — Jan. 2026",
+      "contexte": "Projet d'équipe mené sur quatre mois à quatre développeurs. L'objectif était de créer une application desktop de gestion et consultation de médicaments pour une pharmacie.",
       "role": "Conception du schéma entité-relation de la base de données, création et déploiement de la base SQLite sur machine virtuelle, participation à l'intégration de l'interface JavaFX.",
       "realise": [
         "Modélisation du schéma entité-relation (MCD/MLD) — identifications des entités et associations",
@@ -756,8 +778,8 @@
     },
     "lespass": {
       "titre": "TiBillet / Lespass — Stage Komidi",
-      "type": "Stage entreprise · 2ème année BTS · 6 semaines · Komidi, Saint-Joseph, La Réunion",
-      "contexte": "Stage de 2ème année BTS SIO chez Komidi, association culturelle à Saint-Joseph (La Réunion). Komidi utilise TiBillet, une suite open source de billetterie et gestion d'adhésions (Django/Python, Docker Compose), pour gérer ses ventes de billets. Mission : déployer l'environnement de développement, résoudre les incidents bloquants, développer des fonctionnalités, et documenter l'ensemble du travail.",
+      "type": "Stage en entreprise · 6 semaines · Komidi, Saint-Joseph, La Réunion",
+      "contexte": "Stage chez Komidi, association culturelle à Saint-Joseph (La Réunion). Komidi utilise TiBillet, une suite open source de billetterie et gestion d'adhésions (Django/Python, Docker Compose), pour gérer ses ventes de billets. Mission : déployer l'environnement de développement, résoudre les incidents bloquants, développer des fonctionnalités, et documenter l'ensemble du travail.",
       "role": "Développeur stagiaire — prise en main complète de la stack TiBillet (Fedow + Lespass + Docker), correction d'incidents en production et en développement, développement de fonctionnalités sur le code source Django (models, views, templates, admin), rédaction des livrables (guide d'installation, cahiers des charges, mentions légales).",
       "realise": [
         "Installation complète de l'environnement de dev : Debian 13, Docker, Git/SSH, VSCodium, génération des clés Fernet et Django, docker compose up + flush.sh",
@@ -779,8 +801,8 @@
     },
     "tetris": {
       "titre": "Tetris",
-      "type": "Projet personnel · 1ère année BTS · 2024–2025",
-      "contexte": "Projet développé entièrement en autonomie en 1ère année de BTS SIO, en dehors du cursus scolaire. Python était alors mon tout premier langage de programmation. Ce projet m'a permis d'apprendre les bases du développement logiciel (variables, boucles, fonctions, POO) à travers un cas concret et motivant, plutôt que par des exercices académiques.",
+      "type": "Projet personnel · 2024–2025",
+      "contexte": "Projet développé entièrement en autonomie, en dehors de tout cadre scolaire. Python était alors mon tout premier langage de programmation. Ce projet m'a permis d'apprendre les bases du développement logiciel (variables, boucles, fonctions, POO) à travers un cas concret et motivant, plutôt que par des exercices académiques.",
       "role": "Développement complet du projet de A à Z : apprentissage du langage, conception de l'architecture, implémentation et tests.",
       "realise": [
         "Apprentissage autonome de Python et de la bibliothèque Pygame",
@@ -791,14 +813,14 @@
         "Animations et rendu graphique fluide via Pygame"
       ],
       "obstacle": "Gestion des rotations de pièces et des collisions aux bords de la grille — problème résolu après recherches personnelles et mise en place d'une matrice de collision.",
-      "resultat": "Jeu Tetris complet et fonctionnel, publié sur GitHub. Premier projet personnel mené de bout en bout, qui a déclenché mon intérêt pour le développement logiciel et conduit à l'apprentissage de Java en 2ème année.",
+      "resultat": "Jeu Tetris complet et fonctionnel, publié sur GitHub. Premier projet personnel mené de bout en bout, qui a déclenché mon intérêt pour le développement logiciel et conduit à l'apprentissage de Java.",
       "tags": ["Python", "Pygame", "POO"],
       "github": "https://github.com/AoiShidaStr/tetris"
     },
     "parking": {
       "titre": "Application Mobile Parking",
-      "type": "TD · Lycée Pierre Poivre · 2024–2025",
-      "contexte": "Projet réalisé en cours de développement mobile. Objectif : créer une application Android de gestion de places de stationnement.",
+      "type": "Projet encadré · 2024–2025",
+      "contexte": "Projet encadré de développement mobile. Objectif : créer une application Android de gestion de places de stationnement.",
       "role": "Développement de l'application mobile Android.",
       "realise": [
         "Interface de consultation des places disponibles",
@@ -812,8 +834,8 @@
     },
     "cinema": {
       "titre": "Application Cinéma",
-      "type": "TD · Lycée Pierre Poivre · 2024–2025",
-      "contexte": "Projet réalisé en cours de développement. Objectif : développer une application de gestion d'une salle de cinéma.",
+      "type": "Projet encadré · 2024–2025",
+      "contexte": "Projet encadré de développement applicatif. Objectif : développer une application de gestion d'une salle de cinéma.",
       "role": "Développement de l'application Java/JavaFX avec base de données SQL.",
       "realise": [
         "Catalogue de films et gestion des séances",
@@ -826,9 +848,9 @@
       "github": null
     },
     "portfolio": {
-      "titre": "Portfolio BTS SIO",
+      "titre": "Ce portfolio",
       "type": "Projet personnel · 2025–2026",
-      "contexte": "Création d'un portfolio web pour le BTS SIO SLAM. Objectif : présenter les réalisations, les compétences et le parcours de manière professionnelle et mémorable.",
+      "contexte": "Portfolio personnel conçu pour présenter mon travail à des recruteurs. Objectif : un site rapide, sans aucun framework, qui montre à la fois les projets et la manière de les présenter.",
       "role": "Conception et développement complets — design, HTML/CSS/JS, déploiement.",
       "realise": [
         "Design isométrique / low-poly en SVG animé",

@@ -819,54 +819,60 @@ body:hover .cursor { opacity: 1; }
 }
 
 /* ================================================================
-   14. COMPÉTENCES E5
+   14. RECHERCHE D'ALTERNANCE
    ================================================================ */
-.competences-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 1.2rem;
-}
-
-.comp-block {
+.hero-availability {
   display: flex;
-  gap: 1rem;
-  padding: 1.5rem;
-  background: var(--surface-2);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  transition: border-color .3s, transform .3s;
+  align-items: baseline;
+  gap: .6rem;
+  max-width: 46ch;
+  padding: .85rem 1.1rem;
+  font-size: .87rem;
+  line-height: 1.55;
+  color: var(--text-muted);
+  background: rgba(52,211,153,.07);
+  border: 1px solid rgba(52,211,153,.28);
+  border-radius: 10px;
 }
-.comp-block:hover {
-  border-color: var(--border-glow);
-  transform: translateX(4px);
+.hero-availability strong { color: #34d399; font-weight: 600; }
+
+.avail-dot {
+  flex: none;
+  width: .5rem;
+  height: .5rem;
+  border-radius: 50%;
+  background: #34d399;
+  box-shadow: 0 0 0 0 rgba(52,211,153,.55);
+  animation: avail-pulse 2.4s ease-out infinite;
+  transform: translateY(-.1rem);
+}
+@keyframes avail-pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(52,211,153,.55); }
+  70%  { box-shadow: 0 0 0 .5rem rgba(52,211,153,0); }
+  100% { box-shadow: 0 0 0 0 rgba(52,211,153,0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .avail-dot { animation: none; }
 }
 
-.comp-id {
-  font-family: var(--font-mono);
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: var(--indigo);
-  min-width: 2rem;
+.nav-cta {
+  color: #34d399 !important;
+  border: 1px solid rgba(52,211,153,.35);
+  padding: .2rem .6rem;
+  border-radius: 4px;
+  transition: background-color .2s, border-color .2s;
+}
+.nav-cta:hover {
+  background: rgba(52,211,153,.12);
+  border-color: rgba(52,211,153,.6);
 }
 
-.comp-body h4 {
-  font-size: .9rem;
-  font-weight: 600;
-  color: var(--text);
-  margin-bottom: .4rem;
+.persp-block--primary {
+  border-color: rgba(52,211,153,.3);
+  background: linear-gradient(135deg, rgba(52,211,153,.07), var(--surface-2) 60%);
 }
-.comp-body p { font-size: .83rem; color: var(--text-muted); margin-bottom: .7rem; }
-
-.comp-projects { display: flex; flex-wrap: wrap; gap: .4rem; }
-.comp-tag {
-  font-family: var(--font-mono);
-  font-size: .65rem;
-  padding: .15rem .5rem;
-  background: rgba(99,102,241,.12);
-  border: 1px solid var(--border);
-  border-radius: 3px;
-  color: var(--indigo-lt);
-}
+.persp-block--primary .persp-icon { color: #34d399; }
+.persp-block--primary strong { color: #34d399; }
 
 /* ================================================================
    15. VEILLE
@@ -1303,9 +1309,10 @@ body:hover .cursor { opacity: 1; }
 }
 
 @media (max-width: 600px) {
-  .nav-links li:not(:last-child):not(:nth-last-child(2)) { display: none; }
+  .nav { padding-left: 1rem; padding-right: 1rem; }
+  .nav-links { gap: 1rem; margin-left: 1rem; }
+  .nav-links li:not(.nav-keep-sm) { display: none; }
   .projects-grid { grid-template-columns: 1fr; }
-  .competences-grid { grid-template-columns: 1fr; }
   .contact-grid { grid-template-columns: 1fr; }
   .docs-grid { grid-template-columns: 1fr; }
   .veille-preview { gap: 1.5rem; }
