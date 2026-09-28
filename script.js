@@ -104,7 +104,7 @@ window.addEventListener('scroll', () => {
 const ambientLight = document.getElementById('ambient-light');
 const SECTION_COLORS = [
   'rgba(79,70,229,.13)',
-  'rgba(99,102,241,.10)',
+  'rgba(200,65,46,.10)',
   'rgba(67,56,202,.12)',
   'rgba(79,70,229,.13)',
   'rgba(55,48,163,.10)',
@@ -112,8 +112,9 @@ const SECTION_COLORS = [
   'rgba(79,70,229,.09)',
   'rgba(55,48,163,.10)',
   'rgba(79,70,229,.08)',
+  'rgba(55,48,163,.09)',
 ];
-const sectionIds = ['hero','presentation','stages','projets','veille','perspectives','documents','contact'];
+const sectionIds = ['hero','rivages','presentation','competences','projets','stages','veille','perspectives','documents','contact'];
 
 function updateAmbient() {
   const scrollY = window.scrollY + window.innerHeight * 0.4;
@@ -188,6 +189,8 @@ const modalOverlay = document.getElementById('modal-overlay');
 const modalClose   = document.getElementById('modal-close');
 const modalContent = document.getElementById('modal-content');
 
+let lastFocus = null;
+
 function openModal(projectKey) {
   const d = fichesData[projectKey];
   if (!d) return;
@@ -198,31 +201,35 @@ function openModal(projectKey) {
     ? `<a class="modal-github" href="${escHtml(d.github)}" target="_blank" rel="noopener">[ GitHub ] →</a>`
     : '';
 
+  // Une rubrique absente de la fiche n'affiche pas de titre vide.
+  const section = (titre, texte) => texte ? `<h3>${titre}</h3><p>${escHtml(texte)}</p>` : '';
+
   modalContent.innerHTML = `
     <p class="modal-type">${escHtml(d.type)}</p>
     <h2 id="modal-title">${escHtml(d.titre)}</h2>
-    <h3>Contexte</h3>
-    <p>${escHtml(d.contexte)}</p>
-    <h3>Mon rôle</h3>
-    <p>${escHtml(d.role)}</p>
-    <h3>Ce que j'ai réalisé</h3>
-    <ul>${liItems}</ul>
-    <h3>Obstacle rencontré</h3>
-    <p>${escHtml(d.obstacle)}</p>
-    <h3>Résultat</h3>
-    <p>${escHtml(d.resultat)}</p>
+    ${section('Contexte', d.contexte)}
+    ${section('Mon rôle', d.role)}
+    ${liItems ? `<h3>Ce que j'ai réalisé</h3><ul>${liItems}</ul>` : ''}
+    ${section('Obstacle rencontré', d.obstacle)}
+    ${section('Résultat', d.resultat)}
     <h3>Technologies</h3>
     <div class="modal-tags">${tagHtml}</div>
     ${githubHtml}
   `;
 
+  lastFocus = document.activeElement;
   modalOverlay.classList.add('open');
+  modalOverlay.setAttribute('aria-hidden', 'false');
   document.body.style.overflow = 'hidden';
+  modalClose.focus();
 }
 
 function closeModal() {
+  if (!modalOverlay.classList.contains('open')) return;
   modalOverlay.classList.remove('open');
+  modalOverlay.setAttribute('aria-hidden', 'true');
   document.body.style.overflow = '';
+  if (lastFocus) lastFocus.focus();
 }
 
 document.querySelectorAll('.btn-fiche').forEach(btn => {
@@ -233,7 +240,16 @@ document.querySelectorAll('.btn-fiche').forEach(btn => {
 if (modalOverlay && modalClose) {
   modalClose.addEventListener('click', closeModal);
   modalOverlay.addEventListener('click', e => { if (e.target === modalOverlay) closeModal(); });
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+  document.addEventListener('keydown', e => {
+    if (!modalOverlay.classList.contains('open')) return;
+    if (e.key === 'Escape') closeModal();
+    if (e.key === 'Tab') {                                  // le focus reste dans la fiche ouverte
+      const f = modalOverlay.querySelectorAll('a[href], button');
+      const first = f[0], last = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
+  });
 }
 
 /* ── Logo gemme — attraction magnétique + éclat au clic (idée D) ─ */

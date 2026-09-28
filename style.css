@@ -18,6 +18,12 @@
   --border:      rgba(99, 102, 241, 0.22);
   --border-glow: rgba(99, 102, 241, 0.5);
 
+  /* Accent « torii » repris de Rivages des Morts */
+  --torii:       #c8412e;   /* fonds de bouton (texte blanc : 5,1:1) */
+  --torii-dim:   #a8392a;
+  --torii-lt:    #f28b73;   /* texte sur fond sombre (7:1) */
+  --torii-glow:  rgba(242, 139, 115, 0.35);
+
   --font-display: 'Playfair Display', Georgia, serif;
   --font-body:    'Inter', system-ui, sans-serif;
   --font-mono:    'JetBrains Mono', 'Cascadia Code', 'Fira Code', monospace;
@@ -80,7 +86,12 @@ body {
   font-size: clamp(15px, 1.6vw, 17px);
   line-height: 1.7;
   overflow-x: hidden;
-  cursor: none;
+}
+@media (hover: hover) and (pointer: fine) {
+  body, .btn-fiche, .rgpd-close { cursor: none; }
+}
+@media (hover: none), (pointer: coarse) {
+  .cursor, .cursor-halo { display: none; }
 }
 
 a { color: var(--indigo-lt); text-decoration: none; transition: opacity .2s; }
@@ -200,7 +211,7 @@ body:hover .cursor { opacity: 1; }
   font-weight: var(--fw-bold);
   letter-spacing: 1px;
 }
-.nav-logo-text span { color: var(--indigo); }
+.nav-logo-text span { color: var(--indigo-400); }
 
 .nav-links {
   display: flex;
@@ -295,7 +306,7 @@ body:hover .cursor { opacity: 1; }
   font-size: .7rem;
   letter-spacing: .2em;
   text-transform: uppercase;
-  color: var(--indigo);
+  color: var(--indigo-400);
   margin-bottom: 1rem;
 }
 
@@ -392,7 +403,7 @@ body:hover .cursor { opacity: 1; }
   font-family: var(--font-mono);
   font-size: .7rem;
   letter-spacing: .2em;
-  color: var(--indigo);
+  color: var(--indigo-400);
   text-transform: uppercase;
 }
 
@@ -567,7 +578,7 @@ body:hover .cursor { opacity: 1; }
 .tl-date {
   font-family: var(--font-mono);
   font-size: .7rem;
-  color: var(--indigo);
+  color: var(--indigo-400);
   letter-spacing: .05em;
   display: block;
   margin-bottom: .2rem;
@@ -644,7 +655,7 @@ body:hover .cursor { opacity: 1; }
   font-size: .72rem;
   text-transform: uppercase;
   letter-spacing: .1em;
-  color: var(--indigo);
+  color: var(--indigo-400);
   margin-bottom: .4rem;
 }
 .stage-mission p { font-size: .9rem; color: var(--text-muted); margin-bottom: 1rem; }
@@ -665,7 +676,7 @@ body:hover .cursor { opacity: 1; }
   content: '›';
   position: absolute;
   left: 0;
-  color: var(--indigo);
+  color: var(--indigo-400);
 }
 
 .stage-tags {
@@ -810,7 +821,6 @@ body:hover .cursor { opacity: 1; }
   border: 1px solid var(--border-glow);
   color: var(--indigo-lt);
   border-radius: 4px;
-  cursor: none;
   transition: background .2s, border-color .2s;
 }
 .btn-fiche:hover {
@@ -915,7 +925,7 @@ body:hover .cursor { opacity: 1; }
   font-size: .9rem;
   color: var(--text-muted);
 }
-.veille-axe-icon { color: var(--indigo); font-size: .8rem; }
+.veille-axe-icon { color: var(--indigo-400); font-size: .8rem; }
 
 .veille-cta { }
 
@@ -945,7 +955,7 @@ body:hover .cursor { opacity: 1; }
 
 .persp-icon {
   font-size: 1.5rem;
-  color: var(--indigo);
+  color: var(--indigo-400);
   min-width: 2rem;
   margin-top: .1rem;
 }
@@ -1000,7 +1010,7 @@ body:hover .cursor { opacity: 1; }
 .doc-format {
   font-family: var(--font-mono);
   font-size: .6rem;
-  color: var(--indigo);
+  color: var(--indigo-400);
   border: 1px solid var(--border);
   padding: .15rem .4rem;
   border-radius: 3px;
@@ -1161,7 +1171,7 @@ body:hover .cursor { opacity: 1; }
 .contact-icon {
   font-family: var(--font-mono);
   font-size: 1rem;
-  color: var(--indigo);
+  color: var(--indigo-400);
   min-width: 1.8rem;
   text-align: center;
 }
@@ -1194,12 +1204,15 @@ body:hover .cursor { opacity: 1; }
   justify-content: center;
   padding: 1.5rem;
   opacity: 0;
+  visibility: hidden;
   pointer-events: none;
-  transition: opacity .3s;
+  transition: opacity .3s, visibility 0s linear .3s;
 }
 .modal-overlay.open {
   opacity: 1;
+  visibility: visible;
   pointer-events: all;
+  transition: opacity .3s;
 }
 
 .modal-card {
@@ -1242,7 +1255,7 @@ body:hover .cursor { opacity: 1; }
 .modal-content .modal-type {
   font-family: var(--font-mono);
   font-size: .7rem;
-  color: var(--indigo);
+  color: var(--indigo-400);
   text-transform: uppercase;
   letter-spacing: .1em;
   margin-bottom: .6rem;
@@ -1258,7 +1271,7 @@ body:hover .cursor { opacity: 1; }
   font-size: .75rem;
   text-transform: uppercase;
   letter-spacing: .1em;
-  color: var(--indigo);
+  color: var(--indigo-400);
   margin: 1.4rem 0 .5rem;
 }
 .modal-content p  { font-size: .9rem; color: var(--text-muted); }
@@ -1274,7 +1287,7 @@ body:hover .cursor { opacity: 1; }
   padding-left: 1.2rem;
   position: relative;
 }
-.modal-content ul li::before { content: '›'; position: absolute; left: 0; color: var(--indigo); }
+.modal-content ul li::before { content: '›'; position: absolute; left: 0; color: var(--indigo-400); }
 .modal-tags {
   display: flex;
   flex-wrap: wrap;
@@ -1356,10 +1369,345 @@ body:hover .cursor { opacity: 1; }
   color: #fff;
   border: none;
   border-radius: 6px;
-  cursor: none;
   transition: background .2s;
 }
 .rgpd-close:hover { background: var(--indigo-dim); }
+
+/* ================================================================
+   21b. ACCESSIBILITÉ
+   ================================================================ */
+.sr-only {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+.skip-link {
+  position: fixed;
+  top: .75rem;
+  left: .75rem;
+  z-index: 10000;
+  padding: .6rem 1rem;
+  background: var(--indigo);
+  color: #fff;
+  font-family: var(--font-mono);
+  font-size: .8rem;
+  border-radius: 6px;
+  transform: translateY(-200%);
+  transition: transform .2s;
+}
+.skip-link:focus { transform: none; opacity: 1; }
+
+:where(a, button, [tabindex]):focus-visible {
+  outline: 2px solid var(--indigo-lt);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+.btn-game:focus-visible { outline-color: var(--torii-lt); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .fade-in { opacity: 1; transform: none; }
+}
+
+/* ================================================================
+   21c. ACCENT JEU — bouton « jouer »
+   ================================================================ */
+.btn-game {
+  font-family: var(--font-mono);
+  font-size: .8rem;
+  padding: .7rem 1.5rem;
+  background: var(--torii);
+  color: #fff;
+  border-radius: 6px;
+  letter-spacing: .05em;
+  box-shadow: 0 0 0 1px rgba(242,139,115,.35);
+  transition: background .2s, transform .2s, box-shadow .2s;
+}
+.btn-game:hover {
+  background: var(--torii-dim);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px var(--torii-glow);
+  opacity: 1;
+}
+.nav-game { color: var(--torii-lt) !important; }
+
+.hero-desc strong { color: var(--text); }
+
+/* ================================================================
+   21d. RIVAGES DES MORTS — projet phare
+   ================================================================ */
+#rivages { border-top: 1px solid rgba(242,139,115,.18); }
+
+.chapter-eyebrow--torii { color: var(--torii-lt); }
+
+.rivages-head {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: .4rem 1rem;
+  margin-bottom: 1.5rem;
+}
+.rivages-head .section-title { margin-bottom: 0; }
+
+.status-badge {
+  font-family: var(--font-mono);
+  font-size: .7rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--torii-lt);
+  border: 1px solid rgba(242,139,115,.45);
+  background: rgba(200,65,46,.12);
+  padding: .25rem .7rem;
+  border-radius: var(--radius-full);
+}
+
+.rivages-pitch {
+  color: var(--text-muted);
+  max-width: 70ch;
+  font-size: 1.05rem;
+  line-height: 1.8;
+  margin-bottom: 1.5rem;
+}
+.rivages-pitch strong { color: var(--text); }
+
+.rivages-actions { display: flex; flex-wrap: wrap; gap: .8rem; }
+.rivages-note {
+  margin: .9rem 0 2.5rem;
+  font-family: var(--font-mono);
+  font-size: .72rem;
+  color: var(--text-muted);
+}
+
+.rivages-gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 3rem;
+}
+.shot {
+  margin: 0;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.shot--wide { grid-column: 1 / -1; }
+.shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+.shot figcaption {
+  padding: .7rem 1rem .85rem;
+  font-size: .8rem;
+  color: var(--text-muted);
+}
+
+.rivages-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+.rivages-col {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-top: 2px solid var(--torii);
+  border-radius: 12px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.rivages-col h3,
+.rivages-next h3 {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  color: var(--text);
+}
+.rivages-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: .7rem;
+}
+.rivages-list li {
+  position: relative;
+  padding-left: 1.1rem;
+  font-size: .87rem;
+  color: var(--text-muted);
+}
+.rivages-list li::before {
+  content: '◆';
+  position: absolute;
+  left: 0;
+  top: .1em;
+  font-size: .6rem;
+  color: var(--torii-lt);
+}
+.rivages-list strong { color: var(--text); font-weight: 600; }
+
+.rivages-next {
+  max-width: 75ch;
+  padding: 1.5rem;
+  border-left: 2px solid var(--torii);
+  background: linear-gradient(90deg, rgba(200,65,46,.08), transparent);
+  border-radius: 0 12px 12px 0;
+}
+.rivages-next h3 { margin-bottom: .6rem; }
+.rivages-next p { font-size: .92rem; color: var(--text-muted); }
+
+/* ================================================================
+   21e. PROFIL — message clé et forces
+   ================================================================ */
+.key-message {
+  max-width: 62ch;
+  margin: 0 0 3rem;
+  padding: 1.2rem 1.5rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.1rem, 2.2vw, 1.35rem);
+  line-height: 1.5;
+  color: var(--text);
+  border-left: 3px solid var(--torii);
+  background: rgba(30,27,75,.45);
+  border-radius: 0 12px 12px 0;
+}
+.bio-block { display: flex; flex-direction: column; }
+.forces-title {
+  font-family: var(--font-mono);
+  font-size: .75rem;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: var(--indigo-400);
+  margin-top: .8rem;
+}
+.forces-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: .55rem;
+  margin-bottom: 1rem;
+}
+.forces-list li {
+  font-size: .9rem;
+  color: var(--text-muted);
+  padding-left: 1.1rem;
+  position: relative;
+}
+.forces-list li::before { content: '›'; position: absolute; left: 0; color: var(--torii-lt); }
+.forces-list strong { color: var(--text); }
+
+/* ================================================================
+   21f. COMPÉTENCES
+   ================================================================ */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+.skill-group {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.skill-group h3 {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  color: var(--text);
+}
+.skill-group h3 span { color: var(--indigo-400); margin-right: .3rem; font-size: .9rem; }
+.skill-group--torii { border-color: rgba(242,139,115,.4); }
+.skill-group--torii h3 span { color: var(--torii-lt); }
+.skill-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: .45rem;
+  flex: 1;
+}
+.skill-list li {
+  font-size: .87rem;
+  color: var(--text-muted);
+  padding: .35rem 0;
+  border-bottom: 1px solid rgba(99,102,241,.12);
+}
+.skill-list li:last-child { border-bottom: 0; }
+.skill-list strong { color: var(--text); font-weight: 600; }
+.skill-proof {
+  font-family: var(--font-mono);
+  font-size: .7rem;
+  color: var(--text-muted);
+}
+
+/* ================================================================
+   21g. AUTRES PROJETS (liste compacte)
+   ================================================================ */
+.more-title {
+  font-family: var(--font-mono);
+  font-size: .75rem;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: var(--indigo-400);
+  margin: 3rem 0 1rem;
+}
+.more-list {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: .8rem;
+}
+.more-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.2rem;
+  background: rgba(19,17,46,.7);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+.more-info { display: flex; flex-direction: column; gap: .2rem; }
+.more-name { font-weight: 600; font-size: .95rem; color: var(--text); }
+.more-desc { font-size: .8rem; color: var(--text-muted); }
+.more-actions { display: flex; align-items: center; gap: .7rem; flex-shrink: 0; }
+
+/* ================================================================
+   21h. APPEL À L'ACTION (contact)
+   ================================================================ */
+.cta-block {
+  padding: 1.8rem;
+  margin-bottom: 2rem;
+  border: 1px solid rgba(52,211,153,.35);
+  background: linear-gradient(135deg, rgba(52,211,153,.07), rgba(200,65,46,.06));
+  border-radius: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: .8rem;
+}
+.cta-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.2rem, 2.6vw, 1.6rem);
+  color: var(--text);
+  line-height: 1.3;
+}
+.cta-text { color: var(--text-muted); font-size: .95rem; }
 
 /* ================================================================
    22. RESPONSIVE
@@ -1378,6 +1726,11 @@ body:hover .cursor { opacity: 1; }
   .presentation-layout { grid-template-columns: 1fr; gap: 2.5rem; }
   .stages-grid { grid-template-columns: 1fr; }
   .dot-nav { display: none; }
+
+  .rivages-grid, .skills-grid { grid-template-columns: 1fr; }
+  .rivages-gallery { grid-template-columns: 1fr 1fr; }
+  .more-list { grid-template-columns: 1fr; }
+  .hero-availability { margin-left: auto; margin-right: auto; text-align: left; }
 }
 
 @media (max-width: 600px) {
@@ -1388,4 +1741,9 @@ body:hover .cursor { opacity: 1; }
   .contact-grid { grid-template-columns: 1fr; }
   .docs-grid { grid-template-columns: 1fr; }
   .veille-preview { gap: 1.5rem; }
+
+  .rivages-gallery { grid-template-columns: 1fr; }
+  .more-item { flex-direction: column; align-items: flex-start; }
+  .hero-actions a { width: 100%; text-align: center; }
+  .key-message { padding: 1rem 1.1rem; }
 }

@@ -3,8 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Meven Hoarau Techer — Développeur web · Recherche alternance</title>
-  <meta name="description" content="Portfolio de Meven Hoarau Techer, développeur web à Lyon. Bachelor 3 Développement Web à Nexa, en recherche d'alternance. Projets Python, Django, Java, Docker, open source.">
+  <title>Meven Hoarau Techer — Développeur full-stack · jeu vidéo · Recherche alternance</title>
+  <meta name="description" content="Développeur full-stack passionné de jeu vidéo, à Lyon. Je conçois Rivages des Morts, un action-RPG jouable dans le navigateur en Babylon.js. En recherche d'alternance en studio de jeu indépendant, Lyon ou télétravail.">
+  <meta name="theme-color" content="#0a0a0f">
+
+  <!-- Open Graph / aperçu de partage -->
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="fr_FR">
+  <meta property="og:site_name" content="Meven Hoarau Techer">
+  <meta property="og:title" content="Meven Hoarau Techer — Développeur full-stack · jeu vidéo">
+  <meta property="og:description" content="Je conçois Rivages des Morts, un action-RPG jouable dans le navigateur en Babylon.js, avec coop en ligne à trois. En recherche d'alternance en studio de jeu indépendant.">
+  <meta property="og:url" content="https://aoishidastr.github.io/portfolio/">
+  <meta property="og:image" content="https://aoishidastr.github.io/portfolio/img/og-rivages.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Combat contre la Jorōgumo, boss de Rivages des Morts, dans une rizière en vue isométrique">
+  <meta name="twitter:card" content="summary_large_image">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -12,9 +27,11 @@
 </head>
 <body>
 
+  <a class="skip-link" href="#main">Aller au contenu</a>
+
   <!-- ── Curseur personnalisé ── -->
-  <div class="cursor" id="cursor"></div>
-  <div class="cursor-halo" id="cursor-halo"></div>
+  <div class="cursor" id="cursor" aria-hidden="true"></div>
+  <div class="cursor-halo" id="cursor-halo" aria-hidden="true"></div>
 
   <!-- ── Canvas particules ── -->
   <canvas id="canvas-bg" aria-hidden="true"></canvas>
@@ -23,24 +40,26 @@
   <div class="ambient-light" id="ambient-light" aria-hidden="true"></div>
 
   <!-- ── Barre de progression ── -->
-  <div class="progress-bar" id="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+  <div class="progress-bar" id="progress-bar" role="progressbar" aria-label="Progression de lecture" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
 
   <!-- ── Navigation points (droite) ── -->
   <nav class="dot-nav" id="dot-nav" aria-label="Navigation par section">
-    <a href="#hero"         class="dot-nav-item" data-label="Accueil"><span class="dot"></span></a>
-    <a href="#presentation" class="dot-nav-item" data-label="Présentation"><span class="dot"></span></a>
-    <a href="#stages"       class="dot-nav-item" data-label="Expériences"><span class="dot"></span></a>
-    <a href="#projets"      class="dot-nav-item" data-label="Projets"><span class="dot"></span></a>
-    <a href="#veille"       class="dot-nav-item" data-label="Veille"><span class="dot"></span></a>
-    <a href="#perspectives" class="dot-nav-item" data-label="Perspectives"><span class="dot"></span></a>
-    <a href="#documents"    class="dot-nav-item" data-label="Documents"><span class="dot"></span></a>
-    <a href="#contact"      class="dot-nav-item" data-label="Contact"><span class="dot"></span></a>
+    <a href="#hero"         class="dot-nav-item" data-label="Accueil"><span class="dot"></span><span class="sr-only">Accueil</span></a>
+    <a href="#rivages"      class="dot-nav-item" data-label="Rivages des Morts"><span class="dot"></span><span class="sr-only">Rivages des Morts</span></a>
+    <a href="#presentation" class="dot-nav-item" data-label="Profil"><span class="dot"></span><span class="sr-only">Profil</span></a>
+    <a href="#competences"  class="dot-nav-item" data-label="Compétences"><span class="dot"></span><span class="sr-only">Compétences</span></a>
+    <a href="#projets"      class="dot-nav-item" data-label="Projets"><span class="dot"></span><span class="sr-only">Projets</span></a>
+    <a href="#stages"       class="dot-nav-item" data-label="Expériences"><span class="dot"></span><span class="sr-only">Expériences</span></a>
+    <a href="#veille"       class="dot-nav-item" data-label="Veille"><span class="dot"></span><span class="sr-only">Veille</span></a>
+    <a href="#perspectives" class="dot-nav-item" data-label="Perspectives"><span class="dot"></span><span class="sr-only">Perspectives</span></a>
+    <a href="#documents"    class="dot-nav-item" data-label="Documents"><span class="dot"></span><span class="sr-only">Documents</span></a>
+    <a href="#contact"      class="dot-nav-item" data-label="Contact"><span class="dot"></span><span class="sr-only">Contact</span></a>
   </nav>
 
   <!-- ── Modal fiche projet ── -->
-  <div class="modal-overlay" id="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div class="modal-overlay" id="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-hidden="true">
     <div class="modal-card">
-      <button class="modal-close" id="modal-close" aria-label="Fermer">✕</button>
+      <button class="modal-close" id="modal-close" aria-label="Fermer la fiche">✕</button>
       <div class="modal-content" id="modal-content"></div>
     </div>
   </div>
@@ -75,19 +94,19 @@
       <span class="nav-logo-text">M<span>.</span>HT</span>
     </a>
     <ul class="nav-links">
+      <li class="nav-keep-sm"><a class="nav-game" href="#rivages">le jeu</a></li>
       <li><a href="#presentation">profil</a></li>
-      <li><a href="#stages">expériences</a></li>
       <li class="nav-keep-sm"><a href="#projets">projets</a></li>
-      <li><a href="#contact">contact</a></li>
+      <li><a href="#competences">compétences</a></li>
       <li class="nav-keep-sm"><a class="nav-cta" href="#contact">alternance</a></li>
-      <li class="nav-keep-sm"><a href="veille.html">veille</a></li>
+      <li><a href="veille.html">veille</a></li>
     </ul>
   </header>
 
-  <main>
+  <main id="main">
 
     <!-- ============================================================
-         CHAPITRE I — HERO
+         HERO
     ============================================================ -->
     <section class="hero" id="hero">
 
@@ -117,6 +136,19 @@
             <linearGradient id="sat-right" x1="0" y1="0" x2="1" y2="0">
               <stop offset="0%" stop-color="#3730a3"/>
               <stop offset="100%" stop-color="#4f46e5"/>
+            </linearGradient>
+            <!-- Accent « torii » repris de Rivages des Morts -->
+            <linearGradient id="torii-top" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#f28b73"/>
+              <stop offset="100%" stop-color="#d9553d"/>
+            </linearGradient>
+            <linearGradient id="torii-left" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#5c1a12"/>
+              <stop offset="100%" stop-color="#8a2a1c"/>
+            </linearGradient>
+            <linearGradient id="torii-right" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#a8392a"/>
+              <stop offset="100%" stop-color="#c8412e"/>
             </linearGradient>
             <filter id="glow">
               <feGaussianBlur stdDeviation="4" result="blur"/>
@@ -148,69 +180,71 @@
                   font-weight="700" fill="#e0e7ff" letter-spacing="3">MHT</text>
           </g>
 
-          <!-- Cubes satellites -->
+          <!-- Cubes satellites : front / 3D / jeu en haut, back-end et outils en bas -->
           <g class="iso-cube sat-java" filter="url(#glow-sm)">
-            <polygon points="160,100 196,120 160,140 124,120" fill="url(#sat-top)"/>
-            <polygon points="124,120 160,140 160,165 124,145" fill="url(#sat-left)"/>
-            <polygon points="196,120 160,140 160,165 196,145" fill="url(#sat-right)"/>
-            <text x="160" y="127" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="700" fill="#e0e7ff">Java</text>
+            <polygon points="160,100 196,120 160,140 124,120" fill="url(#torii-top)"/>
+            <polygon points="124,120 160,140 160,165 124,145" fill="url(#torii-left)"/>
+            <polygon points="196,120 160,140 160,165 196,145" fill="url(#torii-right)"/>
+            <text x="160" y="127" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="7" font-weight="700" fill="#fff4ef">Babylon</text>
           </g>
           <g class="iso-cube sat-python" filter="url(#glow-sm)">
-            <polygon points="440,95 476,115 440,135 404,115" fill="url(#sat-top)"/>
-            <polygon points="404,115 440,135 440,160 404,140" fill="url(#sat-left)"/>
-            <polygon points="476,115 440,135 440,160 476,140" fill="url(#sat-right)"/>
-            <text x="440" y="122" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="8" font-weight="700" fill="#e0e7ff">Python</text>
+            <polygon points="440,95 476,115 440,135 404,115" fill="url(#torii-top)"/>
+            <polygon points="404,115 440,135 440,160 404,140" fill="url(#torii-left)"/>
+            <polygon points="476,115 440,135 440,160 476,140" fill="url(#torii-right)"/>
+            <text x="440" y="122" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="700" fill="#fff4ef">TS</text>
           </g>
           <g class="iso-cube sat-docker" filter="url(#glow-sm)">
             <polygon points="150,265 186,285 150,305 114,285" fill="url(#sat-top)"/>
             <polygon points="114,285 150,305 150,330 114,310" fill="url(#sat-left)"/>
             <polygon points="186,285 150,305 150,330 186,310" fill="url(#sat-right)"/>
-            <text x="150" y="292" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="8" font-weight="700" fill="#e0e7ff">Docker</text>
+            <text x="150" y="292" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="8" font-weight="700" fill="#e0e7ff">Python</text>
           </g>
           <g class="iso-cube sat-sql" filter="url(#glow-sm)">
             <polygon points="450,265 486,285 450,305 414,285" fill="url(#sat-top)"/>
             <polygon points="414,285 450,305 450,330 414,310" fill="url(#sat-left)"/>
             <polygon points="486,285 450,305 450,330 486,310" fill="url(#sat-right)"/>
-            <text x="450" y="292" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="700" fill="#e0e7ff">SQL</text>
+            <text x="450" y="292" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="8" font-weight="700" fill="#e0e7ff">Django</text>
           </g>
           <g class="iso-cube sat-git" filter="url(#glow-sm)">
             <polygon points="300,315 336,335 300,355 264,335" fill="url(#sat-top)"/>
             <polygon points="264,335 300,355 300,380 264,360" fill="url(#sat-left)"/>
             <polygon points="336,335 300,355 300,380 336,360" fill="url(#sat-right)"/>
-            <text x="300" y="342" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="700" fill="#e0e7ff">Git</text>
+            <text x="300" y="342" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="8" font-weight="700" fill="#e0e7ff">Docker</text>
           </g>
           <g class="iso-cube sat-js" filter="url(#glow-sm)">
-            <polygon points="510,175 546,195 510,215 474,195" fill="url(#sat-top)"/>
-            <polygon points="474,195 510,215 510,240 474,220" fill="url(#sat-left)"/>
-            <polygon points="546,195 510,215 510,240 546,220" fill="url(#sat-right)"/>
-            <text x="510" y="202" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="700" fill="#e0e7ff">JS</text>
+            <polygon points="510,175 546,195 510,215 474,195" fill="url(#torii-top)"/>
+            <polygon points="474,195 510,215 510,240 474,220" fill="url(#torii-left)"/>
+            <polygon points="546,195 510,215 510,240 546,220" fill="url(#torii-right)"/>
+            <text x="510" y="202" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="700" fill="#fff4ef">JS</text>
           </g>
           <g class="iso-cube sat-html" filter="url(#glow-sm)">
             <polygon points="90,175 126,195 90,215 54,195" fill="url(#sat-top)"/>
             <polygon points="54,195 90,215 90,240 54,220" fill="url(#sat-left)"/>
             <polygon points="126,195 90,215 90,240 126,220" fill="url(#sat-right)"/>
-            <text x="90" y="202" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="7.5" font-weight="700" fill="#e0e7ff">HTML</text>
+            <text x="90" y="202" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="700" fill="#e0e7ff">Java</text>
           </g>
         </svg>
       </div>
 
       <div class="hero-content">
-        <div class="hero-badge">DÉVELOPPEUR WEB · LYON</div>
+        <div class="hero-badge">DÉVELOPPEUR FULL-STACK · JEU VIDÉO · LYON</div>
         <h1 class="hero-name">Meven<br><span>Hoarau Techer</span></h1>
-        <p class="hero-sub">Bachelor 3 Développement Web — Nexa, Lyon</p>
+        <p class="hero-sub">Bachelor 3 Développement Web — Nexa Digital School, Lyon</p>
         <p class="hero-desc">
-          Développeur web orienté back-end et applications métier. Deux stages en entreprise,
-          six fonctionnalités livrées sur un projet open source réellement en production,
-          et une pratique quotidienne de Python, Django, Java et Docker.
+          Développeur full-stack passionné de jeu vidéo. Je conçois seul <strong>Rivages des Morts</strong>,
+          un action-RPG jouable dans le navigateur en Babylon.js, avec coop en ligne à trois.
+          Derrière, un socle back-end éprouvé : deux stages et six fonctionnalités livrées
+          sur un projet open source en production.
         </p>
         <p class="hero-availability">
           <span class="avail-dot" aria-hidden="true"></span>
-          <span><strong>Je recherche une alternance</strong> en développement web — Lyon et région lyonnaise,
-          rythme Nexa, démarrage dès que possible.</span>
+          <span><strong>En recherche d'alternance</strong> — studios de jeu indépendants,
+          Lyon ou télétravail. Rythme Nexa, disponible dès maintenant.</span>
         </p>
         <div class="hero-actions">
-          <a class="btn-primary" href="#projets">voir mes projets →</a>
-          <a class="btn-secondary" href="docs/cv.pdf" download>télécharger mon CV →</a>
+          <a class="btn-game" href="https://aoishidastr.github.io/rivages-des-morts/" target="_blank" rel="noopener">▶ jouer à Rivages des Morts<span class="sr-only"> (nouvel onglet)</span></a>
+          <a class="btn-secondary" href="#rivages">découvrir le projet →</a>
+          <a class="btn-secondary" href="docs/cv.pdf" download>mon CV (PDF) ↓</a>
         </div>
         <div class="hero-scroll-hint" aria-hidden="true">
           <span class="scroll-line"></span>
@@ -220,26 +254,145 @@
     </section>
 
     <!-- ============================================================
+         CHAPITRE I — RIVAGES DES MORTS (PROJET PHARE)
+    ============================================================ -->
+    <section class="section fade-in" id="rivages" aria-labelledby="rivages-title">
+      <div class="chapter-eyebrow chapter-eyebrow--torii">Chapitre I · Projet phare</div>
+      <div class="rivages-head">
+        <h2 class="section-title" id="rivages-title">Rivages des Morts</h2>
+        <span class="status-badge">en développement</span>
+      </div>
+      <p class="rivages-pitch">
+        Les au-delà de toutes les mythologies se sont effondrés les uns sur les autres et forment un archipel.
+        Tu incarnes une âme échouée sur l'île du Yomi, l'au-delà japonais, et tu affrontes ses yokai
+        au corps à corps. Un <strong>action-RPG de donjon en vue isométrique, jouable dans le navigateur</strong>,
+        inspiré de Waven et de Hades. J'en porte seul le game design, l'univers et le développement.
+      </p>
+
+      <div class="rivages-actions">
+        <a class="btn-game" href="https://aoishidastr.github.io/rivages-des-morts/" target="_blank" rel="noopener">▶ jouer maintenant<span class="sr-only"> (nouvel onglet)</span></a>
+        <a class="btn-secondary" href="https://github.com/AoiShidaStr/rivages-des-morts" target="_blank" rel="noopener">code source →<span class="sr-only"> (nouvel onglet)</span></a>
+        <a class="btn-secondary" href="https://github.com/AoiShidaStr/rivages-des-morts/blob/main/docs/Rivages%20des%20Morts%20%E2%80%94%20Game%20Design%20Document.md" target="_blank" rel="noopener">game design document →<span class="sr-only"> (nouvel onglet)</span></a>
+      </div>
+      <p class="rivages-note">Se joue au clavier et à la souris, sur ordinateur. Pas de compte : les sauvegardes restent dans le navigateur.</p>
+
+      <div class="rivages-gallery">
+        <figure class="shot shot--wide">
+          <img src="img/rivages/jorogumo.webp" width="1200" height="675" loading="lazy"
+               alt="Combat en vue isométrique dans une rizière : un guerrier nordique et une invocation font face à la Jorōgumo, femme-araignée en kimono rouge, entourée de souches maudites. En haut, la barre de vie du boss.">
+          <figcaption>La Jorōgumo, boss en trois phases des Rizières noyées.</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="img/rivages/kappa.webp" width="1200" height="675" loading="lazy"
+               alt="Un kappa, yokai-tortue vert, charge le héros. Une bande rouge au sol annonce la trajectoire de la charge, et un conseil s'affiche en bas de l'écran.">
+          <figcaption>Chaque attaque est annoncée au sol : on doit pouvoir lire le danger avant qu'il frappe.</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="img/rivages/creation.webp" width="1200" height="675" loading="lazy"
+               alt="Écran « Qui étais-tu ? » de création du héros : quatre cartes de race (Einherjar, Oushebti, Demi-dieu, Hanyō) et cinq cartes de classe (Guerrier, Invocateur, Lame, Paladin, Rôdeur).">
+          <figcaption>Quatre races, cinq classes : toutes les combinaisons sont jouables.</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="img/rivages/titre.webp" width="1200" height="675" loading="lazy"
+               alt="Écran titre de Rivages des Morts, devant la carte peinte de l'île du Yomi : forge, arbres, rizières et un kappa près d'une rivière.">
+          <figcaption>L'île du Yomi, hub du jeu : PNJ, quêtes, forge et boutiques.</figcaption>
+        </figure>
+      </div>
+
+      <div class="rivages-grid">
+        <article class="rivages-col">
+          <h3>Ce qui est jouable aujourd'hui</h3>
+          <ul class="rivages-list">
+            <li>Une île à explorer, avec ses PNJ, ses quêtes, sa forge et ses boutiques.</li>
+            <li>Un donjon, les Rizières noyées : six vagues de yokai puis la Jorōgumo, un boss en trois phases. Niveaux de difficulté débloqués au fil des victoires.</li>
+            <li><strong>4 races × 5 classes</strong>, toutes combinables. Chaque race a une affinité qui change selon la classe.</li>
+            <li>Équipement, forge, arbre de compétences, butin conservé même en cas de mort.</li>
+            <li><strong>Coop en ligne jusqu'à trois joueurs</strong>, sans compte ni serveur : code d'invitation ou liste de parties publiques.</li>
+            <li>Sauvegardes dans le navigateur, avec export et import dans un fichier.</li>
+          </ul>
+        </article>
+
+        <article class="rivages-col">
+          <h3>Décisions de conception</h3>
+          <ul class="rivages-list">
+            <li><strong>Une règle d'univers qui produit du gameplay.</strong> « On existe tant qu'on se souvient de nous » : elle explique l'effondrement, donne les Oubliés comme ennemis communs, fixe la rareté des reliques et le ton des quêtes.</li>
+            <li><strong>Couper ce qui déséquilibre.</strong> La seconde vie du Demi-dieu écrasait les autres races en solo : je l'ai remplacée par l'Égide divine, une invulnérabilité courte une fois par vague.</li>
+            <li><strong>Lisibilité avant tout.</strong> Les attaques s'annoncent au sol, chaque ennemi a un contre (passer dans le dos du kappa, bloquer sa charge, tuer le kodama soigneur en premier).</li>
+            <li><strong>Ressenti de l'invité en coop.</strong> Le combat tourne chez l'hôte, mais le héros de l'invité répond tout de suite à ses déplacements (prédiction locale) : il ne sent pas le ping quand il marche.</li>
+          </ul>
+        </article>
+
+        <article class="rivages-col">
+          <h3>Sous le capot</h3>
+          <ul class="rivages-list">
+            <li>TypeScript, <strong>Babylon.js</strong> et Vite ; environ 16 000 lignes de code.</li>
+            <li>Contenu piloté par les données : ennemis, vagues, quêtes, dialogues et objets décrits en JSON.</li>
+            <li>Réseau pair à pair en WebRTC (Trystero) : un canal fiable pour les événements, un canal rapide sans renvoi pour les positions.</li>
+            <li>Pipeline d'assets maison en Node.js : détourage et découpe des planches, pixel art dessiné par code, icônes, outil d'équilibrage.</li>
+            <li>Déploiement automatique sur GitHub Pages à chaque fusion, via GitHub Actions.</li>
+          </ul>
+          <ul class="project-tags">
+            <li>Babylon.js</li><li>TypeScript</li><li>Vite</li><li>WebRTC</li><li>Node.js</li><li>GitHub Actions</li>
+          </ul>
+        </article>
+      </div>
+
+      <div class="rivages-next">
+        <h3>Ce que j'apprends, et la suite</h3>
+        <p>
+          Ce projet m'apprend à trancher : garder un prototype jouable à chaque étape plutôt qu'accumuler
+          des systèmes, et juger une mécanique sur ce qu'elle fait ressentir en partie, pas sur le papier.
+          Les graphismes sont encore provisoires. La suite est écrite dans le game design document :
+          d'autres îles (les rives de l'Hadès, la Duat, le Helheim), chacune avec sa mythologie et son dieu en boss final.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================================================
          CHAPITRE II — PRÉSENTATION
     ============================================================ -->
     <section class="section fade-in" id="presentation">
-      <div class="chapter-eyebrow">Chapitre I · Présentation</div>
+      <div class="chapter-eyebrow">Chapitre II · Profil</div>
       <h2 class="section-title">Qui suis-je ?</h2>
+
+      <blockquote class="key-message">
+        Développeur autonome et force de proposition, je mets mon regard de joueur au service de l'expérience :
+        je ne code pas seulement des fonctionnalités, je pense à ce que ressent la personne qui joue.
+      </blockquote>
 
       <div class="presentation-layout">
 
         <div class="bio-block fade-in">
           <p class="bio-text">
-            Je suis développeur web, actuellement en <strong>Bachelor 3 Développement Web à Nexa (Lyon)</strong>,
-            et je cherche une alternance pour l'année à venir.
+            Je m'appelle Meven, je suis en <strong>Bachelor 3 Développement Web à Nexa Digital School (Lyon)</strong>,
+            après un BTS SIO option SLAM obtenu à La Réunion. Je cherche une alternance, idéalement dans un
+            studio de jeu indépendant.
           </p>
           <p class="bio-text">
-            J'ai construit mes bases sur des projets réels plutôt que sur des exercices : une refonte de site
-            livrée et mise en ligne pour une entreprise, puis six fonctionnalités déployées sur
-            <strong>TiBillet</strong>, une solution de billetterie open source utilisée au quotidien par une
-            association. Je suis à l'aise pour reprendre une codebase que je ne connais pas, comprendre son
-            architecture et livrer dessus — c'est exactement ce que j'ai fait pendant six semaines chez Komidi.
+            Mon socle, c'est le back-end appris sur des projets réels : une refonte de site mise en ligne pour
+            une entreprise, puis six fonctionnalités livrées sur <strong>TiBillet</strong>, une billetterie open
+            source utilisée en production. Je sais reprendre une base de code que je ne connais pas et livrer dessus.
           </p>
+          <p class="bio-text">
+            Mon parcours est atypique : un échange <strong>Erasmus</strong>, puis des cours à l'<strong>Université
+            Lyon 2</strong> en analyse filmique et en histoire des médias audiovisuels, des espaces théâtraux et de
+            la danse. Ils nourrissent mon sens de la mise en scène, du rythme et de la narration, que je retrouve
+            en game design.
+            <!-- TODO : ajouter les dates de l'échange Erasmus et des cours à Lyon 2 (et les placer dans la frise). -->
+          </p>
+          <p class="bio-text">
+            Et je suis joueur, avec un regard exigeant sur l'ergonomie et le ressenti. C'est ce regard que
+            j'applique à mon propre travail.
+          </p>
+
+          <h3 class="forces-title">Ce que j'apporte</h3>
+          <ul class="forces-list">
+            <li><strong>Mener un projet de A à Z</strong> — game design, univers, code, déploiement.</li>
+            <li><strong>Décider et inventer</strong> — trancher entre deux options, proposer plutôt qu'attendre.</li>
+            <li><strong>Un regard critique sur mon travail</strong> — je coupe ce qui ne marche pas, même quand j'y tenais.</li>
+            <li><strong>Le ressenti avant les métriques</strong> — une interface ou un combat se jugent aussi à ce qu'on éprouve.</li>
+          </ul>
+
           <div class="lang-badges">
             <div class="lang-badge">
               <span class="lang-name">Français</span>
@@ -299,15 +452,23 @@
               <div class="tl-content">
                 <span class="tl-date">Sept. 2026 →</span>
                 <h4>Bachelor 3 Développement Web</h4>
-                <p>Nexa — Lyon · En recherche d'alternance</p>
+                <p>Nexa Digital School — Lyon · En recherche d'alternance</p>
+              </div>
+            </li>
+            <li class="timeline-item">
+              <div class="tl-marker"></div>
+              <div class="tl-content">
+                <span class="tl-date">Sept. 2026 →</span>
+                <h4>Rivages des Morts</h4>
+                <p>Projet personnel · action-RPG en Babylon.js</p>
               </div>
             </li>
             <li class="timeline-item timeline-item--future">
               <div class="tl-marker"></div>
               <div class="tl-content">
                 <span class="tl-date">2027 →</span>
-                <h4>Master ou gestion de projet web</h4>
-                <p>Poursuite à Lyon — vers un rôle de chef de projet web</p>
+                <h4>Master orienté jeu vidéo</h4>
+                <p>Objectif, si j'y parviens : me spécialiser dans le jeu vidéo</p>
               </div>
             </li>
           </ol>
@@ -317,10 +478,207 @@
     </section>
 
     <!-- ============================================================
-         CHAPITRE III — STAGES
+         CHAPITRE III — COMPÉTENCES
+    ============================================================ -->
+    <section class="section fade-in" id="competences">
+      <div class="chapter-eyebrow">Chapitre III · Compétences</div>
+      <h2 class="section-title">Compétences</h2>
+
+      <div class="skills-grid">
+        <article class="skill-group skill-group--torii fade-in">
+          <h3><span aria-hidden="true">◆</span> Front-end, 3D web &amp; jeu</h3>
+          <ul class="skill-list">
+            <li><strong>JavaScript</strong> / <strong>TypeScript</strong></li>
+            <li><strong>HTML / CSS</strong></li>
+            <li><strong>Babylon.js</strong> — rendu temps réel dans le navigateur</li>
+            <li>Vite</li>
+            <li>WebRTC (Trystero) — multijoueur pair à pair</li>
+            <li>Pygame</li>
+            <li>Game design : GDD, équilibrage des classes, lisibilité des combats</li>
+          </ul>
+          <p class="skill-proof">Vu dans : Rivages des Morts, Tetris, ce portfolio, la refonte du site EPP.</p>
+        </article>
+
+        <article class="skill-group fade-in">
+          <h3><span aria-hidden="true">◇</span> Back-end</h3>
+          <ul class="skill-list">
+            <li><strong>Python</strong> / <strong>Django</strong></li>
+            <li><strong>Java</strong></li>
+            <li><strong>SQL</strong> — PostgreSQL, SQLite</li>
+            <li>Modélisation : UML, Merise (MCD, MLD, MPD)</li>
+            <li>Node.js — scripts et outils</li>
+          </ul>
+          <p class="skill-proof">Vu dans : TiBillet en production, Cowork-in, le skill Cahier des charges.</p>
+        </article>
+
+        <article class="skill-group fade-in">
+          <h3><span aria-hidden="true">◇</span> Outils</h3>
+          <ul class="skill-list">
+            <li><strong>Docker</strong> / Docker Compose</li>
+            <li><strong>Git / GitHub</strong> — branches, pull requests</li>
+            <li>GitHub Actions et GitHub Pages</li>
+            <li>Linux (Debian, Ubuntu)</li>
+            <li>WordPress / LocalWP</li>
+            <li>Claude Code — conception de skills</li>
+          </ul>
+          <p class="skill-proof">Vu dans : le stage Komidi, le déploiement du jeu, le site Erasmus.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         CHAPITRE IV — PROJETS
+    ============================================================ -->
+    <section class="section fade-in" id="projets">
+      <div class="chapter-eyebrow">Chapitre IV · Réalisations</div>
+      <h2 class="section-title">Autres projets</h2>
+      <p class="section-intro">Rivages des Morts mis à part, voici ce que j'ai construit, du plus récent au plus ancien.</p>
+
+      <div class="projects-grid">
+
+        <!-- Skill Claude Code : Cahier des charges -->
+        <article class="iso-block-card fade-in">
+          <div class="iso-block">
+            <div class="iso-face iso-face-top" style="--top-a:#fbbf24;--top-b:#d97706"></div>
+            <div class="iso-face iso-face-left" style="--left-a:#451a03;--left-b:#78350f"></div>
+            <div class="iso-face iso-face-right" style="--right-a:#b45309;--right-b:#92400e"></div>
+          </div>
+          <div class="card-body">
+            <div class="card-meta">
+              <span class="card-type">Projet personnel · Sept. 2026 · open source (MIT)</span>
+            </div>
+            <h3 class="project-name">Skill Claude Code : Cahier des charges</h3>
+            <p class="project-desc">Un skill qui transforme des notes en vrac en cahier des charges structuré, vérifié et exporté en PDF, en ne posant que les questions auxquelles les notes ne répondent pas. Il n'invente rien : ce qui manque reste marqué.</p>
+            <ul class="project-tags">
+              <li>Claude Code</li><li>Node.js</li><li>Markdown</li><li>Plugin</li>
+            </ul>
+            <div class="card-actions">
+              <a class="project-link" href="https://github.com/AoiShidaStr/cahier-des-charges" target="_blank" rel="noopener">[ GitHub ] →<span class="sr-only"> (nouvel onglet)</span></a>
+              <button class="btn-fiche" data-project="cahier">Voir la fiche →</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Lespass / TiBillet -->
+        <article class="iso-block-card fade-in">
+          <div class="iso-block">
+            <div class="iso-face iso-face-top" style="--top-a:#818cf8;--top-b:#6366f1"></div>
+            <div class="iso-face iso-face-left" style="--left-a:#1e1b4b;--left-b:#312e81"></div>
+            <div class="iso-face iso-face-right" style="--right-a:#4338ca;--right-b:#3730a3"></div>
+          </div>
+          <div class="card-body">
+            <div class="card-meta">
+              <span class="card-type">Stage · Komidi · 6 semaines · open source en production</span>
+            </div>
+            <h3 class="project-name">Lespass / TiBillet</h3>
+            <p class="project-desc">Six fonctionnalités livrées sur une billetterie open source réellement utilisée : filtres de recherche, champs d'événement configurables, affichages conditionnels. La preuve que je sais entrer dans une vraie base de code et livrer pour de vrais utilisateurs.</p>
+            <ul class="project-tags">
+              <li>Python</li><li>Django</li><li>Docker</li><li>GitHub</li>
+            </ul>
+            <div class="card-actions">
+              <a class="project-link" href="https://github.com/AoiShidaStr/Lespass" target="_blank" rel="noopener">[ GitHub ] →<span class="sr-only"> (nouvel onglet)</span></a>
+              <a class="project-link" href="tibillet.html">[ Projet complet ] →</a>
+              <button class="btn-fiche" data-project="lespass">Voir la fiche →</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Site WordPress Erasmus -->
+        <!-- TODO : préciser l'année, le pays et (si possible) le nom de l'école. -->
+        <article class="iso-block-card fade-in">
+          <div class="iso-block">
+            <div class="iso-face iso-face-top" style="--top-a:#34d399;--top-b:#059669"></div>
+            <div class="iso-face iso-face-left" style="--left-a:#022c22;--left-b:#064e3b"></div>
+            <div class="iso-face iso-face-right" style="--right-a:#047857;--right-b:#065f46"></div>
+          </div>
+          <div class="card-body">
+            <div class="card-meta">
+              <span class="card-type">Échange Erasmus · client réel</span>
+            </div>
+            <h3 class="project-name">Site WordPress d'une école de cuisine</h3>
+            <p class="project-desc">Site conçu pour une école de cuisine qui accueille des personnes en situation de handicap. Développé avec LocalWP puis installé sur un serveur Ubuntu dédié, en échange direct avec le client.</p>
+            <ul class="project-tags">
+              <li>WordPress</li><li>LocalWP</li><li>Ubuntu</li>
+            </ul>
+            <div class="card-actions">
+              <button class="btn-fiche" data-project="erasmus">Voir la fiche →</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Tetris -->
+        <article class="iso-block-card fade-in">
+          <div class="iso-block">
+            <div class="iso-face iso-face-top" style="--top-a:#a78bfa;--top-b:#7c3aed"></div>
+            <div class="iso-face iso-face-left" style="--left-a:#2e1065;--left-b:#4c1d95"></div>
+            <div class="iso-face iso-face-right" style="--right-a:#6d28d9;--right-b:#5b21b6"></div>
+          </div>
+          <div class="card-body">
+            <div class="card-meta">
+              <span class="card-type">Projet personnel · 2024–2025 · mon premier jeu</span>
+            </div>
+            <h3 class="project-name">Tetris</h3>
+            <p class="project-desc">Mon tout premier projet, et déjà un jeu : Tetris complet en Python, appris en autonomie. Moteur de jeu, rotations et collisions, menu, meilleur score sauvegardé.</p>
+            <ul class="project-tags">
+              <li>Python</li><li>Pygame</li><li>POO</li>
+            </ul>
+            <div class="card-actions">
+              <a class="project-link" href="https://github.com/AoiShidaStr/tetris" target="_blank" rel="noopener">[ GitHub ] →<span class="sr-only"> (nouvel onglet)</span></a>
+              <button class="btn-fiche" data-project="tetris">Voir la fiche →</button>
+            </div>
+          </div>
+        </article>
+
+      </div>
+
+      <h3 class="more-title">Aussi réalisés</h3>
+      <ul class="more-list">
+        <li class="more-item fade-in">
+          <div class="more-info">
+            <span class="more-name">Cowork-in</span>
+            <span class="more-desc">Dossier de conception complet à partir d'une expression de besoin : acteurs, cas d'usage, UML, Merise, base PostgreSQL et matrice de traçabilité.</span>
+          </div>
+          <div class="more-actions">
+            <a class="project-link" href="https://github.com/AoiShidaStr/Cowork-in" target="_blank" rel="noopener">[ GitHub ]<span class="sr-only"> (nouvel onglet)</span></a>
+            <button class="btn-fiche" data-project="cowork">fiche</button>
+          </div>
+        </li>
+        <li class="more-item fade-in">
+          <div class="more-info">
+            <span class="more-name">App Mobile Parking</span>
+            <span class="more-desc">Application Android de consultation et de réservation de places de stationnement. Java, SQLite.</span>
+          </div>
+          <div class="more-actions">
+            <button class="btn-fiche" data-project="parking">fiche</button>
+          </div>
+        </li>
+        <li class="more-item fade-in">
+          <div class="more-info">
+            <span class="more-name">Application Cinéma</span>
+            <span class="more-desc">Gestion d'une salle de cinéma : films, séances, réservation de places. Java, JavaFX, SQL.</span>
+          </div>
+          <div class="more-actions">
+            <button class="btn-fiche" data-project="cinema">fiche</button>
+          </div>
+        </li>
+        <li class="more-item fade-in">
+          <div class="more-info">
+            <span class="more-name">Ce portfolio</span>
+            <span class="more-desc">HTML, CSS et JavaScript sans framework, design isométrique en SVG, publié sur GitHub Pages.</span>
+          </div>
+          <div class="more-actions">
+            <a class="project-link" href="https://github.com/AoiShidaStr/portfolio" target="_blank" rel="noopener">[ GitHub ]<span class="sr-only"> (nouvel onglet)</span></a>
+            <button class="btn-fiche" data-project="portfolio">fiche</button>
+          </div>
+        </li>
+      </ul>
+    </section>
+
+    <!-- ============================================================
+         CHAPITRE V — STAGES
     ============================================================ -->
     <section class="section fade-in" id="stages">
-      <div class="chapter-eyebrow">Chapitre II · Expériences</div>
+      <div class="chapter-eyebrow">Chapitre V · Expériences</div>
       <h2 class="section-title">Expériences en entreprise</h2>
 
       <div class="stages-grid">
@@ -332,13 +690,13 @@
             <div class="stage-header-info">
               <h3 class="stage-company">EURL EPP</h3>
               <p class="stage-period">2 juin — 27 juin 2025 · 4 semaines</p>
-              <p class="stage-location">15a rue Fidélio Robert, 97430 Le Tampon</p>
+              <p class="stage-location">Le Tampon, La Réunion</p>
             </div>
           </div>
           <div class="stage-card-body">
             <div class="stage-mission">
               <h4>Mission principale</h4>
-              <p>Refonte complète du site internet de l'entreprise — conception, développement et mise en ligne.</p>
+              <p>Refonte complète du site internet de l'entreprise — conception, développement front-end et mise en ligne.</p>
             </div>
             <ul class="stage-tasks">
               <li>Analyse des besoins et maquettage de la nouvelle interface</li>
@@ -358,19 +716,19 @@
             <div class="stage-header-info">
               <h3 class="stage-company">Association Komidi</h3>
               <p class="stage-period">14 janvier — 24 février 2026 · 6 semaines</p>
-              <p class="stage-location">463 bis rue Raphaël Babet, 97480 Saint-Joseph</p>
+              <p class="stage-location">Saint-Joseph, La Réunion</p>
             </div>
           </div>
           <div class="stage-card-body">
             <div class="stage-mission">
               <h4>Mission principale</h4>
-              <p>Étude et déploiement de la solution open source <strong>TiBillet</strong> (billetterie coopérative) pour l'association.</p>
+              <p>Déploiement et évolution de la billetterie open source <strong>TiBillet</strong> pour l'association : six fonctionnalités livrées en production.</p>
             </div>
             <ul class="stage-tasks">
-              <li>Analyse de l'architecture microservices de TiBillet (~2 semaines)</li>
+              <li>Prise en main d'une architecture microservices inconnue (~2 semaines)</li>
               <li>Déploiement de l'environnement via Docker Compose</li>
-              <li>Cartographie des modules Django/Python</li>
-              <li>Documentation et propositions d'adaptation</li>
+              <li>Développement de fonctionnalités Django (modèles, vues, templates, admin)</li>
+              <li>Documentation : guide d'installation, mentions légales</li>
             </ul>
             <div class="stage-tags">
               <span>Python</span><span>Django</span><span>Docker</span><span>Linux</span><span>GitHub</span>
@@ -382,159 +740,10 @@
     </section>
 
     <!-- ============================================================
-         CHAPITRE IV — PROJETS
-    ============================================================ -->
-    <section class="section fade-in" id="projets">
-      <div class="chapter-eyebrow">Chapitre III · Réalisations</div>
-      <h2 class="section-title">Projets</h2>
-
-      <div class="projects-grid">
-
-        <!-- PharmaPays++ -->
-        <article class="iso-block-card fade-in">
-          <div class="iso-block">
-            <div class="iso-face iso-face-top"></div>
-            <div class="iso-face iso-face-left"></div>
-            <div class="iso-face iso-face-right"></div>
-          </div>
-          <div class="card-body">
-            <div class="card-meta">
-              <span class="card-type">Projet d'équipe · 4 développeurs · 2025–2026</span>
-            </div>
-            <h3 class="project-name">PharmaPays++</h3>
-            <p class="project-desc">Application desktop de gestion et consultation de médicaments. Interface JavaFX, persistance SQLite, architecture MVC.</p>
-            <ul class="project-tags">
-              <li>Java</li><li>JavaFX</li><li>SQLite</li><li>Maven</li>
-            </ul>
-            <div class="card-actions">
-              <a class="project-link" href="https://github.com/AoiShidaStr/pharmapays2" target="_blank" rel="noopener">[ GitHub ] →</a>
-              <button class="btn-fiche" data-project="pharmapays">Voir la fiche →</button>
-            </div>
-          </div>
-        </article>
-
-        <!-- Lespass / TiBillet -->
-        <article class="iso-block-card fade-in">
-          <div class="iso-block">
-            <div class="iso-face iso-face-top" style="--top-a:#818cf8;--top-b:#6366f1"></div>
-            <div class="iso-face iso-face-left" style="--left-a:#1e1b4b;--left-b:#312e81"></div>
-            <div class="iso-face iso-face-right" style="--right-a:#4338ca;--right-b:#3730a3"></div>
-          </div>
-          <div class="card-body">
-            <div class="card-meta">
-              <span class="card-type">Stage en entreprise · Komidi · 6 semaines</span>
-            </div>
-            <h3 class="project-name">Lespass / TiBillet</h3>
-            <p class="project-desc">Déploiement, développement de fonctionnalités et correction d'incidents sur la solution open source TiBillet. 6 issues livrées, Bug VPS corrigé.</p>
-            <ul class="project-tags">
-              <li>Python</li><li>Django</li><li>Docker</li><li>GitHub</li>
-            </ul>
-            <div class="card-actions">
-              <a class="project-link" href="https://github.com/AoiShidaStr/Lespass" target="_blank" rel="noopener">[ GitHub ] →</a>
-              <a class="project-link" href="tibillet.html">[ Projet complet ] →</a>
-              <button class="btn-fiche" data-project="lespass">Voir la fiche →</button>
-            </div>
-          </div>
-        </article>
-
-        <!-- Tetris -->
-        <article class="iso-block-card fade-in">
-          <div class="iso-block">
-            <div class="iso-face iso-face-top" style="--top-a:#a78bfa;--top-b:#7c3aed"></div>
-            <div class="iso-face iso-face-left" style="--left-a:#2e1065;--left-b:#4c1d95"></div>
-            <div class="iso-face iso-face-right" style="--right-a:#6d28d9;--right-b:#5b21b6"></div>
-          </div>
-          <div class="card-body">
-            <div class="card-meta">
-              <span class="card-type">Projet personnel · 2024–2025</span>
-            </div>
-            <h3 class="project-name">Tetris</h3>
-            <p class="project-desc">Jeu Tetris complet développé en autonomie. Architecture POO, moteur de jeu, menu, gestion du meilleur score.</p>
-            <ul class="project-tags">
-              <li>Python</li><li>Pygame</li><li>POO</li>
-            </ul>
-            <div class="card-actions">
-              <a class="project-link" href="https://github.com/AoiShidaStr/tetris" target="_blank" rel="noopener">[ GitHub ] →</a>
-              <button class="btn-fiche" data-project="tetris">Voir la fiche →</button>
-            </div>
-          </div>
-        </article>
-
-        <!-- App Parking -->
-        <article class="iso-block-card fade-in">
-          <div class="iso-block">
-            <div class="iso-face iso-face-top" style="--top-a:#67e8f9;--top-b:#0891b2"></div>
-            <div class="iso-face iso-face-left" style="--left-a:#0c4a6e;--left-b:#075985"></div>
-            <div class="iso-face iso-face-right" style="--right-a:#0369a1;--right-b:#0284c7"></div>
-          </div>
-          <div class="card-body">
-            <div class="card-meta">
-              <span class="card-type">Projet encadré · 2025–2026</span>
-            </div>
-            <h3 class="project-name">App Mobile Parking</h3>
-            <p class="project-desc">Application Android de gestion de places de stationnement. Consultation, réservation et suivi en temps réel.</p>
-            <ul class="project-tags">
-              <li>Android</li><li>Java</li><li>SQLite</li>
-            </ul>
-            <div class="card-actions">
-              <button class="btn-fiche" data-project="parking">Voir la fiche →</button>
-            </div>
-          </div>
-        </article>
-
-        <!-- App Cinéma -->
-        <article class="iso-block-card fade-in">
-          <div class="iso-block">
-            <div class="iso-face iso-face-top" style="--top-a:#f9a8d4;--top-b:#db2777"></div>
-            <div class="iso-face iso-face-left" style="--left-a:#500724;--left-b:#831843"></div>
-            <div class="iso-face iso-face-right" style="--right-a:#be185d;--right-b:#9d174d"></div>
-          </div>
-          <div class="card-body">
-            <div class="card-meta">
-              <span class="card-type">Projet encadré · 2025–2026</span>
-            </div>
-            <h3 class="project-name">Application Cinéma</h3>
-            <p class="project-desc">Application de gestion d'une salle de cinéma. Catalogue de films, séances, réservation de places.</p>
-            <ul class="project-tags">
-              <li>Java</li><li>JavaFX</li><li>SQL</li>
-            </ul>
-            <div class="card-actions">
-              <button class="btn-fiche" data-project="cinema">Voir la fiche →</button>
-            </div>
-          </div>
-        </article>
-
-        <!-- Portfolio -->
-        <article class="iso-block-card fade-in">
-          <div class="iso-block">
-            <div class="iso-face iso-face-top" style="--top-a:#34d399;--top-b:#059669"></div>
-            <div class="iso-face iso-face-left" style="--left-a:#022c22;--left-b:#064e3b"></div>
-            <div class="iso-face iso-face-right" style="--right-a:#047857;--right-b:#065f46"></div>
-          </div>
-          <div class="card-body">
-            <div class="card-meta">
-              <span class="card-type">Projet personnel · 2025–2026</span>
-            </div>
-            <h3 class="project-name">Ce portfolio</h3>
-            <p class="project-desc">Site vitrine isométrique déployé sur GitHub Pages. HTML/CSS/JS pur, animations canvas, design low-poly.</p>
-            <ul class="project-tags">
-              <li>HTML</li><li>CSS</li><li>JavaScript</li><li>GitHub Pages</li>
-            </ul>
-            <div class="card-actions">
-              <a class="project-link" href="https://github.com/AoiShidaStr/portfolio" target="_blank" rel="noopener">[ GitHub ] →</a>
-              <button class="btn-fiche" data-project="portfolio">Voir la fiche →</button>
-            </div>
-          </div>
-        </article>
-
-      </div>
-    </section>
-
-    <!-- ============================================================
-         CHAPITRE IV — VEILLE TECHNOLOGIQUE
+         CHAPITRE VI — VEILLE TECHNOLOGIQUE
     ============================================================ -->
     <section class="section fade-in" id="veille">
-      <div class="chapter-eyebrow">Chapitre IV · Veille</div>
+      <div class="chapter-eyebrow">Chapitre VI · Veille</div>
       <h2 class="section-title">Veille technologique</h2>
       <p class="section-intro">
         Depuis septembre 2024, je réalise une veille mensuelle sur l'Intelligence Artificielle et son
@@ -558,19 +767,19 @@
 
       <div class="veille-axes fade-in">
         <div class="veille-axe">
-          <span class="veille-axe-icon">◈</span>
+          <span class="veille-axe-icon" aria-hidden="true">◈</span>
           <span>Modèles LLM (GPT, Claude, Gemini, Mistral…)</span>
         </div>
         <div class="veille-axe">
-          <span class="veille-axe-icon">◈</span>
+          <span class="veille-axe-icon" aria-hidden="true">◈</span>
           <span>IA appliquée au code (Copilot, Cursor, Claude Code…)</span>
         </div>
         <div class="veille-axe">
-          <span class="veille-axe-icon">◈</span>
+          <span class="veille-axe-icon" aria-hidden="true">◈</span>
           <span>Open source & IA locale (LLaMA, Ollama, Mistral…)</span>
         </div>
         <div class="veille-axe">
-          <span class="veille-axe-icon">◈</span>
+          <span class="veille-axe-icon" aria-hidden="true">◈</span>
           <span>Enjeux éthiques & réglementaires (EU AI Act, vie privée…)</span>
         </div>
       </div>
@@ -584,41 +793,38 @@
          CHAPITRE VII — PERSPECTIVES
     ============================================================ -->
     <section class="section fade-in" id="perspectives">
-      <div class="chapter-eyebrow">Chapitre V · Perspectives</div>
+      <div class="chapter-eyebrow">Chapitre VII · Perspectives</div>
       <h2 class="section-title">Et après ?</h2>
 
       <div class="perspectives-layout">
         <div class="persp-block fade-in persp-block--primary">
-          <div class="persp-icon">→</div>
+          <div class="persp-icon" aria-hidden="true">→</div>
           <div class="persp-content">
-            <h3>Une alternance en développement web</h3>
+            <h3>Une alternance en studio de jeu indépendant</h3>
             <p>
-              C'est ma priorité immédiate. Je cherche une entreprise à <strong>Lyon ou en région lyonnaise</strong>
-              où contribuer à un vrai produit : développement back-end, intégration, reprise et maintenance
-              d'une application existante. Le rythme d'alternance suit le calendrier Nexa et je suis
-              disponible dès maintenant.
+              C'est ma priorité. Je cherche un <strong>studio de jeu indépendant, à Lyon ou en télétravail</strong>,
+              où mettre mon socle full-stack et mon regard de joueur au service d'un vrai jeu. À défaut, une
+              startup du créatif ou du web interactif. Le rythme suit le calendrier Nexa et je suis disponible dès maintenant.
             </p>
           </div>
         </div>
         <div class="persp-block fade-in">
-          <div class="persp-icon">◈</div>
+          <div class="persp-icon" aria-hidden="true">◆</div>
           <div class="persp-content">
-            <h3>Poursuite en Master, à Lyon</h3>
+            <h3>Faire grandir Rivages des Morts</h3>
             <p>
-              Après le Bachelor, j'envisage un <strong>Master</strong> à Lyon pour consolider mes bases
-              techniques et élargir vers la conception et le pilotage de projets web, toujours en alternance
-              si l'entreprise souhaite prolonger la collaboration.
+              Remplacer les graphismes provisoires, puis ouvrir les autres îles de l'archipel prévues dans le
+              game design document, chacune avec sa mythologie, ses ennemis et son dieu en boss final.
             </p>
           </div>
         </div>
         <div class="persp-block fade-in">
-          <div class="persp-icon">▲</div>
+          <div class="persp-icon" aria-hidden="true">▲</div>
           <div class="persp-content">
-            <h3>Objectif : chef de projet web</h3>
+            <h3>Un Master orienté jeu vidéo</h3>
             <p>
-              À moyen terme, je veux évoluer vers un rôle de <strong>chef de projet web</strong> — en gardant
-              un pied dans la technique. Mon stage chez Komidi m'a montré que j'aime autant écrire le code que
-              cadrer le besoin, rédiger un cahier des charges et documenter pour l'équipe qui suivra.
+              Après le Bachelor, si j'y parviens, je veux poursuivre en <strong>Master spécialisé dans le jeu vidéo</strong>,
+              pour consolider la technique et le game design, en alternance si le studio souhaite prolonger l'aventure.
             </p>
           </div>
         </div>
@@ -629,14 +835,14 @@
          CHAPITRE VIII — DOCUMENTS
     ============================================================ -->
     <section class="section fade-in" id="documents">
-      <div class="chapter-eyebrow">Chapitre VI · Documents</div>
+      <div class="chapter-eyebrow">Chapitre VIII · Documents</div>
       <h2 class="section-title">Documents officiels</h2>
       <p class="section-intro">Pièces justificatives disponibles en téléchargement.</p>
 
       <div class="docs-grid">
 
         <a class="doc-card fade-in" href="docs/cv.pdf" download>
-          <div class="doc-icon">↓</div>
+          <div class="doc-icon" aria-hidden="true">↓</div>
           <div class="doc-info">
             <h4>Curriculum Vitae</h4>
             <p>CV Meven Hoarau Techer — Développeur web</p>
@@ -645,7 +851,7 @@
         </a>
 
         <a class="doc-card fade-in" href="docs/attestation-stage-epp.pdf" download>
-          <div class="doc-icon">↓</div>
+          <div class="doc-icon" aria-hidden="true">↓</div>
           <div class="doc-info">
             <h4>Attestation Stage — EURL EPP</h4>
             <p>Juin 2025 · Le Tampon · 4 semaines</p>
@@ -654,7 +860,7 @@
         </a>
 
         <a class="doc-card fade-in" href="docs/attestation-stage-komidi.pdf" download>
-          <div class="doc-icon">↓</div>
+          <div class="doc-icon" aria-hidden="true">↓</div>
           <div class="doc-info">
             <h4>Attestation Stage — Komidi</h4>
             <p>Jan. — Fév. 2026 · Saint-Joseph · 6 semaines</p>
@@ -663,7 +869,7 @@
         </a>
 
         <a class="doc-card fade-in" href="docs/rgpd-certifications.pdf" download>
-          <div class="doc-icon">↓</div>
+          <div class="doc-icon" aria-hidden="true">↓</div>
           <div class="doc-info">
             <h4>Certifications RGPD</h4>
             <p>CNIL · Modules 2 à 5 · Déc. 2024 · 5 certificats</p>
@@ -676,7 +882,7 @@
       <!-- ── Résultats du diplôme ── -->
       <div class="results-block fade-in">
         <div class="results-header">
-          <span class="results-icon">▣</span>
+          <span class="results-icon" aria-hidden="true">▣</span>
           <div class="results-title">
             <h4>Résultats du BTS SIO — option SLAM</h4>
             <p class="results-sub">Session 2026 · Admis · 120 ECTS</p>
@@ -726,7 +932,7 @@
       <!-- PIX -->
       <div class="pix-block fade-in">
         <div class="pix-header">
-          <span class="pix-icon">★</span>
+          <span class="pix-icon" aria-hidden="true">★</span>
           <div>
             <h4>Certification PIX</h4>
             <p class="pix-sub">25 mars 2026 · Code : P-WBV69HM3</p>
@@ -749,33 +955,42 @@
          CHAPITRE IX — CONTACT
     ============================================================ -->
     <section class="section fade-in" id="contact">
-      <div class="chapter-eyebrow">Chapitre VII · Contact</div>
+      <div class="chapter-eyebrow">Chapitre IX · Contact</div>
       <h2 class="section-title">Me contacter</h2>
+
+      <div class="cta-block">
+        <p class="cta-title">En recherche d'alternance — studios de jeu indépendants, Lyon ou télétravail</p>
+        <p class="cta-text">Vous montez un jeu et cherchez un développeur qui pense aussi au joueur ? Écrivez-moi, je réponds vite.</p>
+        <div class="hero-actions">
+          <a class="btn-primary" href="mailto:meventecher@gmail.com?subject=Alternance%20%E2%80%94%20prise%20de%20contact">m'écrire →</a>
+          <a class="btn-game" href="https://aoishidastr.github.io/rivages-des-morts/" target="_blank" rel="noopener">▶ jouer à Rivages des Morts<span class="sr-only"> (nouvel onglet)</span></a>
+        </div>
+      </div>
 
       <ul class="contact-grid">
         <li class="contact-card">
-          <span class="contact-icon">@</span>
+          <span class="contact-icon" aria-hidden="true">@</span>
           <div class="contact-info">
             <span class="contact-label">e-mail</span>
             <a href="mailto:meventecher@gmail.com">meventecher@gmail.com</a>
           </div>
         </li>
         <li class="contact-card">
-          <span class="contact-icon">gh</span>
+          <span class="contact-icon" aria-hidden="true">gh</span>
           <div class="contact-info">
             <span class="contact-label">github</span>
-            <a href="https://github.com/AoiShidaStr" target="_blank" rel="noopener">AoiShidaStr</a>
+            <a href="https://github.com/AoiShidaStr" target="_blank" rel="noopener">AoiShidaStr<span class="sr-only"> (nouvel onglet)</span></a>
           </div>
         </li>
         <li class="contact-card">
-          <span class="contact-icon">☎</span>
+          <span class="contact-icon" aria-hidden="true">☎</span>
           <div class="contact-info">
             <span class="contact-label">téléphone</span>
-            <span>+262 693 827 100</span>
+            <a href="tel:+262693827100">+262 693 827 100</a>
           </div>
         </li>
         <li class="contact-card">
-          <span class="contact-icon">↓</span>
+          <span class="contact-icon" aria-hidden="true">↓</span>
           <div class="contact-info">
             <span class="contact-label">curriculum vitae</span>
             <a href="docs/cv.pdf" download>Télécharger mon CV (PDF)</a>
@@ -787,8 +1002,8 @@
   </main>
 
   <footer class="footer">
-    <span>Meven Hoarau Techer &nbsp;·&nbsp; Développeur web &nbsp;·&nbsp; Lyon &nbsp;·&nbsp; 2026</span>
-    <a href="https://aoishidastr.github.io/portfolio" style="color:inherit;opacity:.4">aoishidastr.github.io/portfolio</a>
+    <span>Meven Hoarau Techer &nbsp;·&nbsp; Développeur full-stack · jeu vidéo &nbsp;·&nbsp; Lyon &nbsp;·&nbsp; 2026</span>
+    <a href="https://aoishidastr.github.io/portfolio" style="color:inherit;opacity:.6">aoishidastr.github.io/portfolio</a>
   </footer>
 
   <!-- ── Bannière RGPD ── -->
@@ -800,22 +1015,22 @@
   <!-- ── Données des fiches projet ── -->
   <script type="application/json" id="fiches-data">
   {
-    "pharmapays": {
-      "titre": "PharmaPays++",
-      "type": "Projet d'équipe (4 personnes) · Oct. 2025 — Jan. 2026",
-      "contexte": "Projet d'équipe mené sur quatre mois à quatre développeurs. L'objectif était de créer une application desktop de gestion et consultation de médicaments pour une pharmacie.",
-      "role": "Conception du schéma entité-relation de la base de données, création et déploiement de la base SQLite sur machine virtuelle, participation à l'intégration de l'interface JavaFX.",
+    "cahier": {
+      "titre": "Skill Claude Code : Cahier des charges",
+      "type": "Projet personnel · Sept. 2026 · open source (MIT)",
+      "contexte": "Un cahier des charges rate rarement parce qu'il manque de pages : il rate parce qu'une exigence dit « le site doit être rapide », parce que personne n'a écrit ce qui est hors périmètre, ou parce qu'un chiffre y figure sans source. J'ai voulu un outil qui impose ces disciplines plutôt que de simplement générer du texte.",
+      "role": "Conception et développement complets : le déroulé suivi par Claude (SKILL.md), les gabarits et références, les scripts de vérification et d'export, et l'empaquetage en plugin installable.",
       "realise": [
-        "Modélisation du schéma entité-relation (MCD/MLD) — identifications des entités et associations",
-        "Création et configuration d'une machine virtuelle dédiée (hébergement de la BDD)",
-        "Implémentation de la base de données SQLite et alimentation avec des données de test",
-        "Déploiement de l'application et tests de bon fonctionnement sur la VM",
-        "Répartition des tâches avec l'équipe après validation commune du modèle BDD"
+        "Un déroulé en six étapes : situer l'avancement, afficher un tableau de couverture, ne poser que les questions manquantes, rédiger 14 sections + annexe A, vérifier, produire le PDF",
+        "Une règle centrale : aucune information inventée. Chaque exigence porte une source ; ce qui manque est marqué « À COMPLÉTER », « À VÉRIFIER À L'ENTRETIEN » ou « NON DIT PAR LE CLIENT »",
+        "Un vérificateur en Node.js (verifier.mjs) : quotas, identifiants en double, critères d'acceptation Given / When / Then, cohérence criticité = P × I, risques critiques sans plan de repli, chasse aux mots flous",
+        "Un export PDF (build-pdf.mjs) avec page de garde et sommaire, via Chrome headless, sans aucune dépendance npm",
+        "Distribution en plugin Claude Code via une marketplace, installable en deux commandes"
       ],
-      "obstacle": "Coordination d'une équipe de 4 développeurs sans outil de gestion de projet formel — résolution par une répartition claire des modules dès le départ et une communication régulière.",
-      "resultat": "Application desktop fonctionnelle permettant la recherche, consultation et gestion de médicaments, déployée sur machine virtuelle et testée par l'ensemble de l'équipe.",
-      "tags": ["Java", "JavaFX", "SQLite", "Maven"],
-      "github": "https://github.com/AoiShidaStr/pharmapays2"
+      "obstacle": "Empêcher un modèle de langage de combler les trous « au jugé ». La solution : rendre le manque visible et traçable (colonne Source, trois marqueurs distincts, annexe récapitulative), et contrôler mécaniquement le résultat plutôt que de faire confiance à la rédaction.",
+      "resultat": "Un skill public sous licence MIT, qui transforme des notes brutes en cahier des charges opposable et en PDF prêt à présenter.",
+      "tags": ["Claude Code", "Skill / plugin", "Node.js", "Markdown", "Chrome headless"],
+      "github": "https://github.com/AoiShidaStr/cahier-des-charges"
     },
     "lespass": {
       "titre": "TiBillet / Lespass — Stage Komidi",
@@ -840,21 +1055,51 @@
       "tags": ["Python", "Django", "Docker", "Linux/Debian", "Git", "PostgreSQL", "HTML/CSS", "Bootstrap", "Open Source", "TiBillet", "AGPL-3.0"],
       "github": "https://github.com/AoiShidaStr/Lespass"
     },
+    "erasmus": {
+      "titre": "Site WordPress d'une école de cuisine",
+      "type": "Échange Erasmus · client réel",
+      "contexte": "Pendant mon échange Erasmus, j'ai réalisé le site d'une école de cuisine qui accueille des personnes en situation de handicap. Un projet à impact, mené en contact direct avec le client.",
+      "role": "Réalisation du site WordPress et de son installation serveur.",
+      "realise": [
+        "Développement du site en local avec LocalWP",
+        "Installation sur un serveur Ubuntu dédié",
+        "Échanges avec le client pour cadrer et ajuster le site"
+      ],
+      "resultat": "Le site était prêt, mais il n'a pas été mis en production : en fin de projet, l'école a choisi de changer d'hébergement. Il n'y a donc pas de lien public.",
+      "tags": ["WordPress", "LocalWP", "Ubuntu", "Relation client"],
+      "github": null
+    },
+    "cowork": {
+      "titre": "Cowork-in — dossier de conception",
+      "type": "Exercice de conception · Sept. 2026",
+      "contexte": "Un réseau de trois espaces de coworking (Lille, Roubaix, Tourcoing) gère tout par tableur et par mail, et double-réserve une salle chaque semaine. À partir de ce seul texte d'expression de besoin, il fallait dériver de façon cohérente les acteurs, les cas d'usage, les classes, le modèle de données et la base.",
+      "role": "Production du dossier de conception, de l'analyse du besoin jusqu'aux scripts SQL.",
+      "realise": [
+        "Analyse du besoin, tableau des acteurs et quatre fiches de cas d'usage (réserver un poste, une salle, s'inscrire à un atelier, annuler)",
+        "Diagrammes UML en PlantUML : cas d'utilisation, classes métier, séquence système, séquence détaillée, composants",
+        "Modélisation Merise : dictionnaire de données, MCD, MLD, MPD",
+        "Scripts PostgreSQL : schéma et index, contraintes, jeu de test",
+        "Matrice de traçabilité entre besoins, cas d'usage et données"
+      ],
+      "obstacle": "Garder la cohérence d'un bout à l'autre : chaque règle du client (facturation au-delà de 4 h de salle par mois, facture globale pour les sociétés, ateliers à places limitées) doit se retrouver dans les cas d'usage, les classes et les contraintes SQL.",
+      "resultat": "Un dossier de conception versionné, exécutable de zéro, et une matrice qui relie chaque besoin à son implémentation.",
+      "tags": ["UML", "PlantUML", "Merise", "PostgreSQL", "Analyse du besoin"],
+      "github": "https://github.com/AoiShidaStr/Cowork-in"
+    },
     "tetris": {
       "titre": "Tetris",
       "type": "Projet personnel · 2024–2025",
-      "contexte": "Projet développé entièrement en autonomie, en dehors de tout cadre scolaire. Python était alors mon tout premier langage de programmation. Ce projet m'a permis d'apprendre les bases du développement logiciel (variables, boucles, fonctions, POO) à travers un cas concret et motivant, plutôt que par des exercices académiques.",
+      "contexte": "Projet développé entièrement en autonomie, en dehors de tout cadre scolaire. Python était alors mon tout premier langage de programmation. J'ai choisi de l'apprendre en faisant un jeu plutôt que des exercices académiques.",
       "role": "Développement complet du projet de A à Z : apprentissage du langage, conception de l'architecture, implémentation et tests.",
       "realise": [
         "Apprentissage autonome de Python et de la bibliothèque Pygame",
-        "Architecture POO : séparation claire Logique (Tetris.py) / Affichage (Graphics.py) / Menu (menu.py)",
+        "Architecture POO : séparation Logique (Logique.py) / Affichage (Graphics.py) / Menu (menu.py)",
         "Moteur de jeu complet : génération de pièces, rotations, détection de collisions, suppression de lignes complètes",
         "Système de menu principal et écran de game over",
-        "Persistance du meilleur score dans un fichier texte (best_score.txt)",
-        "Animations et rendu graphique fluide via Pygame"
+        "Persistance du meilleur score dans un fichier texte (best_score.txt)"
       ],
       "obstacle": "Gestion des rotations de pièces et des collisions aux bords de la grille — problème résolu après recherches personnelles et mise en place d'une matrice de collision.",
-      "resultat": "Jeu Tetris complet et fonctionnel, publié sur GitHub. Premier projet personnel mené de bout en bout, qui a déclenché mon intérêt pour le développement logiciel et conduit à l'apprentissage de Java.",
+      "resultat": "Jeu Tetris complet et fonctionnel, publié sur GitHub. Premier projet mené de bout en bout : c'est lui qui a déclenché mon envie de développer, et de développer des jeux.",
       "tags": ["Python", "Pygame", "POO"],
       "github": "https://github.com/AoiShidaStr/tetris"
     },
@@ -894,13 +1139,14 @@
       "contexte": "Portfolio personnel conçu pour présenter mon travail à des recruteurs. Objectif : un site rapide, sans aucun framework, qui montre à la fois les projets et la manière de les présenter.",
       "role": "Conception et développement complets — design, HTML/CSS/JS, déploiement.",
       "realise": [
-        "Design isométrique / low-poly en SVG animé",
-        "Canvas particles en JavaScript natif",
-        "Système de fiches projet en modal (données JSON embarquées)",
-        "Déploiement continu via GitHub Actions sur GitHub Pages"
+        "Design isométrique / low-poly en SVG animé, avec un accent repris de Rivages des Morts",
+        "Particules en canvas, en JavaScript natif",
+        "Système de fiches projet en modale (données JSON embarquées)",
+        "Accessibilité de base : navigation au clavier, focus visible, textes alternatifs, réduction des animations",
+        "Publication sur GitHub Pages"
       ],
       "obstacle": "Réaliser un design original et mémorable sans framework CSS ni JavaScript.",
-      "resultat": "Site vitrine déployé sur GitHub Pages, accessible publiquement.",
+      "resultat": "Site vitrine publié sur GitHub Pages, accessible publiquement.",
       "tags": ["HTML", "CSS", "JavaScript", "GitHub Pages"],
       "github": "https://github.com/AoiShidaStr/portfolio"
     }
