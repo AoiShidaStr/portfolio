@@ -24,63 +24,91 @@ document.addEventListener('mousemove', e => {
   requestAnimationFrame(animHalo);
 })();
 
-/* ── Canvas particules losanges ─────────────────────────────── */
+/* ── Champ d'étoiles (canvas) ────────────────────────────────── */
 const canvas = document.getElementById('canvas-bg');
 const ctx    = canvas.getContext('2d');
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 function resizeCanvas() {
   canvas.width  = window.innerWidth;
   canvas.height = window.innerHeight;
 }
 resizeCanvas();
-window.addEventListener('resize', resizeCanvas);
-
-const PARTICLE_COUNT = 55;
-const particles = [];
+window.addEventListener('resize', () => { resizeCanvas(); if (reduceMotion) drawStars(0); });
 
 function randBetween(a, b) { return a + Math.random() * (b - a); }
 
-class Particle {
-  constructor() { this.reset(true); }
+const STAR_COLORS = ['255,255,255', '255,255,255', '196,194,255', '125,211,252', '244,190,255'];
+const STAR_COUNT  = window.innerWidth < 700 ? 90 : 170;
 
-  reset(init) {
-    this.x      = randBetween(0, canvas.width);
-    this.y      = init ? randBetween(0, canvas.height) : canvas.height + 10;
-    this.size   = randBetween(2, 5);
-    this.speedX = randBetween(-0.3, 0.3);
-    this.speedY = randBetween(-0.6, -0.15);
-    this.alpha  = randBetween(0.08, 0.35);
-    this.fadeDir   = Math.random() > .5 ? 1 : -1;
-    this.fadeDelta = randBetween(0.002, 0.006);
+class Star {
+  constructor() {
+    this.x = randBetween(0, canvas.width);
+    this.y = randBetween(0, canvas.height);
+    this.big = Math.random() < 0.08;
+    this.r = this.big ? randBetween(1.3, 2.1) : randBetween(0.4, 1.2);
+    this.color = STAR_COLORS[Math.floor(Math.random() * STAR_COLORS.length)];
+    this.base = this.big ? randBetween(0.7, 1) : randBetween(0.25, 0.75);
+    this.speed = randBetween(0.4, 1.6);          // vitesse du scintillement
+    this.phase = randBetween(0, Math.PI * 2);
+    this.drift = this.r * 0.035;                 // parallaxe : les plus grosses avancent plus vite
   }
-
   update() {
-    this.x += this.speedX;
-    this.y += this.speedY;
-    this.alpha += this.fadeDelta * this.fadeDir;
-    if (this.alpha > .35 || this.alpha < .05) this.fadeDir *= -1;
-    if (this.y < -10) this.reset(false);
+    this.y -= this.drift;
+    if (this.y < -4) { this.y = canvas.height + 4; this.x = randBetween(0, canvas.width); }
   }
-
-  draw() {
-    ctx.save();
-    ctx.globalAlpha = this.alpha;
-    ctx.translate(this.x, this.y);
-    ctx.rotate(Math.PI / 4);
-    ctx.fillStyle = '#818cf8';
-    ctx.fillRect(-this.size / 2, -this.size / 2, this.size, this.size);
-    ctx.restore();
+  draw(t) {
+    const tw = 0.65 + 0.35 * Math.sin(t * this.speed + this.phase);
+    ctx.fillStyle = `rgba(${this.color},${this.base * tw})`;
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+    ctx.fill();
+    if (this.big) {                               // léger halo pour les étoiles brillantes
+      ctx.fillStyle = `rgba(${this.color},${0.10 * tw})`;
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.r * 4, 0, Math.PI * 2);
+      ctx.fill();
+    }
   }
 }
 
-for (let i = 0; i < PARTICLE_COUNT; i++) particles.push(new Particle());
+const stars = Array.from({ length: STAR_COUNT }, () => new Star());
+let shooting = null;
+let nextShot = performance.now() + randBetween(4000, 9000);
 
-function animParticles() {
+function spawnShootingStar() {
+  const startX = randBetween(canvas.width * 0.2, canvas.width * 0.95);
+  shooting = { x: startX, y: randBetween(0, canvas.height * 0.35), vx: -randBetween(9, 13), vy: randBetween(4, 6), life: 0 };
+}
+
+function drawStars(now) {
+  const t = now / 1000;
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  particles.forEach(p => { p.update(); p.draw(); });
-  requestAnimationFrame(animParticles);
+  stars.forEach(st => { if (!reduceMotion) st.update(); st.draw(t); });
+
+  if (!reduceMotion) {
+    if (!shooting && now > nextShot) { spawnShootingStar(); nextShot = now + randBetween(7000, 15000); }
+    if (shooting) {
+      shooting.x += shooting.vx; shooting.y += shooting.vy; shooting.life += 1;
+      const a = Math.max(0, 1 - shooting.life / 45);
+      const g = ctx.createLinearGradient(shooting.x, shooting.y, shooting.x - shooting.vx * 7, shooting.y - shooting.vy * 7);
+      g.addColorStop(0, `rgba(255,255,255,${a})`);
+      g.addColorStop(1, 'rgba(125,211,252,0)');
+      ctx.strokeStyle = g; ctx.lineWidth = 1.6;
+      ctx.beginPath();
+      ctx.moveTo(shooting.x, shooting.y);
+      ctx.lineTo(shooting.x - shooting.vx * 7, shooting.y - shooting.vy * 7);
+      ctx.stroke();
+      if (shooting.life > 45) shooting = null;
+    }
+  }
 }
-animParticles();
+
+function animStars(now) {
+  drawStars(now);
+  requestAnimationFrame(animStars);
+}
+if (reduceMotion) drawStars(0); else requestAnimationFrame(animStars);
 
 /* ── Barre de progression ────────────────────────────────────── */
 const progressBar = document.getElementById('progress-bar');
