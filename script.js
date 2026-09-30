@@ -39,13 +39,13 @@ window.addEventListener('resize', () => { resizeCanvas(); if (reduceMotion) draw
 function randBetween(a, b) { return a + Math.random() * (b - a); }
 
 const STAR_COLORS = ['255,255,255', '255,255,255', '196,194,255', '125,211,252', '244,190,255'];
-const STAR_COUNT  = window.innerWidth < 700 ? 90 : 170;
+const STAR_COUNT  = window.innerWidth < 700 ? 130 : 280;
 
 class Star {
   constructor() {
     this.x = randBetween(0, canvas.width);
     this.y = randBetween(0, canvas.height);
-    this.big = Math.random() < 0.08;
+    this.big = Math.random() < 0.10;
     this.r = this.big ? randBetween(1.3, 2.1) : randBetween(0.4, 1.2);
     this.color = STAR_COLORS[Math.floor(Math.random() * STAR_COLORS.length)];
     this.base = this.big ? randBetween(0.7, 1) : randBetween(0.25, 0.75);

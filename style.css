@@ -1780,6 +1780,80 @@ body {
 .results-block, .pix-block, .cta-block { backdrop-filter: blur(4px); }
 .iso-block-card:hover { box-shadow: 0 16px 48px rgba(91, 79, 240, 0.28), 0 0 0 1px rgba(125, 211, 252, 0.25); }
 
+
+/* Nébuleuses : nappes de couleur qui dérivent lentement derrière tout le site */
+body::before {
+  content: '';
+  position: fixed;
+  inset: -20%;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(38% 30% at 78% 18%, rgba(168, 85, 247, 0.42), transparent 70%),
+    radial-gradient(34% 28% at 12% 62%, rgba(34, 211, 238, 0.26), transparent 70%),
+    radial-gradient(40% 32% at 60% 92%, rgba(232, 121, 249, 0.26), transparent 70%),
+    radial-gradient(26% 20% at 35% 8%, rgba(99, 102, 241, 0.30), transparent 70%);
+  filter: blur(22px);
+  animation: nebula-drift 90s ease-in-out infinite alternate;
+}
+@keyframes nebula-drift {
+  from { transform: translate3d(0, 0, 0) rotate(0deg) scale(1); }
+  to   { transform: translate3d(-3%, 2%, 0) rotate(6deg) scale(1.08); }
+}
+
+/* Grandes planètes fixes, en partie hors écran */
+.cosmos-planet {
+  position: fixed;
+  right: -190px;
+  bottom: -230px;
+  width: 540px;
+  height: 540px;
+  border-radius: 50%;
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at 30% 28%, #7dd3fc 0%, #3b82f6 22%, #4f46e5 48%, #1e1b4b 78%, #0a0a1f 100%);
+  box-shadow: 0 0 130px 24px rgba(59, 130, 246, 0.26), inset -64px -52px 120px rgba(0, 0, 0, 0.72);
+  opacity: 0.5;
+}
+.cosmos-planet--2 {
+  right: auto;
+  bottom: auto;
+  left: -150px;
+  top: 44%;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle at 32% 30%, #fecdd3 0%, #fb7185 26%, #be185d 56%, #4a0d2e 84%, #14060f 100%);
+  box-shadow: 0 0 90px 14px rgba(244, 63, 94, 0.2), inset -40px -32px 80px rgba(0, 0, 0, 0.7);
+  opacity: 0.38;
+}
+
+/* Petites planètes autour des cubes de l'accueil */
+.planet { position: absolute; border-radius: 50%; pointer-events: none; }
+.planet--teal {
+  left: 4%;
+  bottom: 8%;
+  width: 46px;
+  height: 46px;
+  background: radial-gradient(circle at 32% 30%, #ccfbf1 0%, #2dd4bf 40%, #0f766e 78%, #042f2e 100%);
+  box-shadow: 0 0 26px rgba(45, 212, 191, 0.35), inset -7px -6px 14px rgba(0, 0, 0, 0.5);
+}
+.planet--orange {
+  right: 3%;
+  top: 14%;
+  width: 28px;
+  height: 28px;
+  background: radial-gradient(circle at 32% 30%, #fed7aa 0%, #fb923c 45%, #9a3412 90%);
+  box-shadow: 0 0 18px rgba(251, 146, 60, 0.35), inset -5px -4px 9px rgba(0, 0, 0, 0.5);
+}
+
+@media (max-width: 700px) {
+  .cosmos-planet { width: 300px; height: 300px; right: -120px; bottom: -140px; }
+  .cosmos-planet--2 { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  body::before { animation: none; }
+}
+
 .nav.scrolled { background: rgba(4, 5, 13, 0.82); backdrop-filter: blur(10px); }
 .rgpd-banner, .modal-card { backdrop-filter: blur(12px); }
 .btn-primary { background: linear-gradient(135deg, #5b4ff0, #7c3aed); }

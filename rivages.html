@@ -38,6 +38,8 @@
 
   <!-- ── Lumière ambiante scroll ── -->
   <div class="ambient-light" id="ambient-light" aria-hidden="true"></div>
+  <div class="cosmos-planet" aria-hidden="true"></div>
+  <div class="cosmos-planet cosmos-planet--2" aria-hidden="true"></div>
 
   <!-- ── Barre de progression ── -->
   <div class="progress-bar" id="progress-bar" role="progressbar" aria-label="Progression de lecture" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
@@ -76,7 +78,7 @@
       <li><a href="index.html#presentation">profil</a></li>
       <li class="nav-keep-sm"><a href="index.html#projets">projets</a></li>
       <li><a href="index.html#competences">compétences</a></li>
-      <li class="nav-keep-sm"><a class="nav-cta" href="index.html#contact">alternance</a></li>
+      <li class="nav-keep-sm"><a class="nav-cta" href="#contact">alternance</a></li>
       <li><a href="veille.html">veille</a></li>
     </ul>
   </header>
@@ -183,11 +185,51 @@
           chacune avec sa mythologie et son dieu en boss final.
         </p>
       </div>
+    </section>
 
-      <div class="rivages-actions rivages-actions--end">
-        <a class="btn-primary" href="index.html#projets">← tous mes projets</a>
-        <a class="btn-secondary" href="index.html#contact">me contacter →</a>
+    <section class="section fade-in" id="contact">
+      <div class="chapter-eyebrow">Contact</div>
+      <h2 class="section-title">Me contacter</h2>
+
+      <div class="cta-block">
+        <p class="cta-title">En recherche d'alternance — développement web et logiciel, Lyon ou télétravail</p>
+        <p class="cta-text">Une équipe à rejoindre, un produit à faire avancer, un studio de jeu qui recrute ? Écrivez-moi, je réponds vite.</p>
+        <div class="hero-actions">
+          <a class="btn-primary" href="mailto:meventecher@gmail.com?subject=Alternance%20%E2%80%94%20prise%20de%20contact">m'écrire →</a>
+          <a class="btn-secondary" href="docs/cv-jeu-video.pdf" download>télécharger mon CV jeu vidéo →</a>
+        </div>
       </div>
+
+      <ul class="contact-grid">
+        <li class="contact-card">
+          <span class="contact-icon" aria-hidden="true">@</span>
+          <div class="contact-info">
+            <span class="contact-label">e-mail</span>
+            <a href="mailto:meventecher@gmail.com">meventecher@gmail.com</a>
+          </div>
+        </li>
+        <li class="contact-card">
+          <span class="contact-icon" aria-hidden="true">gh</span>
+          <div class="contact-info">
+            <span class="contact-label">github</span>
+            <a href="https://github.com/AoiShidaStr" target="_blank" rel="noopener">AoiShidaStr<span class="sr-only"> (nouvel onglet)</span></a>
+          </div>
+        </li>
+        <li class="contact-card">
+          <span class="contact-icon" aria-hidden="true">☎</span>
+          <div class="contact-info">
+            <span class="contact-label">téléphone</span>
+            <a href="tel:+262693827100">+262 693 827 100</a>
+          </div>
+        </li>
+        <li class="contact-card">
+          <span class="contact-icon" aria-hidden="true">↓</span>
+          <div class="contact-info">
+            <span class="contact-label">CV jeu vidéo</span>
+            <a href="docs/cv-jeu-video.pdf" download>Télécharger mon CV jeu vidéo (PDF)</a>
+          </div>
+        </li>
+      </ul>
     </section>
 
   </main>
