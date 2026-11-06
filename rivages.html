@@ -3,248 +3,336 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rivages des Morts — Meven Hoarau Techer</title>
-  <meta name="description" content="Rivages des Morts : action-RPG de donjon en vue isométrique, jouable dans le navigateur avec coop en ligne à trois. Game design, univers et développement par Meven Hoarau Techer (Babylon.js, TypeScript).">
-  <meta name="theme-color" content="#0a0a0f">
+  <title>Rivages des Morts — action-RPG multijoueur · Meven Hoarau Techer</title>
+  <meta name="description" content="Rivages des Morts : action-RPG de donjon en pixel art isométrique, jouable dans le navigateur, en coop en ligne à trois ou en duel. TypeScript, Babylon.js, WebRTC, netcode à rollback. Conçu et développé par Meven Hoarau Techer.">
+  <meta name="theme-color" content="#09080a">
 
-  <!-- Open Graph / aperçu de partage -->
   <meta property="og:type" content="website">
   <meta property="og:locale" content="fr_FR">
   <meta property="og:site_name" content="Meven Hoarau Techer">
   <meta property="og:title" content="Rivages des Morts — action-RPG jouable dans le navigateur">
-  <meta property="og:description" content="Action-RPG de donjon isométrique en Babylon.js, avec coop en ligne à trois. Jouable gratuitement dans le navigateur.">
+  <meta property="og:description" content="Action-RPG de donjon en pixel art, coop en ligne à trois et duel à rollback. Jouable gratuitement dans le navigateur.">
   <meta property="og:url" content="https://aoishidastr.github.io/portfolio/rivages.html">
   <meta property="og:image" content="https://aoishidastr.github.io/portfolio/img/og-rivages.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="Combat contre la Jorōgumo, boss de Rivages des Morts, dans une rizière en vue isométrique">
+  <meta property="og:image:alt" content="Combat contre Izanami, boss de Rivages des Morts, en pixel art isométrique">
   <meta name="twitter:card" content="summary_large_image">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="preload" as="image" href="img/rivages/hero-torii.webp">
+  <link rel="stylesheet" href="site.css">
 </head>
 <body>
-
   <a class="skip-link" href="#main">Aller au contenu</a>
 
-  <!-- ── Curseur personnalisé ── -->
-  <div class="cursor" id="cursor" aria-hidden="true"></div>
-  <div class="cursor-halo" id="cursor-halo" aria-hidden="true"></div>
-
-  <!-- ── Canvas particules ── -->
-  <canvas id="canvas-bg" aria-hidden="true"></canvas>
-
-  <!-- ── Lumière ambiante scroll ── -->
-  <div class="ambient-light" id="ambient-light" aria-hidden="true"></div>
-  <div class="cosmos-planet" aria-hidden="true"></div>
-  <div class="cosmos-planet cosmos-planet--2" aria-hidden="true"></div>
-
-  <!-- ── Barre de progression ── -->
-  <div class="progress-bar" id="progress-bar" role="progressbar" aria-label="Progression de lecture" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-
-  <!-- ── Navigation principale ── -->
-  <header class="nav" id="nav">
-    <a class="nav-logo" href="index.html#hero" aria-label="Accueil — Meven Hoarau Techer">
-      <span class="nav-logo-gem">
-        <svg id="nav-gem-svg" viewBox="0 0 200 200" aria-hidden="true">
-          <defs>
-            <linearGradient id="ngT" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#a5b4fc"/><stop offset="100%" stop-color="#6366f1"/></linearGradient>
-            <linearGradient id="ngL" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#312e81"/><stop offset="100%" stop-color="#4f46e5"/></linearGradient>
-            <linearGradient id="ngR" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#4f46e5"/><stop offset="100%" stop-color="#818cf8"/></linearGradient>
-            <linearGradient id="ngB" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1e1b4b"/><stop offset="100%" stop-color="#0a0a0f"/></linearGradient>
-            <filter id="ngGlow"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-          </defs>
-          <!-- particules d'éclat au clic -->
-          <g id="nav-gem-burst" opacity="0"></g>
-          <!-- gemme (Crystal Gem — option D) -->
-          <g id="nav-gem" filter="url(#ngGlow)" style="transform-origin:100px 100px">
-            <polygon points="100,28 142,78 100,90"   fill="url(#ngT)" opacity="0.95"/>
-            <polygon points="100,28  58,78 100,90"   fill="url(#ngL)" opacity="0.9"/>
-            <polygon points="142,78 158,100 100,90"  fill="url(#ngR)" opacity="0.85"/>
-            <polygon points=" 58,78  42,100 100,90"  fill="url(#ngL)" opacity="0.8"/>
-            <polygon points="100,90 158,100 130,148" fill="#3730a3" opacity="0.9"/>
-            <polygon points="100,90  42,100  70,148" fill="#1e1b4b" opacity="0.9"/>
-            <polygon points="100,90 130,148  70,148" fill="url(#ngB)"/>
-            <polygon points="100,38 130,72 100,80"   fill="rgba(255,255,255,.12)"/>
-          </g>
-        </svg>
-      </span>
-      <span class="nav-logo-text">M<span>.</span>HT</span>
-    </a>
-    <ul class="nav-links">
-      <li class="nav-keep-sm"><a class="nav-game" href="rivages.html" aria-current="page">le jeu</a></li>
-      <li><a href="index.html#presentation">profil</a></li>
-      <li class="nav-keep-sm"><a href="index.html#projets">projets</a></li>
-      <li><a href="index.html#competences">compétences</a></li>
-      <li class="nav-keep-sm"><a class="nav-cta" href="#contact">alternance</a></li>
-      <li><a href="veille.html">veille</a></li>
-    </ul>
+  <header class="topbar" id="topbar">
+    <div class="wrap">
+      <a class="brand" href="index.html" aria-label="Meven Hoarau Techer — accueil du portfolio">
+        <span class="brand-seal" aria-hidden="true">MHT</span>
+        <span class="brand-name">Meven Hoarau Techer <span>· full-stack</span></span>
+      </a>
+      <nav aria-label="Navigation principale">
+        <ul class="menu">
+          <li class="hide-sm"><a href="#galerie">Galerie</a></li>
+          <li class="hide-sm"><a href="#technique">Technique</a></li>
+          <li class="hide-sm"><a href="#fabrication">Fabrication</a></li>
+          <li><a href="index.html">Portfolio</a></li>
+          <li><a class="menu-cta" href="https://aoishidastr.github.io/rivages-des-morts/" target="_blank" rel="noopener">Jouer<span class="sr-only"> (nouvel onglet)</span></a></li>
+        </ul>
+      </nav>
+    </div>
   </header>
 
   <main id="main">
 
-    <section class="section fade-in" id="jeu" aria-labelledby="rivages-title">
-      <div class="chapter-eyebrow chapter-eyebrow--torii">Projet personnel · 2026</div>
-      <div class="rivages-head">
-        <h1 class="section-title" id="rivages-title">Rivages des Morts</h1>
-        <span class="status-badge">en développement</span>
+    <section class="game-hero" aria-labelledby="game-title">
+      <div class="game-hero-bg" aria-hidden="true">
+        <img src="img/rivages/hero-torii.webp" width="1584" height="625" alt="">
       </div>
-      <p class="rivages-pitch">
-        Les au-delà de toutes les mythologies se sont effondrés les uns sur les autres et forment un archipel.
-        Tu incarnes une âme échouée sur l'île du Yomi, l'au-delà japonais, et tu affrontes ses yokai
-        au corps à corps. Un <strong>action-RPG de donjon en vue isométrique, jouable dans le navigateur</strong>,
-        inspiré de Waven et de Hades. J'en porte seul le game design, l'univers et le développement.
-      </p>
-
-      <div class="rivages-actions">
-        <a class="btn-game" href="https://aoishidastr.github.io/rivages-des-morts/" target="_blank" rel="noopener">▶ jouer maintenant<span class="sr-only"> (nouvel onglet)</span></a>
-        <a class="btn-secondary" href="https://github.com/AoiShidaStr/rivages-des-morts" target="_blank" rel="noopener">code source →<span class="sr-only"> (nouvel onglet)</span></a>
-        <a class="btn-secondary" href="https://github.com/AoiShidaStr/rivages-des-morts/blob/main/docs/Rivages%20des%20Morts%20%E2%80%94%20Game%20Design%20Document.md" target="_blank" rel="noopener">game design document →<span class="sr-only"> (nouvel onglet)</span></a>
-      </div>
-      <p class="rivages-note">Se joue au clavier et à la souris, sur ordinateur. Pas de compte : les sauvegardes restent dans le navigateur.</p>
-
-      <div class="rivages-gallery">
-        <figure class="shot shot--wide">
-          <img src="img/rivages/jorogumo.webp" width="1200" height="675" loading="lazy"
-               alt="Combat en vue isométrique dans une rizière : un guerrier nordique et une invocation font face à la Jorōgumo, femme-araignée en kimono rouge, entourée de souches maudites. En haut, la barre de vie du boss.">
-          <figcaption>La Jorōgumo, boss en trois phases des Rizières noyées.</figcaption>
-        </figure>
-        <figure class="shot">
-          <img src="img/rivages/kappa.webp" width="1200" height="675" loading="lazy"
-               alt="Un kappa, yokai-tortue vert, charge le héros. Une bande rouge au sol annonce la trajectoire de la charge, et un conseil s'affiche en bas de l'écran.">
-          <figcaption>Chaque attaque est annoncée au sol : on doit pouvoir lire le danger avant qu'il frappe.</figcaption>
-        </figure>
-        <figure class="shot">
-          <img src="img/rivages/creation.webp" width="1200" height="675" loading="lazy"
-               alt="Écran « Qui étais-tu ? » de création du héros : quatre cartes de race (Einherjar, Oushebti, Demi-dieu, Hanyō) et cinq cartes de classe (Guerrier, Invocateur, Lame, Paladin, Rôdeur).">
-          <figcaption>Quatre races, cinq classes : toutes les combinaisons sont jouables.</figcaption>
-        </figure>
-        <figure class="shot">
-          <img src="img/rivages/titre.webp" width="1200" height="675" loading="lazy"
-               alt="Écran titre de Rivages des Morts, devant la carte peinte de l'île du Yomi : forge, arbres, rizières et un kappa près d'une rivière.">
-          <figcaption>L'île du Yomi, hub du jeu : PNJ, quêtes, forge et boutiques.</figcaption>
-        </figure>
-      </div>
-
-      <div class="rivages-grid">
-        <article class="rivages-col">
-          <h3>Ce qui est jouable aujourd'hui</h3>
-          <ul class="rivages-list">
-            <li>Une île à explorer, avec ses PNJ, ses quêtes, sa forge et ses boutiques.</li>
-            <li>Un donjon, les Rizières noyées : six vagues de yokai puis la Jorōgumo, un boss en trois phases. Niveaux de difficulté débloqués au fil des victoires.</li>
-            <li><strong>4 races × 5 classes</strong>, toutes combinables. Chaque race a une affinité qui change selon la classe.</li>
-            <li>Équipement, forge, arbre de compétences, butin conservé même en cas de mort.</li>
-            <li><strong>Coop en ligne jusqu'à trois joueurs</strong>, sans compte ni serveur : code d'invitation ou liste de parties publiques.</li>
-            <li>Sauvegardes dans le navigateur, avec export et import dans un fichier.</li>
-          </ul>
-        </article>
-
-        <article class="rivages-col">
-          <h3>Décisions de conception</h3>
-          <ul class="rivages-list">
-            <li><strong>Une règle d'univers qui produit du gameplay.</strong> « On existe tant qu'on se souvient de nous » : elle explique l'effondrement, donne les Oubliés comme ennemis communs, fixe la rareté des reliques et le ton des quêtes.</li>
-            <li><strong>Couper ce qui déséquilibre.</strong> La seconde vie du Demi-dieu écrasait les autres races en solo : je l'ai remplacée par l'Égide divine, une invulnérabilité courte une fois par vague.</li>
-            <li><strong>Lisibilité avant tout.</strong> Les attaques s'annoncent au sol, chaque ennemi a un contre (passer dans le dos du kappa, bloquer sa charge, tuer le kodama soigneur en premier).</li>
-            <li><strong>Ressenti de l'invité en coop.</strong> Le combat tourne chez l'hôte, mais le héros de l'invité répond tout de suite à ses déplacements (prédiction locale) : il ne sent pas le ping quand il marche.</li>
-          </ul>
-        </article>
-
-        <article class="rivages-col">
-          <h3>Sous le capot</h3>
-          <ul class="rivages-list">
-            <li>TypeScript, <strong>Babylon.js</strong> et Vite ; environ 16 000 lignes de code.</li>
-            <li>Contenu piloté par les données : ennemis, vagues, quêtes, dialogues et objets décrits en JSON.</li>
-            <li>Réseau pair à pair en WebRTC (Trystero) : un canal fiable pour les événements, un canal rapide sans renvoi pour les positions.</li>
-            <li>Pipeline d'assets maison en Node.js : détourage et découpe des planches, pixel art dessiné par code, icônes, outil d'équilibrage.</li>
-            <li>Déploiement automatique sur GitHub Pages à chaque fusion, via GitHub Actions.</li>
-          </ul>
-          <ul class="project-tags">
-            <li>Babylon.js</li><li>TypeScript</li><li>Vite</li><li>WebRTC</li><li>Node.js</li><li>GitHub Actions</li>
-          </ul>
-        </article>
-      </div>
-
-      <div class="rivages-next">
-        <h3>Comment je le fabrique</h3>
-        <p>
-          Je développe avec <strong>Claude Code comme assistant de programmation</strong>. Le game design, l'univers,
-          l'équilibrage et le choix de ce qui entre dans le jeu restent les miens, et chaque changement passe par une
-          pull request que je teste en jouant avant de la fusionner. Les graphismes actuels sont provisoires : générés
-          par IA (Google AI Studio), puis détourés et intégrés par mes propres scripts Node.js.
+      <div class="wrap">
+        <div class="game-head fade-up">
+          <div class="game-seal" aria-hidden="true">黄<br>泉</div>
+          <p class="kicker"><span class="live-dot" aria-hidden="true"></span>En ligne · version 0.25.1 · projet personnel</p>
+        </div>
+        <h1 class="game-title fade-up d1" id="game-title">Rivages des Morts</h1>
+        <p class="game-pitch fade-up d2">
+          Les au-delà de toutes les mythologies se sont effondrés les uns sur les autres. Tu incarnes une âme échouée
+          au Yomi, l'au-delà japonais, face à ses yokai et à ses dieux. Un <strong>action-RPG de donjon en pixel art isométrique,
+          jouable dans le navigateur</strong>, en coop en ligne jusqu'à trois ou en duel. J'en porte le game design, l'univers
+          et tout le développement.
         </p>
-      </div>
+        <div class="hero-cta fade-up d3">
+          <a class="btn btn-primary btn-play" href="https://aoishidastr.github.io/rivages-des-morts/" target="_blank" rel="noopener">Jouer maintenant<span class="sr-only"> (nouvel onglet)</span></a>
+          <a class="btn btn-ghost" href="https://github.com/AoiShidaStr/rivages-des-morts" target="_blank" rel="noopener">Code source ↗<span class="sr-only"> (nouvel onglet)</span></a>
+          <a class="btn btn-ghost" href="https://github.com/AoiShidaStr/rivages-des-morts/blob/main/docs/Rivages%20des%20Morts%20%E2%80%94%20Game%20Design%20Document.md" target="_blank" rel="noopener">Game design document ↗<span class="sr-only"> (nouvel onglet)</span></a>
+        </div>
+        <p class="game-note fade-up d4">Se joue au clavier et à la souris, sur ordinateur. Gratuit, sans compte : les sauvegardes restent dans le navigateur.</p>
 
-      <div class="rivages-next">
-        <h3>Ce que j'apprends, et la suite</h3>
-        <p>
-          Ce projet m'apprend à trancher : garder un prototype jouable à chaque étape plutôt qu'accumuler
-          des systèmes, et juger une mécanique sur ce qu'elle fait ressentir en partie, pas sur le papier.
-          La suite est écrite dans le game design document : d'autres îles (les rives de l'Hadès, la Duat, le Helheim),
-          chacune avec sa mythologie et son dieu en boss final.
-        </p>
+        <dl class="stats game-stats fade-up d5" aria-label="Le projet en chiffres">
+          <div class="stat"><dt class="sr-only">TypeScript</dt><dd style="margin:0"><span class="stat-num" data-count="35000">35 000<span class="u">+</span></span><span class="stat-label">lignes de TypeScript, jeu et serveur</span></dd></div>
+          <div class="stat"><dt class="sr-only">Outillage</dt><dd style="margin:0"><span class="stat-num" data-count="15000">15 000</span><span class="stat-label">lignes d'outillage Node.js</span></dd></div>
+          <div class="stat"><dt class="sr-only">Pull requests</dt><dd style="margin:0"><span class="stat-num" data-count="73">73</span><span class="stat-label">pull requests fusionnées</span></dd></div>
+          <div class="stat"><dt class="sr-only">Versions</dt><dd style="margin:0"><span class="stat-num" data-count="32">32</span><span class="stat-label">versions en quatre semaines</span></dd></div>
+          <div class="stat"><dt class="sr-only">Boss</dt><dd style="margin:0"><span class="stat-num" data-count="3">3</span><span class="stat-label">boss à phases, un donjon sans fin</span></dd></div>
+        </dl>
       </div>
     </section>
 
-    <section class="section fade-in" id="contact">
-      <div class="chapter-eyebrow">Contact</div>
-      <h2 class="section-title">Me contacter</h2>
-
-      <div class="cta-block">
-        <p class="cta-title">En recherche d'alternance — développement web et logiciel, Lyon ou télétravail</p>
-        <p class="cta-text">Une équipe à rejoindre, un produit à faire avancer, un studio de jeu qui recrute ? Écrivez-moi, je réponds vite.</p>
-        <div class="hero-actions">
-          <a class="btn-primary" href="mailto:meventecher@gmail.com?subject=Alternance%20%E2%80%94%20prise%20de%20contact">m'écrire →</a>
-          <a class="btn-secondary" href="docs/cv-jeu-video.pdf" download>télécharger mon CV jeu vidéo →</a>
+    <!-- Galerie -->
+    <section class="section" id="galerie" aria-labelledby="galerie-title">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <p class="eyebrow">Captures de la version 0.25</p>
+          <h2 class="h2" id="galerie-title">Le jeu, <em>tel qu'il est aujourd'hui.</em></h2>
+          <p class="lede">Depuis la version 0.21, tout le jeu est en pixel art : l'île, ses habitants, les yokai, les héros et les objets. Cliquer sur une capture pour l'agrandir.</p>
+        </div>
+        <div class="bento bento--game reveal" id="gallery">
+          <figure class="shot shot--a">
+            <img src="img/rivages/izanami.webp" width="1431" height="805" loading="lazy" alt="Combat contre Izanami dans son palais : trois héros, des boules de feu et la zone rouge de sa colère.">
+            <figcaption><b>Palais d'Izanami</b>« Ne la regarde pas » : sous ton regard elle se renforce, puis sa colère éclate. Ici en coop à trois.</figcaption>
+            <button type="button"><span class="sr-only">Agrandir : Izanami</span></button>
+          </figure>
+          <figure class="shot shot--b">
+            <img src="img/rivages/village.webp" width="1102" height="620" loading="lazy" alt="Le village des âmes : une place dallée, une maison et la forge, un cerisier en fleur.">
+            <figcaption><b>Île du Yomi</b>Le village des âmes, cœur du hub.</figcaption>
+            <button type="button"><span class="sr-only">Agrandir : le village</span></button>
+          </figure>
+          <figure class="shot shot--c">
+            <img src="img/rivages/cascade.webp" width="1102" height="620" loading="lazy" alt="La cascade, où s'ouvre la faille du Yomi sans fond.">
+            <figcaption><b>La cascade</b>L'entrée du Yomi sans fond.</figcaption>
+            <button type="button"><span class="sr-only">Agrandir : la cascade</span></button>
+          </figure>
+          <figure class="shot shot--d">
+            <img src="img/rivages/torii.webp" width="1102" height="620" loading="lazy" alt="Le torii qui mène aux Rizières noyées.">
+            <figcaption><b>Rizières noyées</b>Le torii du premier donjon.</figcaption>
+            <button type="button"><span class="sr-only">Agrandir : le torii</span></button>
+          </figure>
+          <figure class="shot shot--e">
+            <img src="img/rivages/ile-charon.webp" width="1280" height="720" loading="lazy" alt="Le ponton de l'île : Charon, le passeur, accueille le héros dans une boîte de dialogue.">
+            <figcaption><b>Narration</b>Charon accueille chaque nouvelle âme. Dialogues, quêtes et PNJ sont décrits en JSON.</figcaption>
+            <button type="button"><span class="sr-only">Agrandir : Charon</span></button>
+          </figure>
+          <figure class="shot shot--f">
+            <img src="img/rivages/forge.webp" width="1280" height="720" loading="lazy" alt="La forge de Tetsu : amélioration d'une arme, paliers de niveau, durabilité et coût.">
+            <figcaption><b>Systèmes</b>La forge de Tetsu : améliorer, fabriquer, graver, réparer.</figcaption>
+            <button type="button"><span class="sr-only">Agrandir : la forge</span></button>
+          </figure>
         </div>
       </div>
-
-      <ul class="contact-grid">
-        <li class="contact-card">
-          <span class="contact-icon" aria-hidden="true">@</span>
-          <div class="contact-info">
-            <span class="contact-label">e-mail</span>
-            <a href="mailto:meventecher@gmail.com">meventecher@gmail.com</a>
-          </div>
-        </li>
-        <li class="contact-card">
-          <span class="contact-icon" aria-hidden="true">gh</span>
-          <div class="contact-info">
-            <span class="contact-label">github</span>
-            <a href="https://github.com/AoiShidaStr" target="_blank" rel="noopener">AoiShidaStr<span class="sr-only"> (nouvel onglet)</span></a>
-          </div>
-        </li>
-        <li class="contact-card">
-          <span class="contact-icon" aria-hidden="true">☎</span>
-          <div class="contact-info">
-            <span class="contact-label">téléphone</span>
-            <a href="tel:+262693827100">+262 693 827 100</a>
-          </div>
-        </li>
-        <li class="contact-card">
-          <span class="contact-icon" aria-hidden="true">↓</span>
-          <div class="contact-info">
-            <span class="contact-label">CV jeu vidéo</span>
-            <a href="docs/cv-jeu-video.pdf" download>Télécharger mon CV jeu vidéo (PDF)</a>
-          </div>
-        </li>
-      </ul>
     </section>
 
+    <!-- Contenu + décisions -->
+    <section class="section" id="contenu" aria-labelledby="contenu-title">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <p class="eyebrow">Game design</p>
+          <h2 class="h2" id="contenu-title">Ce qu'on y joue, <em>et pourquoi c'est ainsi.</em></h2>
+        </div>
+        <div class="feature-grid">
+          <article class="feature reveal">
+            <h3>Jouable aujourd'hui</h3>
+            <ul>
+              <li>L'<strong>île du Yomi</strong> : PNJ, quêtes, forge, boutiques, et un cycle jour et nuit.</li>
+              <li><strong>Trois donjons</strong> et leurs boss : la Jorōgumo, Izanami, et le gardien errant du Mont Fujikasane.</li>
+              <li>Le <strong>Yomi sans fond</strong> : une descente infinie par paliers, avec sceaux, pactes et records.</li>
+              <li><strong>Cinq classes</strong> et leurs voies, compétences, builds qui se changent d'une touche.</li>
+              <li>Inventaire en grille, <strong>forge, gravures et durabilité</strong>, échanges entre joueurs.</li>
+              <li><strong>Coop en ligne à trois</strong>, et un duel en deux manches dans une arène qui rétrécit.</li>
+            </ul>
+          </article>
+          <article class="feature reveal reveal-d1">
+            <h3>Décisions de conception</h3>
+            <ul>
+              <li><strong>Une règle d'univers qui produit du gameplay.</strong> « On existe tant qu'on se souvient de nous » explique l'effondrement, les ennemis, la rareté des reliques et le ton des quêtes.</li>
+              <li><strong>Lisibilité avant tout.</strong> Chaque attaque s'annonce au sol, chaque ennemi a un contre, et le bord de chaque arène se voit.</li>
+              <li><strong>Le ressenti d'abord.</strong> Pause d'impact, recul, sons choisis un par un : un coup doit se sentir.</li>
+              <li><strong>Corriger vite.</strong> La 0.25.0 jetait les joueurs trop loin dans le Yomi : corrigé le jour même en 0.25.1.</li>
+            </ul>
+          </article>
+          <article class="feature reveal reveal-d2">
+            <h3>Savoir jeter</h3>
+            <ul>
+              <li>En version 0.21, j'ai <strong>abandonné tout le style peint</strong> pour passer au pixel art.</li>
+              <li>Les planches peintes <strong>dérivaient</strong> d'une image à l'autre (visage, taille, tenue) et restaient floues à la taille du jeu.</li>
+              <li>Le pixel art garde <strong>le même héros du premier au dernier pas</strong>, se retouche case par case et pèse moins lourd.</li>
+              <li>Un choix coûteux à court terme, fait parce qu'il servait le joueur.</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Technique -->
+    <section class="section" id="technique" aria-labelledby="tech-title">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <p class="eyebrow">Sous le capot</p>
+          <h2 class="h2" id="tech-title">Une architecture <em>pensée pour durer.</em></h2>
+          <p class="lede">TypeScript strict, <strong>Babylon.js</strong> et Vite. La logique du combat ne dépend ni du rendu ni du réseau : le même monde tourne chez l'hôte, sur le serveur ou dans le rejeu d'un duel.</p>
+        </div>
+
+        <div class="pillars" style="margin-top:0">
+          <article class="pillar reveal">
+            <div class="pillar-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="12" r="2.5"/><circle cx="19" cy="5" r="2.5"/><circle cx="19" cy="19" r="2.5"/><path d="M7.3 10.9 16.7 6.1M7.3 13.1l9.4 4.8"/></svg></div>
+            <h3>Coop pair à pair</h3>
+            <p>WebRTC (Trystero), sans serveur de jeu : l'hôte fait tourner le combat.</p>
+            <ul>
+              <li>Un canal <b>fiable</b> pour les événements, un canal <b>rapide</b> sans renvoi pour les positions</li>
+              <li><b>Prédiction locale</b> : l'invité ne sent pas le ping quand il marche</li>
+            </ul>
+          </article>
+          <article class="pillar reveal reveal-d1">
+            <div class="pillar-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5M12 7v5l3 2"/></svg></div>
+            <h3>Duel à rollback</h3>
+            <p>Les deux navigateurs simulent le même combat, à pas fixe, avec la même graine.</p>
+            <ul>
+              <li>Les commandes adverses sont <b>devinées</b>, puis le monde est <b>rejoué</b> si on s'est trompé</li>
+              <li>Une <b>empreinte du monde</b> comparée toutes les deux secondes détecte les divergences</li>
+            </ul>
+          </article>
+          <article class="pillar reveal reveal-d2">
+            <div class="pillar-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="7" rx="2"/><rect x="3" y="13" width="18" height="7" rx="2"/><path d="M7 7.5h.01M7 16.5h.01"/></svg></div>
+            <h3>Serveur dédié</h3>
+            <p>Un serveur Node.js optionnel, livré en conteneur.</p>
+            <ul>
+              <li><b>Comptes</b>, amis, groupes et chat par WebSocket</li>
+              <li><b>Coop sans hôte</b> : le combat tourne sur le serveur</li>
+              <li>Docker Compose, <b>Caddy</b> en frontal</li>
+            </ul>
+          </article>
+          <article class="pillar reveal reveal-d3">
+            <div class="pillar-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.6 2.6-2.4-.6-.6-2.4z"/></svg></div>
+            <h3>Outillage maison</h3>
+            <p>32 outils Node.js, lancés par des scripts npm.</p>
+            <ul>
+              <li>Détourage et découpe de <b>sprites</b>, icônes, effets visuels</li>
+              <li>Simulateurs d'<b>équilibrage</b> et de DPS, un éditeur de zones</li>
+              <li><b>Bots</b> qui jouent la coop pour tester sans réseau</li>
+            </ul>
+          </article>
+        </div>
+
+        <div class="proof">
+          <div class="panel reveal">
+            <div class="panel-head"><span>src/net/rollback.ts · extrait</span><span class="tag">duel en ligne</span></div>
+            <div class="panel-body">
+              <p class="panel-note">Seules les commandes transitent pendant un duel : <strong>sept entiers par pas</strong>. Direction et visée sont arrondies, neuf boutons tiennent dans un champ de bits.</p>
+<pre class="code" tabindex="0"><code><span class="c">/** Une commande en sept nombres : direction (au millième),
+ *  visée et sol visé (au centimètre), boutons. */</span>
+<span class="k">type</span> <span class="t">Packed</span> = <span class="t">number</span>[];
+
+<span class="k">function</span> <span class="f">pack</span>(frame: <span class="t">InputFrame</span>): <span class="t">Packed</span> {
+  <span class="k">let</span> flags = <span class="n">0</span>;
+  BUTTONS.<span class="f">forEach</span>((key, i) => {
+    <span class="k">if</span> (frame[key]) flags |= <span class="n">1</span> &lt;&lt; i;
+  });
+  <span class="k">const</span> r = (x: <span class="t">number</span>, k: <span class="t">number</span>) => Math.<span class="f">round</span>(x * k);
+  <span class="k">return</span> [r(frame.move.x, <span class="n">1000</span>), r(frame.move.z, <span class="n">1000</span>),
+          r(frame.aim.x, <span class="n">100</span>), r(frame.aim.z, <span class="n">100</span>),
+          r(frame.aimGround.x, <span class="n">100</span>), r(frame.aimGround.z, <span class="n">100</span>),
+          flags];
+}</code></pre>
+            </div>
+          </div>
+          <div class="panel reveal reveal-d1">
+            <div class="panel-head"><span>Cadence de livraison · 30 sept. → 26 oct.</span><span class="tag">32 versions</span></div>
+            <div class="panel-body">
+              <div class="cadence" id="cadence" role="img" aria-label="32 versions publiées entre le 30 septembre et le 26 octobre 2026, jusqu'à six le même jour."></div>
+              <div class="cad-axis" aria-hidden="true"><span>30 sept.</span><span>10 oct.</span><span>18 oct.</span><span>26 oct.</span></div>
+              <div class="cad-legend" aria-hidden="true"><span><i></i>une version publiée</span><span><i class="g"></i>version majeure</span></div>
+              <ul class="milestones">
+                <li><span class="v">0.4</span><span><b>Le Yomi sans fond</b> · un donjon infini à paliers</span></li>
+                <li><span class="v">0.11</span><span><b>Trois chemins par pièce</b> · équipement DPS, Survie ou Boss</span></li>
+                <li><span class="v">0.20</span><span><b>Duel en ligne</b> · netcode à rollback, sons d'impact</span></li>
+                <li><span class="v">0.21</span><span><b>Passage au pixel art</b> · tout le jeu redessiné</span></li>
+                <li><span class="v">0.24</span><span><b>Le sac et l'enclume</b> · inventaire en glisser-déposer, durabilité</span></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Fabrication -->
+    <section class="section" id="fabrication" aria-labelledby="fab-title">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <p class="eyebrow">Fabrication</p>
+          <h2 class="h2" id="fab-title">Comment je le fabrique</h2>
+        </div>
+        <div class="two-col" style="margin-top:0">
+          <div class="feature reveal">
+            <h3>Un flux de travail de studio</h3>
+            <ul>
+              <li>Un <strong>game design document</strong> tenu à jour, qui décide de ce qui entre dans le jeu.</li>
+              <li>Une branche et une <strong>pull request par changement</strong>, vérifiée automatiquement (typage, build).</li>
+              <li>Chaque PR <strong>testée en jouant</strong> avant fusion, puis déployée sur GitHub Pages par GitHub Actions.</li>
+              <li>Des <strong>notes de version</strong> écrites pour les joueurs, lisibles depuis l'écran titre.</li>
+            </ul>
+          </div>
+          <div class="feature reveal reveal-d1">
+            <h3>L'IA, à sa place</h3>
+            <ul>
+              <li>Je développe avec <strong>Claude Code comme assistant de programmation</strong>.</li>
+              <li>Le game design, l'univers, l'équilibrage, l'architecture et le choix de ce qui entre dans le jeu <strong>restent les miens</strong>.</li>
+              <li>Les graphismes sont produits avec des outils d'IA, puis <strong>détourés, corrigés et intégrés par mes propres scripts</strong> : je ne me présente pas comme graphiste.</li>
+              <li>C'est ce qui permet à une seule personne de tenir ce rythme sans perdre la maîtrise du code.</li>
+            </ul>
+          </div>
+        </div>
+        <blockquote class="quote reveal" style="margin-top:14px">
+          Ce projet m'apprend à trancher : garder un prototype jouable à chaque étape plutôt qu'accumuler des systèmes,
+          et juger une mécanique sur ce qu'elle fait ressentir en partie, pas sur le papier.
+          <cite>La suite est écrite dans le game design document : d'autres îles (les rives de l'Hadès, la Duat, le Helheim), chacune avec sa mythologie et son dieu en boss final.</cite>
+        </blockquote>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="section contact" id="contact" aria-labelledby="contact-title">
+      <div class="wrap">
+        <p class="eyebrow reveal">Alternance · Lyon ou télétravail · studios de jeu bienvenus</p>
+        <h2 class="h2 reveal" id="contact-title">Ce jeu vous a plu ? <em>Parlons de votre projet.</em></h2>
+        <p class="lede reveal">Je cherche une alternance en développement web, logiciel ou jeu vidéo, au rythme de Nexa Digital School. Disponible dès maintenant.</p>
+        <div class="contact-actions reveal">
+          <a class="btn btn-primary" href="mailto:meventecher@gmail.com?subject=Rivages%20des%20Morts%20%E2%80%94%20alternance">M'écrire</a>
+          <a class="btn btn-ghost" href="docs/cv-jeu-video.pdf" download>CV jeu vidéo</a>
+          <a class="btn btn-ghost" href="index.html">Tout le portfolio →</a>
+        </div>
+        <ul class="contact-list reveal">
+          <li><span>e-mail</span><a href="mailto:meventecher@gmail.com">meventecher@gmail.com</a></li>
+          <li><span>tél.</span><a href="tel:+262693827100">+262 693 827 100</a></li>
+          <li><span>github</span><a href="https://github.com/AoiShidaStr" target="_blank" rel="noopener">AoiShidaStr<span class="sr-only"> (nouvel onglet)</span></a></li>
+        </ul>
+      </div>
+    </section>
   </main>
 
-  <footer class="footer">
-    <span>Meven Hoarau Techer &nbsp;·&nbsp; Développeur web &amp; logiciel &nbsp;·&nbsp; Lyon &nbsp;·&nbsp; 2026</span>
-    <a href="https://aoishidastr.github.io/portfolio" style="color:inherit;opacity:.6">aoishidastr.github.io/portfolio</a>
+  <footer>
+    <div class="wrap">
+      <span>© 2026 Meven Hoarau Techer · Rivages des Morts</span>
+      <span><a href="index.html">← retour au portfolio</a></span>
+    </div>
   </footer>
 
-  <!-- ── Bannière RGPD ── -->
-  <div class="rgpd-banner" id="rgpd-banner" role="region" aria-label="Politique de confidentialité">
-    <p>Ce site utilise uniquement du stockage local pour mémoriser vos préférences (aucun tracking, aucun cookie tiers).</p>
-    <button class="rgpd-close" id="rgpd-close">J'ai compris</button>
+  <div class="cad-tip" id="cad-tip" aria-hidden="true"></div>
+
+  <div class="overlay lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Capture du jeu" aria-hidden="true">
+    <div class="lb-inner">
+      <button class="sheet-close" type="button" data-close aria-label="Fermer">✕</button>
+      <img id="lb-img" src="" alt="">
+      <button class="lb-nav lb-prev" type="button" data-step="-1" aria-label="Capture précédente">←</button>
+      <button class="lb-nav lb-next" type="button" data-step="1" aria-label="Capture suivante">→</button>
+      <p id="lb-cap"></p>
+    </div>
   </div>
 
-  <script src="script.js"></script>
+  <script type="application/json" id="releases">
+  [["0.1.0","Fondations et équilibrage","2026-09-30"],["0.2.0","Équilibrage du combat","2026-09-30"],["0.3.0","Nouveaux objets du Yomi","2026-09-30"],["0.3.1","Moins d'étourdissements, plus d'esquive","2026-09-30"],["0.6.0","Musique du menu et de l'île","2026-09-30"],["0.7.0","Nouveautés en jeu","2026-09-30"],["0.3.2","Réglage des objets du Yomi","2026-10-01"],["0.4.0","Le Yomi sans fond","2026-10-01",1],["0.4.1","La touche M en AZERTY","2026-10-02"],["0.4.2","Inventaire et forge rangés par rayons","2026-10-02"],["0.8.0","Le Sorcier, et un équipement qui pèse","2026-10-02"],["0.9.0","Maître d'armes, Rempart et Assassin","2026-10-04"],["0.9.1","Le mana se mérite, l'arc se tend","2026-10-04"],["0.10.0","L'arène, le rempart et le bûcher","2026-10-04"],["0.10.1","Ménage de printemps","2026-10-04"],["0.11.0","Trois chemins par pièce","2026-10-07",1],["0.12.0","Lame et Guerrier, plus vifs","2026-10-09"],["0.13.0","Des classes plus solides","2026-10-09"],["0.14.0","Le billot de Tetsu","2026-10-09"],["0.15.0","Ta voie, et le tirage de Tetsu","2026-10-10"],["0.15.1","Le sceau du Yomi","2026-10-10"],["0.16.0","La marée monte","2026-10-10"],["0.17.0","Plutôt défendre","2026-10-11"],["0.18.0","Le feu peint","2026-10-12"],["0.19.0","La réserve et les sceaux","2026-10-13"],["0.20.0","Impact, duel et builds","2026-10-17",1],["0.21.0","Le passage au pixel art","2026-10-18",1],["0.22.0","Le Mont Fujikasane","2026-10-23"],["0.23.0","Le Palais d'Izanami","2026-10-23"],["0.24.0","Le sac et l'enclume","2026-10-23",1],["0.25.0","Le Yomi sans fond, tout de suite au fond","2026-10-26"],["0.25.1","Le Yomi sans fond, remis d'aplomb","2026-10-26"]]
+  </script>
+  <script src="site.js"></script>
 </body>
 </html>
