@@ -21,7 +21,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link rel="preload" as="image" href="img/rivages/hero-torii.webp">
   <link rel="stylesheet" href="site.css">
 </head>
@@ -32,7 +32,7 @@
     <div class="wrap">
       <a class="brand" href="index.html" aria-label="Meven Hoarau Techer — accueil du portfolio">
         <span class="brand-seal" aria-hidden="true">MHT</span>
-        <span class="brand-name">Meven Hoarau Techer <span>· full-stack</span></span>
+        <span class="brand-name">Meven Hoarau Techer</span>
       </a>
       <nav aria-label="Navigation principale">
         <ul class="menu">
@@ -59,10 +59,9 @@
         </div>
         <h1 class="game-title fade-up d1" id="game-title">Rivages des Morts</h1>
         <p class="game-pitch fade-up d2">
-          Les au-delà de toutes les mythologies se sont effondrés les uns sur les autres. Tu incarnes une âme échouée
-          au Yomi, l'au-delà japonais, face à ses yokai et à ses dieux. Un <strong>action-RPG de donjon en pixel art isométrique,
-          jouable dans le navigateur</strong>, en coop en ligne jusqu'à trois ou en duel. J'en porte le game design, l'univers
-          et tout le développement.
+          Un jeu d'action en pixel art, jouable dans le navigateur. On incarne une âme échouée au Yomi, l'au-delà japonais,
+          et on affronte ses yokai seul, en coop à trois ou en duel. C'est mon projet personnel : je fais le game design,
+          l'univers et le code.
         </p>
         <div class="hero-cta fade-up d3">
           <a class="btn btn-primary btn-play" href="https://aoishidastr.github.io/rivages-des-morts/" target="_blank" rel="noopener">Jouer maintenant<span class="sr-only"> (nouvel onglet)</span></a>
@@ -72,11 +71,10 @@
         <p class="game-note fade-up d4">Se joue au clavier et à la souris, sur ordinateur. Gratuit, sans compte : les sauvegardes restent dans le navigateur.</p>
 
         <dl class="stats game-stats fade-up d5" aria-label="Le projet en chiffres">
-          <div class="stat"><dt class="sr-only">TypeScript</dt><dd style="margin:0"><span class="stat-num" data-count="35000">35 000<span class="u">+</span></span><span class="stat-label">lignes de TypeScript, jeu et serveur</span></dd></div>
-          <div class="stat"><dt class="sr-only">Outillage</dt><dd style="margin:0"><span class="stat-num" data-count="15000">15 000</span><span class="stat-label">lignes d'outillage Node.js</span></dd></div>
-          <div class="stat"><dt class="sr-only">Pull requests</dt><dd style="margin:0"><span class="stat-num" data-count="73">73</span><span class="stat-label">pull requests fusionnées</span></dd></div>
-          <div class="stat"><dt class="sr-only">Versions</dt><dd style="margin:0"><span class="stat-num" data-count="32">32</span><span class="stat-label">versions en quatre semaines</span></dd></div>
-          <div class="stat"><dt class="sr-only">Boss</dt><dd style="margin:0"><span class="stat-num" data-count="3">3</span><span class="stat-label">boss à phases, un donjon sans fin</span></dd></div>
+          <div class="stat"><dt class="sr-only">TypeScript</dt><dd style="margin:0"><span class="stat-num" data-count="35000">35 000<span class="u">+</span></span><span class="stat-label">lignes de TypeScript</span></dd></div>
+          <div class="stat"><dt class="sr-only">Versions</dt><dd style="margin:0"><span class="stat-num" data-count="32">32</span><span class="stat-label">versions publiées</span></dd></div>
+          <div class="stat"><dt class="sr-only">Donjons</dt><dd style="margin:0"><span class="stat-num" data-count="3">3</span><span class="stat-label">donjons et un donjon sans fin</span></dd></div>
+          <div class="stat"><dt class="sr-only">Classes</dt><dd style="margin:0"><span class="stat-num" data-count="5">5</span><span class="stat-label">classes jouables</span></dd></div>
         </dl>
       </div>
     </section>
@@ -86,8 +84,8 @@
       <div class="wrap">
         <div class="section-head reveal">
           <p class="eyebrow">Captures de la version 0.25</p>
-          <h2 class="h2" id="galerie-title">Le jeu, <em>tel qu'il est aujourd'hui.</em></h2>
-          <p class="lede">Depuis la version 0.21, tout le jeu est en pixel art : l'île, ses habitants, les yokai, les héros et les objets. Cliquer sur une capture pour l'agrandir.</p>
+          <h2 class="h2" id="galerie-title">Captures</h2>
+          <p class="lede">Le jeu est en pixel art depuis la version 0.21. Cliquez sur une image pour l'agrandir.</p>
         </div>
         <div class="bento bento--game reveal" id="gallery">
           <figure class="shot shot--a">
@@ -129,11 +127,11 @@
       <div class="wrap">
         <div class="section-head reveal">
           <p class="eyebrow">Game design</p>
-          <h2 class="h2" id="contenu-title">Ce qu'on y joue, <em>et pourquoi c'est ainsi.</em></h2>
+          <h2 class="h2" id="contenu-title">Le jeu</h2>
         </div>
         <div class="feature-grid">
           <article class="feature reveal">
-            <h3>Jouable aujourd'hui</h3>
+            <h3>Ce qu'on peut faire</h3>
             <ul>
               <li>L'<strong>île du Yomi</strong> : PNJ, quêtes, forge, boutiques, et un cycle jour et nuit.</li>
               <li><strong>Trois donjons</strong> et leurs boss : la Jorōgumo, Izanami, et le gardien errant du Mont Fujikasane.</li>
@@ -144,21 +142,19 @@
             </ul>
           </article>
           <article class="feature reveal reveal-d1">
-            <h3>Décisions de conception</h3>
+            <h3>Mes choix de game design</h3>
             <ul>
-              <li><strong>Une règle d'univers qui produit du gameplay.</strong> « On existe tant qu'on se souvient de nous » explique l'effondrement, les ennemis, la rareté des reliques et le ton des quêtes.</li>
-              <li><strong>Lisibilité avant tout.</strong> Chaque attaque s'annonce au sol, chaque ennemi a un contre, et le bord de chaque arène se voit.</li>
-              <li><strong>Le ressenti d'abord.</strong> Pause d'impact, recul, sons choisis un par un : un coup doit se sentir.</li>
-              <li><strong>Corriger vite.</strong> La 0.25.0 jetait les joueurs trop loin dans le Yomi : corrigé le jour même en 0.25.1.</li>
+              <li><strong>Une règle d'univers :</strong> « on existe tant qu'on se souvient de nous ». Elle explique l'histoire, les ennemis et le ton des quêtes.</li>
+              <li><strong>Des combats lisibles :</strong> chaque attaque est annoncée au sol et chaque ennemi a une parade.</li>
+              <li><strong>Des coups qu'on sent :</strong> pause à l'impact, recul, sons choisis un par un.</li>
             </ul>
           </article>
           <article class="feature reveal reveal-d2">
-            <h3>Savoir jeter</h3>
+            <h3>Le passage au pixel art</h3>
             <ul>
-              <li>En version 0.21, j'ai <strong>abandonné tout le style peint</strong> pour passer au pixel art.</li>
-              <li>Les planches peintes <strong>dérivaient</strong> d'une image à l'autre (visage, taille, tenue) et restaient floues à la taille du jeu.</li>
-              <li>Le pixel art garde <strong>le même héros du premier au dernier pas</strong>, se retouche case par case et pèse moins lourd.</li>
-              <li>Un choix coûteux à court terme, fait parce qu'il servait le joueur.</li>
+              <li>Au début, le jeu utilisait des images peintes.</li>
+              <li>Elles changeaient d'une image d'animation à l'autre et restaient floues à la taille du jeu.</li>
+              <li>En version 0.21, j'ai tout repris en pixel art : plus net, plus léger, plus facile à retoucher.</li>
             </ul>
           </article>
         </div>
@@ -169,9 +165,9 @@
     <section class="section" id="technique" aria-labelledby="tech-title">
       <div class="wrap">
         <div class="section-head reveal">
-          <p class="eyebrow">Sous le capot</p>
-          <h2 class="h2" id="tech-title">Une architecture <em>pensée pour durer.</em></h2>
-          <p class="lede">TypeScript strict, <strong>Babylon.js</strong> et Vite. La logique du combat ne dépend ni du rendu ni du réseau : le même monde tourne chez l'hôte, sur le serveur ou dans le rejeu d'un duel.</p>
+          <p class="eyebrow">Technique</p>
+          <h2 class="h2" id="tech-title">Comment c'est construit</h2>
+          <p class="lede">TypeScript, Babylon.js et Vite. La logique du combat est séparée de l\'affichage et du réseau.</p>
         </div>
 
         <div class="pillars" style="margin-top:0">
@@ -219,7 +215,7 @@
           <div class="panel reveal">
             <div class="panel-head"><span>src/net/rollback.ts · extrait</span><span class="tag">duel en ligne</span></div>
             <div class="panel-body">
-              <p class="panel-note">Seules les commandes transitent pendant un duel : <strong>sept entiers par pas</strong>. Direction et visée sont arrondies, neuf boutons tiennent dans un champ de bits.</p>
+              <p class="panel-note">Pendant un duel, seules les commandes des joueurs passent par le réseau : sept nombres à chaque pas de jeu.</p>
 <pre class="code" tabindex="0"><code><span class="c">/** Une commande en sept nombres : direction (au millième),
  *  visée et sol visé (au centimètre), boutons. */</span>
 <span class="k">type</span> <span class="t">Packed</span> = <span class="t">number</span>[];
@@ -238,7 +234,7 @@
             </div>
           </div>
           <div class="panel reveal reveal-d1">
-            <div class="panel-head"><span>Cadence de livraison · 30 sept. → 26 oct.</span><span class="tag">32 versions</span></div>
+            <div class="panel-head"><span>Versions publiées · 30 sept. → 26 oct.</span><span class="tag">32 versions</span></div>
             <div class="panel-body">
               <div class="cadence" id="cadence" role="img" aria-label="32 versions publiées entre le 30 septembre et le 26 octobre 2026, jusqu'à six le même jour."></div>
               <div class="cad-axis" aria-hidden="true"><span>30 sept.</span><span>10 oct.</span><span>18 oct.</span><span>26 oct.</span></div>
@@ -265,7 +261,7 @@
         </div>
         <div class="two-col" style="margin-top:0">
           <div class="feature reveal">
-            <h3>Un flux de travail de studio</h3>
+            <h3>Organisation</h3>
             <ul>
               <li>Un <strong>game design document</strong> tenu à jour, qui décide de ce qui entre dans le jeu.</li>
               <li>Une branche et une <strong>pull request par changement</strong>, vérifiée automatiquement (typage, build).</li>
@@ -274,13 +270,12 @@
             </ul>
           </div>
           <div class="feature reveal reveal-d1">
-            <h3>L'IA, à sa place</h3>
+            <h3>Utilisation de l'IA</h3>
             <ul>
               <li>Je développe avec <strong>Claude Code comme assistant de programmation</strong>.</li>
-              <li>Le game design, l'univers, l'équilibrage, l'architecture et le choix de ce qui entre dans le jeu <strong>restent les miens</strong>.</li>
-              <li>Les graphismes sont produits avec des outils d'IA, puis <strong>détourés, corrigés et intégrés par mes propres scripts</strong> : je ne me présente pas comme graphiste.</li>
-              <li>C'est ce qui permet à une seule personne de tenir ce rythme sans perdre la maîtrise du code.</li>
-            </ul>
+              <li>Le game design, l'univers, l'architecture et les choix de contenu <strong>restent les miens</strong>, et je relis chaque modification.</li>
+              <li>Les graphismes sont produits avec des outils d'IA, puis <strong>retouchés et intégrés par mes propres scripts</strong>. Je ne suis pas graphiste.</li>
+                          </ul>
           </div>
         </div>
         <blockquote class="quote reveal" style="margin-top:14px">
@@ -294,9 +289,9 @@
     <!-- Contact -->
     <section class="section contact" id="contact" aria-labelledby="contact-title">
       <div class="wrap">
-        <p class="eyebrow reveal">Alternance · Lyon ou télétravail · studios de jeu bienvenus</p>
-        <h2 class="h2 reveal" id="contact-title">Ce jeu vous a plu ? <em>Parlons de votre projet.</em></h2>
-        <p class="lede reveal">Je cherche une alternance en développement web, logiciel ou jeu vidéo, au rythme de Nexa Digital School. Disponible dès maintenant.</p>
+        <p class="eyebrow reveal">Contact</p>
+        <h2 class="h2 reveal" id="contact-title">Me contacter</h2>
+        <p class="lede reveal">Je cherche une alternance en développement web, logiciel ou jeu vidéo, au rythme de Nexa Digital School.</p>
         <div class="contact-actions reveal">
           <a class="btn btn-primary" href="mailto:meventecher@gmail.com?subject=Rivages%20des%20Morts%20%E2%80%94%20alternance">M'écrire</a>
           <a class="btn btn-ghost" href="docs/cv-jeu-video.pdf" download>CV jeu vidéo</a>
